@@ -4,12 +4,8 @@
 package com.excilys.dao;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Properties;
 
 import com.mysql.jdbc.Connection;
@@ -26,8 +22,7 @@ public class ConnectionManager {
 	
 	private Connection connection;
 	
-	private final static ConnectionManager
-	_instance = new ConnectionManager();
+	private final static ConnectionManager _instance = new ConnectionManager();
 	
 	private ConnectionManager(){
 		try {
@@ -51,15 +46,17 @@ public class ConnectionManager {
 		} finally {
 			fileStream.close();
 		}
-		
 		this.url = properties.getProperty("url");
 		this.user = properties.getProperty("user");
 		this.password = properties.getProperty("password");
-		
 	}
 
 	public static ConnectionManager getInstance() {
 		return _instance;
+	}
+
+	public Connection getConnection() {
+		return connection;
 	}
 	
 	//---test main----//

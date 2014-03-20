@@ -13,13 +13,6 @@ public class Company {
 	}
 
 	/**
-	 * @param id the id to set
-	 */
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	/**
 	 * @return the name
 	 */
 	public String getName() {
@@ -33,8 +26,7 @@ public class Company {
 		this.name = name;
 	}
 
-	public Company(int id, String name) {
-		this.id = id;
+	public Company(String name) {
 		this.name = name;
 	}
 

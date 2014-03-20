@@ -18,13 +18,6 @@ public class Computer {
 	}
 
 	/**
-	 * @param id the id to set
-	 */
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	/**
 	 * @return the company_id
 	 */
 	public int getCompany_id() {
@@ -81,7 +74,6 @@ public class Computer {
 	}
 
 	public Computer(int id, int company_id, String name, Date introduced, Date discontinued) {
-		this.id = id;
 		this.company_id = company_id;
 		this.name = name;
 		this.introduced = introduced;
