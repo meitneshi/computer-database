@@ -23,7 +23,7 @@ public class CompanyDAO {
 	
 	public void create(Company companyToAdd) {
 		StringBuffer buffer = new StringBuffer();
-		String sql = buffer.append("INSERT INTO company (id, name) VALUES").append(" null, ").append(companyToAdd.getName()).toString();
+		String sql = buffer.append("INSERT INTO company (id, name) VALUES").append(" (null, '").append(companyToAdd.getName()).append("');").toString();
 		this.executeSQLQuery(sql);
 	}
 	
@@ -64,7 +64,7 @@ public class CompanyDAO {
 	public ResultSet executeSQLQuery(String sqlToExecute) {
 		ResultSet result = null;
 		try {
-			result = this.connectionManager.getConnection().createStatement().executeQuery(sqlToExecute);
+			this.connectionManager.getConnection().createStatement().executeUpdate(sqlToExecute);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -72,10 +72,10 @@ public class CompanyDAO {
 	}
 	
 	//---test main----//
-//	public static void main(String args[]) throws SQLException {
-//		CompanyDAO cdao = new CompanyDAO();
-//		Company myCompany = new Company("my First Company");
-//		cdao.create(myCompany);
-//		System.out.println("c'est fait");
-//	}
+	public static void main(String args[]) throws SQLException {
+		CompanyDAO cdao = new CompanyDAO();
+		Company myCompany = new Company("my First Company2");
+		cdao.create(myCompany);
+		System.out.println("c'est fait");
+	}
 }
