@@ -1,9 +1,13 @@
 package com.excilys.dao;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.excilys.domainClass.Company;
+import com.mysql.jdbc.Statement;
 
 public class CompanyDAO {
 
@@ -35,17 +39,43 @@ public class CompanyDAO {
 	 * @param params
 	 * @return ResulSet of Company
 	 */
-	public ResultSet find(String[] params) {
-		ResultSet companiesResult = null;
+	public List<Company> find(String[] params) {
+		List<Company> companiesResult = new ArrayList<Company>();
+		ResultSet queryResult = null;
 		StringBuffer buffer = new StringBuffer();
 		String sql = buffer.append("SELECT * FROM company WHERE company.name LIKE '%").append(params[0]).append("%'").toString();
 		try {
-			companiesResult = this.connectionManager.getConnection().createStatement().executeQuery(sql);
+			queryResult = this.connectionManager.getConnection().createStatement().executeQuery(sql);
+			while (queryResult.next()) {
+				Company company = new Company(queryResult.getString(2).toString(), queryResult.getInt(1));
+				companiesResult.add(company);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return companiesResult;
 	}
+	
+	public List<Company> findAll() {
+		List<Company> companies = new ArrayList<Company>();
+		ResultSet queryResult = null;
+		String sql = "SELECT id, name FROM company ;";
+		try {
+			Connection connection = this.connectionManager.getConnection();
+			Statement statement = (Statement) connection.createStatement();
+			queryResult = statement.executeQuery(sql);
+//			queryResult = this.connectionManager.getConnection().createStatement().executeQuery(sql);
+			while (queryResult.next()) {
+				Company comp = new Company(queryResult.getString(2), queryResult.getInt(1));
+				companies.add(comp);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return companies;
+		
+	}
+	
 	/**
 	 * 
 	 * for the moment user can only modify the name
@@ -60,15 +90,18 @@ public class CompanyDAO {
 		this.executeSQLQuery(sql);
 	}
 	
-	public void delete(Company companytoDelete) {
+	public void delete(int companyIdToDelete) {
 		StringBuffer buffer = new StringBuffer();
-		String sql = buffer.append("DELETE FROM company WHERE company.id=").append(companytoDelete.getId()).append(" AND company.name=").append(companytoDelete.getName()).append (";").toString();
+		String sql = buffer.append("DELETE FROM company WHERE company.id=").append(companyIdToDelete).append (";").toString();
 		this.executeSQLQuery(sql);
 	}
 	
 	public void executeSQLQuery(String sqlToExecute) {
 		try {
-			this.connectionManager.getConnection().createStatement().executeUpdate(sqlToExecute);
+			Connection connection = this.connectionManager.getConnection();
+			Statement statement = (Statement) connection.createStatement();
+			int resultSet = statement.executeUpdate(sqlToExecute);
+//			this.connectionManager.getConnection().createStatement().executeUpdate(sqlToExecute);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -77,12 +110,14 @@ public class CompanyDAO {
 	//---test main----//
 	public static void main(String args[]) throws SQLException {
 		CompanyDAO cdao = new CompanyDAO();
-		String[] params = new String[2];
-		params[0] = "apple";
-		ResultSet res = cdao.find(params);
-		while (res.next()) {
-			System.out.println(res.getString(2));
+		Company c = new Company("testing comp");
+//		cdao.create(c);
+		
+		List<Company> res = cdao.findAll();
+		for (Company company:res) {
+			System.out.println(company);
 		}
+//		cdao.delete(46);
 		System.out.println("c'est fait");
 	}
 }

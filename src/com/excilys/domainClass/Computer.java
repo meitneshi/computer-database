@@ -5,7 +5,7 @@ import java.util.Date;
 public class Computer {
 	
 	private int id;
-	private int company_id;
+	private int companyId;
 	private String name;
 	private Date introduced;
 	private Date discontinued;
@@ -20,15 +20,15 @@ public class Computer {
 	/**
 	 * @return the company_id
 	 */
-	public int getCompany_id() {
-		return company_id;
+	public int getCompanyId() {
+		return companyId;
 	}
 
 	/**
 	 * @param company_id the company_id to set
 	 */
-	public void setCompany_id(int company_id) {
-		this.company_id = company_id;
+	public void setCompanyId(int companyId) {
+		this.companyId = companyId;
 	}
 
 	/**
@@ -73,11 +73,34 @@ public class Computer {
 		this.discontinued = discontinued;
 	}
 
-	public Computer(int id, int company_id, String name, Date introduced, Date discontinued) {
-		this.company_id = company_id;
+	public Computer() {
+		super();
+	}
+	
+	public Computer(int id, int companyId, String name, Date introduced, Date discontinued) {
+		this.companyId = companyId;
 		this.name = name;
 		this.introduced = introduced;
 		this.discontinued = discontinued;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	public boolean equals(Computer computer) {
+		return (this.getId() == computer.getId());
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Computer [id=" + id + ", companyId=" + companyId + ", name="
+				+ name + ", introduced=" + introduced + ", discontinued="
+				+ discontinued + "]";
+	}
+
+	
 
 }
