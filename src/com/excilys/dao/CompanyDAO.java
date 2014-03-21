@@ -12,9 +12,7 @@ import com.mysql.jdbc.Statement;
 public class CompanyDAO {
 
 	ConnectionManager connectionManager = ConnectionManager.getInstance();
-	
-	//Create Find Update Delete
-	
+		
 	private final static CompanyDAO _instance = new CompanyDAO();
 	
 	public static CompanyDAO getInstance() {
@@ -52,6 +50,8 @@ public class CompanyDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			//bloc de fermeture
 		}
 		return companiesResult;
 	}
@@ -64,13 +64,14 @@ public class CompanyDAO {
 			Connection connection = this.connectionManager.getConnection();
 			Statement statement = (Statement) connection.createStatement();
 			queryResult = statement.executeQuery(sql);
-//			queryResult = this.connectionManager.getConnection().createStatement().executeQuery(sql);
 			while (queryResult.next()) {
 				Company comp = new Company(queryResult.getString(2), queryResult.getInt(1));
 				companies.add(comp);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			//bloc de fermeture
 		}
 		return companies;
 		
@@ -96,28 +97,31 @@ public class CompanyDAO {
 		this.executeSQLQuery(sql);
 	}
 	
-	public void executeSQLQuery(String sqlToExecute) {
+	public int executeSQLQuery(String sqlToExecute) {
+		int result = 0;
 		try {
 			Connection connection = this.connectionManager.getConnection();
 			Statement statement = (Statement) connection.createStatement();
-			int resultSet = statement.executeUpdate(sqlToExecute);
-//			this.connectionManager.getConnection().createStatement().executeUpdate(sqlToExecute);
+			result = statement.executeUpdate(sqlToExecute);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			//bloc de fermeture
 		}
+		return result;
 	}
 	
 	//---test main----//
-	public static void main(String args[]) throws SQLException {
-		CompanyDAO cdao = new CompanyDAO();
-		Company c = new Company("testing comp");
+//	public static void main(String args[]) throws SQLException {
+//		CompanyDAO cdao = new CompanyDAO();
+//		Company c = new Company("testing comp");
 //		cdao.create(c);
-		
-		List<Company> res = cdao.findAll();
-		for (Company company:res) {
-			System.out.println(company);
-		}
+//		
+//		List<Company> res = cdao.findAll();
+//		for (Company company:res) {
+//			System.out.println(company);
+//		}
 //		cdao.delete(46);
-		System.out.println("c'est fait");
-	}
+//		System.out.println("c'est fait");
+//	}
 }

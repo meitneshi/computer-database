@@ -4,7 +4,7 @@ public class ComputerDAO {
 	
 	ConnectionManager connectionManager = ConnectionManager.getInstance();
 	
-	//Create Find Update Delete
+	//Create Find Findall Update Delete
 	
 	private final static ComputerDAO _instance = new ComputerDAO();
 	
