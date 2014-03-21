@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.print.attribute.standard.DateTimeAtCompleted;
 
 import com.excilys.domainClass.Company;
 import com.excilys.domainClass.Computer;
@@ -38,7 +37,7 @@ public class ComputerDAO {
 		super();
 	}
 	
-	//Create Find Findall Update Delete
+	//Find Update
 
 	public void create(Computer computerToAdd){
 		System.out.println(computerToAdd);
@@ -69,54 +68,57 @@ public class ComputerDAO {
 	}
 	
 	public List<Computer> find (Computer computerTofind) {
-		List<Computer> computerResult = new ArrayList<Computer>();
+		List<Computer> computersResult = new ArrayList<Computer>();
 		ResultSet queryResult = null;
 		StringBuffer buffer = new StringBuffer();
-		String sql = buffer.append("SELECT * FROM computer WHERE computer.name LIKE '%").
+		String sql = buffer.append("computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name").
+				append("FROM computer").
+				append("INNER JOIN company ON computer.company_id = company.id;").
+				append("WHERE computer.name LIKE '%").
 				append(computerTofind.getName()).
 				append("%'").
 				toString();
-//		try {
-//			this.connection = this.connectionManager.getConnection();
-//			this.statement = (Statement) connection.createStatement();
-//			queryResult = statement.executeQuery(sql);
-//			while (queryResult.next()) {
-//				Computer computer = new Computer(
-//						queryResult.getInt("id"),
-//						queryResult.getString("name"),
-//						queryResult.getDate("introduced"),
-//						queryResult.getDate("discontinued"),
-//						queryResult.getInt("company-id");
-//				companiesResult.add(company);
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		} finally {
-//			DAOFactory.safeClose(connection, statement, queryResult);
-//		}
-//		return companiesResult;
-		return null;
+		try {
+			this.connection = this.connectionManager.getConnection();
+			this.statement = (Statement) connection.createStatement();
+			queryResult = statement.executeQuery(sql);
+			while (queryResult.next()) {
+				Company company = new Company(queryResult.getString("company.name"), queryResult.getInt("company_id"));
+				Computer computer = new Computer(
+						queryResult.getInt("id"), 
+						company, 
+						queryResult.getString("name"), 
+						queryResult.getTimestamp("introduced"), 
+						queryResult.getTimestamp("discontinued"));
+				computersResult.add(computer);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DAOFactory.safeClose(connection, statement, queryResult);
+		}
+		return computersResult;
 	}
 	
 	public List<Computer> findAll() {
-		List<Computer> companies = new ArrayList<Computer>();
+		List<Computer> computers = new ArrayList<Computer>();
 		ResultSet queryResult = null;
 		String sql = "SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name FROM computer INNER JOIN company ON computer.company_id = company.id;";
-//		try {
-//			this.connection = this.connectionManager.getConnection();
-//			this.statement = (Statement) connection.createStatement();
-//			queryResult = statement.executeQuery(sql);
-//			while (queryResult.next()) {
-//				Computer computer = new Computer(queryResult.getInt("id"), company, name, introduced, discontinued)
-//				companies.add(comp);
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		} finally {
-//			DAOFactory.safeClose(connection, statement, queryResult);
-//		}
-//		return companies;
-		return null;
+		try {
+			this.connection = this.connectionManager.getConnection();
+			this.statement = (Statement) connection.createStatement();
+			queryResult = statement.executeQuery(sql);
+			while (queryResult.next()) {
+				Company company = new Company(queryResult.getString("company.name"), queryResult.getInt("company_id"));
+				Computer computer = new Computer(queryResult.getInt("id"), company, queryResult.getString("name"), queryResult.getTimestamp("introduced"), queryResult.getTimestamp("discontinued"));
+				computers.add(computer);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DAOFactory.safeClose(connection, statement, queryResult);
+		}
+		return computers;
 	}
 	
 	public int executeSQLQuery(String sqlToExecute) {
@@ -157,7 +159,10 @@ public class ComputerDAO {
 //		
 //		cdao.create(comp);
 //		System.out.println("computer crée en base");
-		cdao.delete(576);
+		List<Computer> res = cdao.findAll();
+		for (Computer computer:res) {
+			System.out.println(computer);
+		}
 //		List<Company> res = cdao.find(c);
 //		cdao.create(c);
 //		List<Company> res = cdao.findAll();
