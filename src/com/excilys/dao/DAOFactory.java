@@ -12,7 +12,7 @@ public class DAOFactory {
 		
 	}
 	
-	public void safeClose(Connection connection, Statement statement, ResultSet resultSet){
+	public static void safeClose(Connection connection, Statement statement, ResultSet resultSet){
 		try {
 			if (connection != null) {
 				connection.close();

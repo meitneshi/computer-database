@@ -14,6 +14,9 @@ public class CompanyDAO {
 	ConnectionManager connectionManager = ConnectionManager.getInstance();
 		
 	private final static CompanyDAO _instance = new CompanyDAO();
+	private Connection connection;
+	private Statement statement;
+	
 	
 	public static CompanyDAO getInstance() {
 		return _instance;
@@ -43,7 +46,9 @@ public class CompanyDAO {
 		StringBuffer buffer = new StringBuffer();
 		String sql = buffer.append("SELECT * FROM company WHERE company.name LIKE '%").append(params[0]).append("%'").toString();
 		try {
-			queryResult = this.connectionManager.getConnection().createStatement().executeQuery(sql);
+			this.connection = this.connectionManager.getConnection();
+			this.statement = (Statement) connection.createStatement();
+			queryResult = statement.executeQuery(sql);
 			while (queryResult.next()) {
 				Company company = new Company(queryResult.getString(2).toString(), queryResult.getInt(1));
 				companiesResult.add(company);
@@ -51,7 +56,7 @@ public class CompanyDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			//bloc de fermeture
+			DAOFactory.safeClose(connection, statement, queryResult);
 		}
 		return companiesResult;
 	}
@@ -61,8 +66,8 @@ public class CompanyDAO {
 		ResultSet queryResult = null;
 		String sql = "SELECT id, name FROM company ;";
 		try {
-			Connection connection = this.connectionManager.getConnection();
-			Statement statement = (Statement) connection.createStatement();
+			this.connection = this.connectionManager.getConnection();
+			this.statement = (Statement) connection.createStatement();
 			queryResult = statement.executeQuery(sql);
 			while (queryResult.next()) {
 				Company comp = new Company(queryResult.getString(2), queryResult.getInt(1));
@@ -71,7 +76,7 @@ public class CompanyDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			//bloc de fermeture
+			DAOFactory.safeClose(connection, statement, queryResult);
 		}
 		return companies;
 		
@@ -100,13 +105,13 @@ public class CompanyDAO {
 	public int executeSQLQuery(String sqlToExecute) {
 		int result = 0;
 		try {
-			Connection connection = this.connectionManager.getConnection();
-			Statement statement = (Statement) connection.createStatement();
+			this.connection = this.connectionManager.getConnection();
+			this.statement = (Statement) connection.createStatement();
 			result = statement.executeUpdate(sqlToExecute);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			//bloc de fermeture
+			DAOFactory.safeClose(connection, statement, null);
 		}
 		return result;
 	}
