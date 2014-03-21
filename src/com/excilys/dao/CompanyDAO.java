@@ -1,6 +1,6 @@
 package com.excilys.dao;
 
-import java.sql.Connection;
+import com.mysql.jdbc.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import com.mysql.jdbc.Statement;
 
 public class CompanyDAO {
 
-	ConnectionManager connectionManager = ConnectionManager.getInstance();
+	DAOFactory connectionManager = DAOFactory.getInstance();
 		
 	private final static CompanyDAO _instance = new CompanyDAO();
 	private Connection connection;
@@ -40,11 +40,11 @@ public class CompanyDAO {
 	 * @param params
 	 * @return ResulSet of Company
 	 */
-	public List<Company> find(String[] params) {
+	public List<Company> find(Company companytofind) {
 		List<Company> companiesResult = new ArrayList<Company>();
 		ResultSet queryResult = null;
 		StringBuffer buffer = new StringBuffer();
-		String sql = buffer.append("SELECT * FROM company WHERE company.name LIKE '%").append(params[0]).append("%'").toString();
+		String sql = buffer.append("SELECT * FROM company WHERE company.name LIKE '%").append(companytofind.getName()).append("%'").toString();
 		try {
 			this.connection = this.connectionManager.getConnection();
 			this.statement = (Statement) connection.createStatement();
@@ -117,16 +117,17 @@ public class CompanyDAO {
 	}
 	
 	//---test main----//
-//	public static void main(String args[]) throws SQLException {
-//		CompanyDAO cdao = new CompanyDAO();
-//		Company c = new Company("testing comp");
+	public static void main(String args[]) throws SQLException {
+		CompanyDAO cdao = new CompanyDAO();
+		Company c = new Company("app");
+		List<Company> res = cdao.find(c);
 //		cdao.create(c);
 //		
 //		List<Company> res = cdao.findAll();
-//		for (Company company:res) {
-//			System.out.println(company);
-//		}
+		for (Company company:res) {
+			System.out.println(company);
+		}
 //		cdao.delete(46);
-//		System.out.println("c'est fait");
-//	}
+		System.out.println("c'est fait");
+	}
 }
