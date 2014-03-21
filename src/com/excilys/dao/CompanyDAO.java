@@ -36,9 +36,14 @@ public class CompanyDAO {
 	 * @return ResulSet of Company
 	 */
 	public ResultSet find(String[] params) {
+		ResultSet companiesResult = null;
 		StringBuffer buffer = new StringBuffer();
 		String sql = buffer.append("SELECT * FROM company WHERE company.name LIKE '%").append(params[0]).append("%'").toString();
-		ResultSet companiesResult = this.executeSQLQuery(sql);
+		try {
+			companiesResult = this.connectionManager.getConnection().createStatement().executeQuery(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return companiesResult;
 	}
 	/**
@@ -51,31 +56,33 @@ public class CompanyDAO {
 	 */
 	public void update(Company companytoUpdate, String[] params) {
 		StringBuffer buffer = new StringBuffer();
-		String sql = buffer.append("UPDATE company SET name=").append(params[0]).append(" WHERE ").append("company.id = ").append(companytoUpdate.getId()).toString();
+		String sql = buffer.append("UPDATE company SET name=").append(params[0]).append(" WHERE ").append("company.id = ").append(companytoUpdate.getId()).append (";").toString();
 		this.executeSQLQuery(sql);
 	}
 	
 	public void delete(Company companytoDelete) {
 		StringBuffer buffer = new StringBuffer();
-		String sql = buffer.append("DELETE FROM company WHERE company.id=").append(companytoDelete.getId()).append(" AND company.name=").append(companytoDelete.getName()).toString();
+		String sql = buffer.append("DELETE FROM company WHERE company.id=").append(companytoDelete.getId()).append(" AND company.name=").append(companytoDelete.getName()).append (";").toString();
 		this.executeSQLQuery(sql);
 	}
 	
-	public ResultSet executeSQLQuery(String sqlToExecute) {
-		ResultSet result = null;
+	public void executeSQLQuery(String sqlToExecute) {
 		try {
 			this.connectionManager.getConnection().createStatement().executeUpdate(sqlToExecute);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return result;
 	}
 	
 	//---test main----//
 	public static void main(String args[]) throws SQLException {
 		CompanyDAO cdao = new CompanyDAO();
-		Company myCompany = new Company("my First Company2");
-		cdao.create(myCompany);
+		String[] params = new String[2];
+		params[0] = "apple";
+		ResultSet res = cdao.find(params);
+		while (res.next()) {
+			System.out.println(res.getString(2));
+		}
 		System.out.println("c'est fait");
 	}
 }
