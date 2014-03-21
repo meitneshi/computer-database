@@ -28,7 +28,11 @@ public class CompanyDAO {
 	
 	public void create(Company companyToAdd) {
 		StringBuffer buffer = new StringBuffer();
-		String sql = buffer.append("INSERT INTO company (id, name) VALUES").append(" (null, '").append(companyToAdd.getName()).append("');").toString();
+		String sql = buffer.append("INSERT INTO company (id, name) VALUES").
+				append(" (null, '").
+				append(companyToAdd.getName()).
+				append("');").
+				toString();
 		this.executeSQLQuery(sql);
 	}
 	
@@ -44,7 +48,10 @@ public class CompanyDAO {
 		List<Company> companiesResult = new ArrayList<Company>();
 		ResultSet queryResult = null;
 		StringBuffer buffer = new StringBuffer();
-		String sql = buffer.append("SELECT * FROM company WHERE company.name LIKE '%").append(companytofind.getName()).append("%'").toString();
+		String sql = buffer.append("SELECT * FROM company WHERE company.name LIKE '%").
+				append(companytofind.getName()).
+				append("%'").
+				toString();
 		try {
 			this.connection = this.connectionManager.getConnection();
 			this.statement = (Statement) connection.createStatement();
@@ -92,13 +99,22 @@ public class CompanyDAO {
 	 */
 	public void update(Company companytoUpdate, String[] params) {
 		StringBuffer buffer = new StringBuffer();
-		String sql = buffer.append("UPDATE company SET name=").append(params[0]).append(" WHERE ").append("company.id = ").append(companytoUpdate.getId()).append (";").toString();
+		String sql = buffer.append("UPDATE company SET name=").
+				append(params[0]).
+				append(" WHERE ").
+				append("company.id = ").
+				append(companytoUpdate.getId()).
+				append (";").
+				toString();
 		this.executeSQLQuery(sql);
 	}
 	
 	public void delete(int companyIdToDelete) {
 		StringBuffer buffer = new StringBuffer();
-		String sql = buffer.append("DELETE FROM company WHERE company.id=").append(companyIdToDelete).append (";").toString();
+		String sql = buffer.append("DELETE FROM company WHERE company.id=").
+				append(companyIdToDelete).
+				append (";").
+				toString();
 		this.executeSQLQuery(sql);
 	}
 	
@@ -119,10 +135,11 @@ public class CompanyDAO {
 	//---test main----//
 	public static void main(String args[]) throws SQLException {
 		CompanyDAO cdao = new CompanyDAO();
-		Company c = new Company("app");
+		Company c = new Company("myapp");
+		System.out.println(c);
+		cdao.create(c);
 		List<Company> res = cdao.find(c);
 //		cdao.create(c);
-//		
 //		List<Company> res = cdao.findAll();
 		for (Company company:res) {
 			System.out.println(company);

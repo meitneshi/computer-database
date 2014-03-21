@@ -30,8 +30,6 @@ public class DAOFactory {
 	private DAOFactory(){
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			this.initParam();
-			this.connection = (Connection) DriverManager.getConnection(url, user, password);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -55,6 +53,15 @@ public class DAOFactory {
 	}
 
 	public Connection getConnection() {
+		try {
+			this.initParam();
+			return (Connection) DriverManager.getConnection(url, user, password);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return connection;
 	}
 	

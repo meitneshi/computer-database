@@ -1,14 +1,21 @@
 package com.excilys.domainClass;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class Computer {
 	
 	private int id;
-	private int companyId;
+	private Company company;
 	private String name;
-	private Date introduced;
-	private Date discontinued;
+	private Timestamp introduced;
+	private Timestamp discontinued;
+	
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 	/**
 	 * @return the id
@@ -18,17 +25,17 @@ public class Computer {
 	}
 
 	/**
-	 * @return the company_id
+	 * @return the company
 	 */
-	public int getCompanyId() {
-		return companyId;
+	public Company getCompany() {
+		return company;
 	}
 
 	/**
-	 * @param company_id the company_id to set
+	 * @param company the company to set
 	 */
-	public void setCompanyId(int companyId) {
-		this.companyId = companyId;
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 
 	/**
@@ -48,28 +55,28 @@ public class Computer {
 	/**
 	 * @return the introduced
 	 */
-	public Date getIntroduced() {
+	public Timestamp getIntroduced() {
 		return introduced;
 	}
 
 	/**
 	 * @param introduced the introduced to set
 	 */
-	public void setIntroduced(Date introduced) {
+	public void setIntroduced(Timestamp introduced) {
 		this.introduced = introduced;
 	}
 
 	/**
 	 * @return the discontinued
 	 */
-	public Date getDiscontinued() {
+	public Timestamp getDiscontinued() {
 		return discontinued;
 	}
 
 	/**
 	 * @param discontinued the discontinued to set
 	 */
-	public void setDiscontinued(Date discontinued) {
+	public void setDiscontinued(Timestamp discontinued) {
 		this.discontinued = discontinued;
 	}
 
@@ -77,8 +84,16 @@ public class Computer {
 		super();
 	}
 	
-	public Computer(int id, int companyId, String name, Date introduced, Date discontinued) {
-		this.companyId = companyId;
+	public Computer(Company company, String name, Timestamp introduced, Timestamp discontinued) {
+		this.company = company;
+		this.name = name;
+		this.introduced = introduced;
+		this.discontinued = discontinued;
+	}
+	
+	public Computer(int id, Company company, String name, Timestamp introduced, Timestamp discontinued) {
+		this.id = id;
+		this.company = company;
 		this.name = name;
 		this.introduced = introduced;
 		this.discontinued = discontinued;
@@ -96,11 +111,10 @@ public class Computer {
 	 */
 	@Override
 	public String toString() {
-		return "Computer [id=" + id + ", companyId=" + companyId + ", name="
-				+ name + ", introduced=" + introduced + ", discontinued="
+		return "Computer [id=" + id + ", company=" + company + ", name=" + name
+				+ ", introduced=" + introduced + ", discontinued="
 				+ discontinued + "]";
 	}
 
 	
-
 }
