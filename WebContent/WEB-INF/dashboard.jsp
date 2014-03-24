@@ -5,7 +5,7 @@
 
 <jsp:include page="include/header.jsp" />
 
-<section id="lol">
+<section id="main">
 	<h1 id="homeTitle">
 		<c:if test="${fn:length(computerList) == 1}">
 			<c:out value="${fn:length(computerList)}"/> Computer found
@@ -13,52 +13,48 @@
 		<c:out value= "${fn:length(computerList)}"/> Computers found
 	</h1>
 	
-	<div id="actions">
-		<form action="" method="GET">
-			<input type="search" id="searchbox" name="search"
-				value="" placeholder="Search name">
-			<input type="submit" id="searchsubmit"
-				value="Filter by name"
-				class="btn primary">
-		</form>
-		<a class="btn success" id="add" href="addComputer.jsp">Add Computer</a>
-	</div>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<form class="navbar-form navbar-left" method="GET">
+				<div class="form-group">
+					<input type="text" class="form-control" placeholder="Search by name">
+				</div>
+				<button type="submit" class="btn btn-default">Filter by name</button>
+			</form>
+			<a href="addComputer.jsp" class="btn btn-success btn-lg active">Add Computer</a>
+		</div>
+	</nav>
 
-		<table class="computers zebra-striped">
-			<thead>
+	<table class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<th>Computer Name</th>
+				<th>Introduced Date</th>
+				<th>Discontinued Date</th>
+				<th>Company</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach items="${computerList}" var="computer">
 				<tr>
-					<!-- Variable declarations for passing labels as parameters -->
-					<!-- Table header for Computer Name -->
-					<th>Computer Name</th>
-					<th>Introduced Date</th>
-					<!-- Table header for Discontinued Date -->
-					<th>Discontinued Date</th>
-					<!-- Table header for Company -->
-					<th>Company</th>
+					<td>
+						<a href="#" onclick="">
+							<c:out value="${computer.name }"/>
+						</a>
+					</td>
+					<td>
+						<c:out value="${computer.introduced }"/>
+					</td>
+					<td>
+						<c:out value="${computer.discontinued }"/>
+					</td>
+					<td>
+						<c:out value="${computer.company.name }"/>
+					</td>
 				</tr>
-			</thead>
-			<tbody>
-
-				<tr>
-					<td><a href="#" onclick="">ThinkPad T420</a></td>
-					<td>2011-01-01</td>
-					<td>2013-03-04</td>
-					<td>Lenovo</td>
-				</tr>
-				<tr>
-					<td><a href="#">Precision 3500</a></td>
-					<td>2010-05-07</td>
-					<td>2012-06-01</td>
-					<td>Dell</td>
-				</tr>
-				<tr>
-					<td><a href="#">Macbook Air</a></td>
-					<td>2005-05-09</td>
-					<td>2008-06-06</td>
-					<td>Apple</td>
-				</tr>
-			</tbody>
-		</table>
+			</c:forEach>
+		</tbody>
+	</table>
 </section>
 
 <jsp:include page="include/footer.jsp" />

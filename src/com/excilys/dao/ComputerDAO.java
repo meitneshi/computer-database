@@ -3,14 +3,9 @@ package com.excilys.dao;
 
 import com.mysql.jdbc.Connection;
 
-import java.security.Timestamp;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -112,9 +107,15 @@ public class ComputerDAO {
 			statement = (Statement) connection.createStatement();
 			queryResult = statement.executeQuery(sql);
 			while (queryResult.next()) {
-				Company company = new Company(queryResult.getString("company.name"), queryResult.getInt("company_id"));
-				Computer computer = new Computer(queryResult.getInt("id"), company, queryResult.getString("name"), queryResult.getTimestamp("introduced"), queryResult.getTimestamp("discontinued"));
-				computers.add(computer);
+				if ((queryResult.getString("company_id")) == null){
+					Company companyDefault = new Company("N/A");
+					Computer computer = new Computer(queryResult.getInt("id"), companyDefault, queryResult.getString("name"), queryResult.getTimestamp("introduced"), queryResult.getTimestamp("discontinued"));
+					computers.add(computer);
+				} else {
+					Company company = new Company(queryResult.getString("company.name"), queryResult.getInt("company_id"));
+					Computer computer = new Computer(queryResult.getInt("id"), company, queryResult.getString("name"), queryResult.getTimestamp("introduced"), queryResult.getTimestamp("discontinued"));
+					computers.add(computer);
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

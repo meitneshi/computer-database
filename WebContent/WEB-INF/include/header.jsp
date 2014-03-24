@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Bootstrap -->
 <link href="css/bootstrap-3.1.1/bootstrap.min.css" rel="stylesheet" media="screen">
-<link href="css/main.css" rel="stylesheet" media="screen">
+<!-- <link href="css/main.css" rel="stylesheet" media="screen"> -->
 </head>
 <body>
-	<header class="navbar-default">
+	<header class="navbar">
 		<h1 class="navbar-link">
 			<a href="dashboard.jsp"> Application - Computer Database </a>
 		</h1>
