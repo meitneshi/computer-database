@@ -6,7 +6,7 @@
 <jsp:include page="include/header.jsp" />
 <script>
   $(function() {
-    $(".datepicker").datepicker();
+    $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' }).val();
   });
 </script>
 
@@ -48,7 +48,7 @@
 				<div class="col-md-2"><strong>Company Name : </strong></div>
 				<div class="col-md-3">
 					<div class="dropdown">
-						<select id="companies">
+						<select id="companies" name="company">
 							<option value="0">--Non renseignée--</option>
 							<c:forEach items="${companyList}" var="company">
 								<option value="${company.id }" >
@@ -60,17 +60,17 @@
 				</div>
 <!-- 				<div class="col-md-4">pour le message de validation</div> -->
 			</div>
-		</form>
-	</div>
-	
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-2">
-				<input type="submit" class="btn btn-success" value="Add Computer">
-				or
-				<a href="/computer_database/Dashboard" class="btn btn-link">Cancel</a>
+
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-2">
+						<input type="submit" class="btn btn-success" value="Add Computer">
+						or
+						<a href="/computer_database/Dashboard" class="btn btn-link">Cancel</a>
+					</div>
+				</div>
 			</div>
-		</div>
+		</form>
 	</div>
 </section>
 

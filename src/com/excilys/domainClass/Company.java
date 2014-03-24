@@ -37,6 +37,10 @@ public class Company {
 		super();
 	}
 	
+	public Company(int id) {
+		this.id=id;
+	}
+	
 	public Company(String name) {
 		this.name = name;
 	}

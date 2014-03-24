@@ -38,10 +38,6 @@ public class CompanyDAO {
 	
 	/**
 	 * 
-	 * company can only be search by name (for the moment)
-	 * params[] look like [0 -> "name_enter_by_the_user"]
-	 * 
-	 * @param params
 	 * @return ResulSet of Company
 	 */
 	public List<Company> find(Company companytofind) {
@@ -50,7 +46,9 @@ public class CompanyDAO {
 		StringBuffer buffer = new StringBuffer();
 		String sql = buffer.append("SELECT * FROM company WHERE company.name LIKE '%").
 				append(companytofind.getName()).
-				append("%'").
+				append("%' ").
+				append("OR company.id = ").
+				append(companytofind.getId()).
 				toString();
 		try {
 			this.connection = this.connectionManager.getConnection();
