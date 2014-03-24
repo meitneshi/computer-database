@@ -5,6 +5,7 @@
 
 <jsp:include page="include/header.jsp" />
 
+
 <section id="main">
 	<h1 id="homeTitle">456 Computers found</h1>
 	<div id="actions">

@@ -58,7 +58,7 @@ public class ComputerDAO {
 	}
 	
 	public void update(Computer computerToUpdate) {
-		
+		//TODO
 	}
 	
 	public void delete(int computerIdToDelete) {
@@ -138,14 +138,14 @@ public class ComputerDAO {
 	
 	//---test main----//
 	public static void main(String args[]) throws SQLException, ParseException {
-		ComputerDAO cdao = new ComputerDAO();
-		CompanyDAO codao = new CompanyDAO();
-		System.out.println("DAO créés");
-		
-		
-		Company company = new Company("patate");
-		Computer computer = new Computer(company, "mac", java.sql.Timestamp.valueOf("2012-12-12 00:00:00"), java.sql.Timestamp.valueOf("2012-12-12 00:00:00"));
-		System.out.println("computer a chercher créé");
+//		ComputerDAO cdao = new ComputerDAO();
+//		CompanyDAO codao = new CompanyDAO();
+//		System.out.println("DAO créés");
+//		
+//		
+//		Company company = new Company("patate");
+//		Computer computer = new Computer(company, "mac", java.sql.Timestamp.valueOf("2012-12-12 00:00:00"), java.sql.Timestamp.valueOf("2012-12-12 00:00:00"));
+//		System.out.println("computer a chercher créé");
 				
 //		Company c = new Company("rca");
 //		List<Company> res = codao.find(c);
@@ -165,10 +165,10 @@ public class ComputerDAO {
 //		
 //		cdao.create(comp);
 //		System.out.println("computer crée en base");
-		List<Computer> res = cdao.find(computer);
-		for (Computer computers:res) {
-			System.out.println(computers);
-		}
+//		List<Computer> res = cdao.find(computer);
+//		for (Computer computers:res) {
+//			System.out.println(computers);
+//		}
 //		List<Company> res = cdao.find(c);
 //		cdao.create(c);
 //		List<Company> res = cdao.findAll();
@@ -176,7 +176,7 @@ public class ComputerDAO {
 //			System.out.println(company);
 //		}
 //		cdao.delete(46);
-		System.out.println("c'est fait");
+//		System.out.println("c'est fait");
 	}
 
 }
