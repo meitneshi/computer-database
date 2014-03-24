@@ -15,13 +15,15 @@
 	
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
-			<form class="navbar-form navbar-left" method="GET">
+			<form class="navbar-form navbar-left" method="POST">
 				<div class="form-group">
 					<input type="text" class="form-control" placeholder="Search by name">
 				</div>
 				<button type="submit" class="btn btn-default">Filter by name</button>
 			</form>
-			<a href="addComputer.jsp" class="btn btn-success btn-lg active">Add Computer</a>
+			<div class="navbar-right">
+				<a href="/computer_database/AddComputer" class="btn btn-success btn-lg active">Add Computer</a>
+			</div>
 		</div>
 	</nav>
 

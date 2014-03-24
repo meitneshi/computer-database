@@ -1,6 +1,7 @@
 package com.excilys.servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,16 +13,16 @@ import javax.servlet.http.HttpServletResponse;
 import com.excilys.dao.ComputerDAO;
 
 /**
- * Servlet implementation class DashboardServlet
+ * Servlet implementation class AddComputerServlet
  */
-@WebServlet("/Dashboard")
-public class DashboardServlet extends HttpServlet {
+@WebServlet("/AddComputer")
+public class AddComputerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DashboardServlet() {
+    public AddComputerServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,10 +33,7 @@ public class DashboardServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		
-		ComputerDAO compuDAO = new ComputerDAO();
-		request.setAttribute("computerList", compuDAO.findAll());		
-		
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/dashboard.jsp");
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/addComputer.jsp");
 		dispatcher.forward(request,response);
 	}
 
