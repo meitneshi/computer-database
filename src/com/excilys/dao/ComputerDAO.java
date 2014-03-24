@@ -71,13 +71,14 @@ public class ComputerDAO {
 		List<Computer> computersResult = new ArrayList<Computer>();
 		ResultSet queryResult = null;
 		StringBuffer buffer = new StringBuffer();
-		String sql = buffer.append("computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name").
-				append("FROM computer").
-				append("INNER JOIN company ON computer.company_id = company.id;").
+		String sql = buffer.append("SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name ").
+				append("FROM computer ").
+				append("RIGHT JOIN company ON computer.company_id = company.id ").
 				append("WHERE computer.name LIKE '%").
 				append(computerTofind.getName()).
-				append("%'").
+				append("%';").
 				toString();
+		System.out.println(sql);
 		try {
 			this.connection = this.connectionManager.getConnection();
 			this.statement = (Statement) connection.createStatement();
@@ -140,7 +141,12 @@ public class ComputerDAO {
 		ComputerDAO cdao = new ComputerDAO();
 		CompanyDAO codao = new CompanyDAO();
 		System.out.println("DAO créés");
-//		
+		
+		
+		Company company = new Company("patate");
+		Computer computer = new Computer(company, "mac", java.sql.Timestamp.valueOf("2012-12-12 00:00:00"), java.sql.Timestamp.valueOf("2012-12-12 00:00:00"));
+		System.out.println("computer a chercher créé");
+				
 //		Company c = new Company("rca");
 //		List<Company> res = codao.find(c);
 //		System.out.println("company Trouvé" + res);
@@ -159,9 +165,9 @@ public class ComputerDAO {
 //		
 //		cdao.create(comp);
 //		System.out.println("computer crée en base");
-		List<Computer> res = cdao.findAll();
-		for (Computer computer:res) {
-			System.out.println(computer);
+		List<Computer> res = cdao.find(computer);
+		for (Computer computers:res) {
+			System.out.println(computers);
 		}
 //		List<Company> res = cdao.find(c);
 //		cdao.create(c);
