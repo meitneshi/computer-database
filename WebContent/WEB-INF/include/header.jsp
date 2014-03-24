@@ -7,8 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-<link href="js/jQuery-2.1.0.min.js" rel="stylesheet" media="screen">
-<link href="js/jquery-ui-1.9.2.custom.min.js" rel="stylesheet" media="screen">
+<link href="css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" media="screen">
+<script src="js/jQuery-2.1.0.min.js"></script>
+<script src="js/jquery-ui-1.10.4.custom.js"></script>
+
 </head>
 <body>
 	<header class="navbar">

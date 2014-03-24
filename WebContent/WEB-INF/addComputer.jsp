@@ -4,19 +4,26 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 
 <jsp:include page="include/header.jsp" />
+<script>
+  $(function() {
+    $(".datepicker").datepicker();
+  });
+</script>
+
+
 <section id="main">
 
 	<h1>Add Computer</h1>
 	
 	<hr>
 	<small>Les champs marqués d'un astérisque (*) sont obligatoires</small>
-	
+	<br>
 	<div class="container-fluid">
 		<form>
 			<div class="row" id="computerName">
 				<div class="col-md-1"><strong>Computer Name* : </strong></div>
 				<div class="col-md-3">
-					<input type="text" name="ComputerName" id="ComputerName" class="form-control" placeholder="Computer Name">
+					<input type="text" name="computerName" id="computerName" class="form-control" placeholder="Computer Name">
 				</div>
 <!-- 				<div class="col-md-4">pour le message de validation</div> -->
 			</div>
@@ -24,7 +31,7 @@
 			<div class="row" id="introducedDate">
 				<div class="col-md-1"><strong>Introduced Date : </strong></div>
 				<div class="col-md-3">
-					<input type="text" name="IntroducedDate" id="IntroducedDate" class="form-control" placeholder="Introduced Date">
+					<input type="text" name="introducedDate" class="datepicker form-control" placeholder="Introduced Date">
 				</div>
 <!-- 				<div class="col-md-4">pour le message de validation</div> -->
 			</div>
@@ -32,7 +39,7 @@
 			<div class="row" id="discontinuedDate">
 				<div class="col-md-1"><strong>Discontinued Date : </strong></div>
 				<div class="col-md-3">
-					<input type="text" name="DiscontinuedDate" id="DiscontinuedDate" class="form-control" placeholder="Discontinued Date">
+					<input type="text" name="discontinuedDate" class="datepicker form-control" placeholder="Discontinued Date">
 				</div>
 <!-- 				<div class="col-md-4">pour le message de validation</div> -->
 			</div>
