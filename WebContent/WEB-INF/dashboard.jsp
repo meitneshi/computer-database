@@ -5,9 +5,14 @@
 
 <jsp:include page="include/header.jsp" />
 
-
-<section id="main">
-	<h1 id="homeTitle">456 Computers found</h1>
+<section id="lol">
+	<h1 id="homeTitle">
+		<c:if test="${fn:length(computerList) == 1}">
+			<c:out value="${fn:length(computerList)}"/> Computer found
+		</c:if>
+		<c:out value= "${fn:length(computerList)}"/> Computers found
+	</h1>
+	
 	<div id="actions">
 		<form action="" method="GET">
 			<input type="search" id="searchbox" name="search"

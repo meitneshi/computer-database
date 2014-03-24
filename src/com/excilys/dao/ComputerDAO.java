@@ -25,8 +25,6 @@ public class ComputerDAO {
 	DAOFactory connectionManager = DAOFactory.getInstance();
 	
 	private final static ComputerDAO _instance = new ComputerDAO();
-	private Connection connection;
-	private Statement statement;
 	
 	
 	public static ComputerDAO getInstance() {
@@ -67,7 +65,9 @@ public class ComputerDAO {
 		this.executeSQLQuery(sql);
 	}
 	
-	public List<Computer> find (Computer computerTofind) {
+	public List<Computer> find (Computer computerTofind) throws SQLException {
+		Connection connection = null;
+		Statement statement = null;
 		List<Computer> computersResult = new ArrayList<Computer>();
 		ResultSet queryResult = null;
 		StringBuffer buffer = new StringBuffer();
@@ -80,8 +80,8 @@ public class ComputerDAO {
 				toString();
 		System.out.println(sql);
 		try {
-			this.connection = this.connectionManager.getConnection();
-			this.statement = (Statement) connection.createStatement();
+			connection = this.connectionManager.getConnection();
+			statement = (Statement) connection.createStatement();
 			queryResult = statement.executeQuery(sql);
 			while (queryResult.next()) {
 				Company company = new Company(queryResult.getString("company.name"), queryResult.getInt("company_id"));
@@ -102,12 +102,14 @@ public class ComputerDAO {
 	}
 	
 	public List<Computer> findAll() {
+		Connection connection = null;
+		Statement statement = null;
 		List<Computer> computers = new ArrayList<Computer>();
 		ResultSet queryResult = null;
-		String sql = "SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name FROM computer INNER JOIN company ON computer.company_id = company.id;";
+		String sql = "SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name FROM computer LEFT JOIN company ON computer.company_id = company.id;";
 		try {
-			this.connection = this.connectionManager.getConnection();
-			this.statement = (Statement) connection.createStatement();
+			connection = this.connectionManager.getConnection();
+			statement = (Statement) connection.createStatement();
 			queryResult = statement.executeQuery(sql);
 			while (queryResult.next()) {
 				Company company = new Company(queryResult.getString("company.name"), queryResult.getInt("company_id"));
@@ -123,10 +125,12 @@ public class ComputerDAO {
 	}
 	
 	public int executeSQLQuery(String sqlToExecute) {
+		Connection connection = null;
+		Statement statement = null;
 		int result = 0;
 		try {
-			this.connection = this.connectionManager.getConnection();
-			this.statement = (Statement) connection.createStatement();
+			connection = this.connectionManager.getConnection();
+			statement = (Statement) connection.createStatement();
 			result = statement.executeUpdate(sqlToExecute);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -137,7 +141,7 @@ public class ComputerDAO {
 	}
 	
 	//---test main----//
-	public static void main(String args[]) throws SQLException, ParseException {
+//	public static void main(String args[]) throws SQLException, ParseException {
 //		ComputerDAO cdao = new ComputerDAO();
 //		CompanyDAO codao = new CompanyDAO();
 //		System.out.println("DAO créés");
@@ -171,12 +175,12 @@ public class ComputerDAO {
 //		}
 //		List<Company> res = cdao.find(c);
 //		cdao.create(c);
-//		List<Company> res = cdao.findAll();
-//		for (Company company:res) {
-//			System.out.println(company);
+//		List<Computer> res = cdao.findAll();
+//		for (Computer computer:res) {
+//			System.out.println(computer);
 //		}
 //		cdao.delete(46);
 //		System.out.println("c'est fait");
-	}
+//	}
 
 }

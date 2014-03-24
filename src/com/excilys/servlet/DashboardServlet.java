@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.excilys.dao.ComputerDAO;
+
 /**
  * Servlet implementation class DashboardServlet
  */
@@ -30,8 +32,12 @@ public class DashboardServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
-        out.println("<h1>HELLO WORLD !!</h1>");
+		
+		ComputerDAO compuDAO = new ComputerDAO();
+		request.setAttribute("computerList", compuDAO.findAll());		
+		
+		
+		
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/dashboard.jsp");
 		dispatcher.forward(request,response);
 	}

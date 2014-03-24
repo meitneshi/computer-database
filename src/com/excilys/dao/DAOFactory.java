@@ -36,16 +36,22 @@ public class DAOFactory {
 	}
 	
 	private void initParam() throws IOException {
-		Properties properties = new Properties();
-		FileInputStream fileStream = new FileInputStream("config/dbConnectionConf.conf");
-		try {
-			properties.load(fileStream);
-		} finally {
-			fileStream.close();
-		}
-		this.url = properties.getProperty("url");
-		this.user = properties.getProperty("user");
-		this.password = properties.getProperty("password");
+		
+		/*-----AVEC fichier de config------*/
+//		Properties properties = new Properties();
+//		FileInputStream fileStream = new FileInputStream("./WebContent/WEB-INF/config/dbConnectionConf.conf");
+//		try {
+//			properties.load(fileStream);
+//		} finally {
+//			fileStream.close();
+//		}
+//		this.url = properties.getProperty("url");
+//		this.user = properties.getProperty("user");
+//		this.password = properties.getProperty("password");
+		/*-----SANS Fichier de config-----*/
+		this.url = "jdbc:mysql://localhost:3306/computer-database-db?zeroDateTimeBehavior=convertToNull";
+		this.user = "root";
+		this.password = "jmlld3fpj";
 	}
 
 	public static DAOFactory getInstance() {
