@@ -6,7 +6,9 @@
 <title>EPF Computer Database</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Bootstrap -->
-<link href="css/bootstrap-3.1.1/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="js/jQuery-2.1.0.min.js" rel="stylesheet" media="screen">
+<link href="js/jquery-ui-1.9.2.custom.min.js" rel="stylesheet" media="screen">
 </head>
 <body>
 	<header class="navbar">
