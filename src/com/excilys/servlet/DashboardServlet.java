@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.excilys.dao.ComputerDAO;
+import com.excilys.dao.ComputerPaginationDAO;
 
 /**
  * Servlet implementation class DashboardServlet
@@ -33,7 +34,10 @@ public class DashboardServlet extends HttpServlet {
 		response.setContentType("text/html");
 		
 		ComputerDAO compuDAO = new ComputerDAO();
-		request.setAttribute("computerList", compuDAO.findAll());		
+		ComputerPaginationDAO cppdao = new ComputerPaginationDAO();
+		request.setAttribute("computerPageList", cppdao.findAllInPage(1, 30));
+		request.setAttribute("numberOfComputer", compuDAO.count());
+		request.setAttribute("PageMax", compuDAO.findAll().size());
 		
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/dashboard.jsp");
 		dispatcher.forward(request,response);

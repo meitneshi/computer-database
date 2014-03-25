@@ -2,15 +2,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="page" %>
 
 <jsp:include page="include/header.jsp" />
 
 <section id="main">
 	<h1 id="homeTitle">
-		<c:if test="${fn:length(computerList) == 1}">
-			<c:out value="${fn:length(computerList)}"/> Computer found
+		<c:if test="${numberOfComputer == 1}">
+			<c:out value="${numberOfComputer}"/> Computer found
 		</c:if>
-		<c:out value= "${fn:length(computerList)}"/> Computers found
+		<c:out value= "${numberOfComputer}"/> Computers found
 	</h1>
 	
 	<nav class="navbar navbar-default">
@@ -30,6 +31,9 @@
 	<c:if test="${displayDivEdit}">
 		<div class="alert alert-success">Your computer have been successfully edited</div>
 	</c:if>
+	
+	<page:pagination></page:pagination>
+	
 
 	<table class="table table-striped table-hover">
 		<thead>
@@ -41,7 +45,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${computerList}" var="computer">
+			<c:forEach items="${computerPageList}" var="computer">
 				<tr>
 					<td>
 						

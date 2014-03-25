@@ -14,8 +14,6 @@ public class CompanyDAO {
 	DAOFactory connectionManager = DAOFactory.getInstance();
 		
 	private final static CompanyDAO _instance = new CompanyDAO();
-	private Connection connection;
-	private Statement statement;
 	
 	
 	public static CompanyDAO getInstance() {
@@ -41,6 +39,8 @@ public class CompanyDAO {
 	 * @return ResulSet of Company
 	 */
 	public List<Company> find(Company companytofind) {
+		Connection connection = null;
+		Statement statement = null;
 		List<Company> companiesResult = new ArrayList<Company>();
 		ResultSet queryResult = null;
 		StringBuilder builder = new StringBuilder();
@@ -51,8 +51,8 @@ public class CompanyDAO {
 				append(companytofind.getId()).
 				toString();
 		try {
-			this.connection = this.connectionManager.getConnection();
-			this.statement = (Statement) connection.createStatement();
+			connection = this.connectionManager.getConnection();
+			statement = (Statement) connection.createStatement();
 			queryResult = statement.executeQuery(sql);
 			while (queryResult.next()) {
 				Company company = new Company(queryResult.getString(2).toString(), queryResult.getInt(1));
@@ -67,12 +67,14 @@ public class CompanyDAO {
 	}
 	
 	public List<Company> findAll() {
+		Connection connection = null;
+		Statement statement = null;
 		List<Company> companies = new ArrayList<Company>();
 		ResultSet queryResult = null;
 		String sql = "SELECT id, name FROM company ;";
 		try {
-			this.connection = this.connectionManager.getConnection();
-			this.statement = (Statement) connection.createStatement();
+			connection = this.connectionManager.getConnection();
+			statement = (Statement) connection.createStatement();
 			queryResult = statement.executeQuery(sql);
 			while (queryResult.next()) {
 				Company comp = new Company(queryResult.getString(2), queryResult.getInt(1));
@@ -117,10 +119,12 @@ public class CompanyDAO {
 	}
 	
 	public int executeSQLQuery(String sqlToExecute) {
+		Connection connection = null;
+		Statement statement = null;
 		int result = 0;
 		try {
-			this.connection = this.connectionManager.getConnection();
-			this.statement = (Statement) connection.createStatement();
+			connection = this.connectionManager.getConnection();
+			statement = (Statement) connection.createStatement();
 			result = statement.executeUpdate(sqlToExecute);
 		} catch (SQLException e) {
 			e.printStackTrace();

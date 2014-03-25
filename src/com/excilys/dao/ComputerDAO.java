@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import com.excilys.domainClass.Company;
 import com.excilys.domainClass.Computer;
 import com.mysql.jdbc.Statement;
@@ -90,7 +89,7 @@ public class ComputerDAO {
 		StringBuilder builder = new StringBuilder();
 		String sql = builder.append("SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name ").
 				append("FROM computer ").
-				append("RIGHT JOIN company ON computer.company_id = company.id ").
+				append("LEFT JOIN company ON computer.company_id = company.id ").
 				append("WHERE computer.name LIKE '%").
 				append(computerTofind.getName()).
 				append("%';").
@@ -126,7 +125,7 @@ public class ComputerDAO {
 		StringBuilder builder = new StringBuilder();
 		String sql = builder.append("SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name ").
 				append("FROM computer ").
-				append("RIGHT JOIN company ON computer.company_id = company.id ").
+				append("LEFT JOIN company ON computer.company_id = company.id ").
 				append("WHERE computer.id = ").
 				append(id).
 				toString();
@@ -188,5 +187,28 @@ public class ComputerDAO {
 			DAOFactory.safeClose(connection, statement, null);
 		}
 		return result;
+	}
+
+	public int count() {
+		//Calcul du nombre de computer
+		int numberFinal = 0;
+		ResultSet number = null;
+		Connection connection = null;
+		Statement statement = null;
+		StringBuilder builder = new StringBuilder();
+		String sql = builder.append("SELECT COUNT(id) FROM computer;").toString();
+		try {
+			connection = this.connectionManager.getConnection();
+			statement = (Statement) connection.createStatement();
+			number = statement.executeQuery(sql);
+			while (number.next()) {
+				numberFinal = number.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DAOFactory.safeClose(connection, statement, null);
+		}
+		return numberFinal;
 	}
 }
