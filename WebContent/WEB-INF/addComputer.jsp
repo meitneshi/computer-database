@@ -65,7 +65,6 @@ $(document).ready(function(){
 				<div class="col-md-3">
 					<input type="text" name="computerName" id="computerName" class="form-control" placeholder="Computer Name" required/>
 				</div>
-<!-- 				<div class="col-md-4">pour le message de validation</div> -->
 			</div>
 			
 			<div class="row" id="introducedDate">
@@ -73,7 +72,6 @@ $(document).ready(function(){
 				<div class="col-md-3">
 					<input type="text" name="introducedDate" class="datepicker form-control" placeholder="Introduced Date">
 				</div>
-<!-- 				<div class="col-md-4">pour le message de validation</div> -->
 			</div>
 			
 			<div class="row" id="discontinuedDate">
@@ -81,7 +79,6 @@ $(document).ready(function(){
 				<div class="col-md-3">
 					<input type="text" name="discontinuedDate" class="datepicker form-control" placeholder="Discontinued Date">
 				</div>
-<!-- 				<div class="col-md-4">pour le message de validation</div> -->
 			</div>
 			
 			<div class="row" id="company">
@@ -98,7 +95,6 @@ $(document).ready(function(){
 						</select>
 					</div>
 				</div>
-<!-- 				<div class="col-md-4">pour le message de validation</div> -->
 			</div>
 
 			<div class="container-fluid">

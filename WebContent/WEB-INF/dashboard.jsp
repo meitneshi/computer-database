@@ -40,18 +40,40 @@
 			<c:forEach items="${computerList}" var="computer">
 				<tr>
 					<td>
+						
 						<a href="#" onclick="">
 							<c:out value="${computer.name }"/>
 						</a>
 					</td>
 					<td>
-						<c:out value="${computer.introduced }"/>
+						<c:choose>
+							<c:when test="${computer.introduced == null}">
+								<c:out value="N/A"/>
+							</c:when>
+							<c:otherwise>
+								<c:out value="${computer.introduced }"/>
+							</c:otherwise>
+						</c:choose>
 					</td>
 					<td>
-						<c:out value="${computer.discontinued }"/>
+						<c:choose>
+							<c:when test="${computer.discontinued == null}">
+								<c:out value="N/A"/>
+							</c:when>
+							<c:otherwise>
+								<c:out value="${computer.discontinued }"/>
+							</c:otherwise>
+						</c:choose>
 					</td>
 					<td>
-						<c:out value="${computer.company.name }"/>
+						<c:choose>
+							<c:when test="${computer.company.name == null}">
+								<c:out value="N/A"/>
+							</c:when>
+							<c:otherwise>
+								<c:out value="${computer.company.name }"/>
+							</c:otherwise>
+						</c:choose>
 					</td>
 				</tr>
 			</c:forEach>

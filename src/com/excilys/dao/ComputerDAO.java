@@ -115,15 +115,9 @@ public class ComputerDAO {
 			statement = (Statement) connection.createStatement();
 			queryResult = statement.executeQuery(sql);
 			while (queryResult.next()) {
-				if ((queryResult.getString("company_id")) == null){
-					Company companyDefault = new Company("N/A");
-					Computer computer = new Computer(queryResult.getInt("id"), companyDefault, queryResult.getString("name"), queryResult.getTimestamp("introduced"), queryResult.getTimestamp("discontinued"));
-					computers.add(computer);
-				} else {
-					Company company = new Company(queryResult.getString("company.name"), queryResult.getInt("company_id"));
-					Computer computer = new Computer(queryResult.getInt("id"), company, queryResult.getString("name"), queryResult.getTimestamp("introduced"), queryResult.getTimestamp("discontinued"));
-					computers.add(computer);
-				}
+				Company company = new Company(queryResult.getString("company.name"), queryResult.getInt("company_id"));
+				Computer computer = new Computer(queryResult.getInt("id"), company, queryResult.getString("name"), queryResult.getTimestamp("introduced"), queryResult.getTimestamp("discontinued"));
+				computers.add(computer);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
