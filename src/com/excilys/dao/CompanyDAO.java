@@ -27,8 +27,8 @@ public class CompanyDAO {
 	}
 	
 	public void create(Company companyToAdd) {
-		StringBuffer buffer = new StringBuffer();
-		String sql = buffer.append("INSERT INTO company (id, name) VALUES").
+		StringBuilder builder = new StringBuilder();
+		String sql = builder.append("INSERT INTO company (id, name) VALUES").
 				append(" (null, '").
 				append(companyToAdd.getName()).
 				append("');").
@@ -43,8 +43,8 @@ public class CompanyDAO {
 	public List<Company> find(Company companytofind) {
 		List<Company> companiesResult = new ArrayList<Company>();
 		ResultSet queryResult = null;
-		StringBuffer buffer = new StringBuffer();
-		String sql = buffer.append("SELECT * FROM company WHERE company.name LIKE '%").
+		StringBuilder builder = new StringBuilder();
+		String sql = builder.append("SELECT * FROM company WHERE company.name LIKE '%").
 				append(companytofind.getName()).
 				append("%' ").
 				append("OR company.id = ").
@@ -96,8 +96,8 @@ public class CompanyDAO {
 	 * @param params
 	 */
 	public void update(Company companytoUpdate, String[] params) {
-		StringBuffer buffer = new StringBuffer();
-		String sql = buffer.append("UPDATE company SET name=").
+		StringBuilder builder = new StringBuilder();
+		String sql = builder.append("UPDATE company SET name=").
 				append(params[0]).
 				append(" WHERE ").
 				append("company.id = ").
@@ -108,8 +108,8 @@ public class CompanyDAO {
 	}
 	
 	public void delete(int companyIdToDelete) {
-		StringBuffer buffer = new StringBuffer();
-		String sql = buffer.append("DELETE FROM company WHERE company.id=").
+		StringBuilder builder = new StringBuilder();
+		String sql = builder.append("DELETE FROM company WHERE company.id=").
 				append(companyIdToDelete).
 				append (";").
 				toString();
@@ -128,21 +128,5 @@ public class CompanyDAO {
 			DAOFactory.safeClose(connection, statement, null);
 		}
 		return result;
-	}
-	
-	//---test main----//
-	public static void main(String args[]) throws SQLException {
-		CompanyDAO cdao = new CompanyDAO();
-		Company c = new Company("myapp");
-		System.out.println(c);
-		cdao.create(c);
-		List<Company> res = cdao.find(c);
-//		cdao.create(c);
-//		List<Company> res = cdao.findAll();
-		for (Company company:res) {
-			System.out.println(company);
-		}
-//		cdao.delete(46);
-		System.out.println("c'est fait");
 	}
 }

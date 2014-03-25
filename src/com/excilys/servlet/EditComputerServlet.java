@@ -99,22 +99,11 @@ public class EditComputerServlet extends HttpServlet {
 			computerToModify.setDiscontinued(discontinued);
 		}
 		
-//		PrintWriter out = response.getWriter();
-//		out.println(computerToModify);
-		
 		computerDAO.update(computerToModify);
 		
 		request.setAttribute("displayDivEdit", true);
 		
-		response.sendRedirect("/computer_database/Dashboard");
-		
-//		ServletContext context= getServletContext();
-//		RequestDispatcher dispatcher= context.getRequestDispatcher("/Dashboard");
-//		dispatcher.forward(request, response);
-		
-//		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/dashboard.jsp");
-//		dispatcher.forward(request,response);
-		
+		response.sendRedirect("/computer_database/Dashboard");		
 	}
 
 }

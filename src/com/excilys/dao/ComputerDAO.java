@@ -16,7 +16,6 @@ import com.mysql.jdbc.Statement;
 
 public class ComputerDAO {
 	
-	
 	DAOFactory connectionManager = DAOFactory.getInstance();
 	
 	private final static ComputerDAO _instance = new ComputerDAO();
@@ -34,8 +33,8 @@ public class ComputerDAO {
 
 	public void create(Computer computerToAdd){
 		System.out.println(computerToAdd);
-		StringBuffer buffer = new StringBuffer();
-		String sql = buffer.append("INSERT INTO computer (id, name, introduced, discontinued, company_id) VALUES").
+		StringBuilder builder = new StringBuilder();
+		String sql = builder.append("INSERT INTO computer (id, name, introduced, discontinued, company_id) VALUES").
 				append(" (null, '").
 				append(computerToAdd.getName()).
 				append("', '").toString();
@@ -60,8 +59,8 @@ public class ComputerDAO {
 	
 	public void update(Computer computerToUpdate) {
 		//initailisation
-		StringBuffer buffer = new StringBuffer();
-		String sql = buffer.append("UPDATE computer SET name = '").
+		StringBuilder builder = new StringBuilder();
+		String sql = builder.append("UPDATE computer SET name = '").
 				append(computerToUpdate.getName()).
 				append("', introduced = '").
 				append(computerToUpdate.getIntroduced()).
@@ -78,8 +77,8 @@ public class ComputerDAO {
 	}
 	
 	public void delete(int computerIdToDelete) {
-		StringBuffer buffer = new StringBuffer();
-		String sql = buffer.append("DELETE FROM computer WHERE computer.id=").append(computerIdToDelete).append (";").toString();
+		StringBuilder builder = new StringBuilder();
+		String sql = builder.append("DELETE FROM computer WHERE computer.id=").append(computerIdToDelete).append (";").toString();
 		this.executeSQLQuery(sql);
 	}
 	
@@ -88,8 +87,8 @@ public class ComputerDAO {
 		Statement statement = null;
 		List<Computer> computersResult = new ArrayList<Computer>();
 		ResultSet queryResult = null;
-		StringBuffer buffer = new StringBuffer();
-		String sql = buffer.append("SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name ").
+		StringBuilder builder = new StringBuilder();
+		String sql = builder.append("SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name ").
 				append("FROM computer ").
 				append("RIGHT JOIN company ON computer.company_id = company.id ").
 				append("WHERE computer.name LIKE '%").
@@ -124,8 +123,8 @@ public class ComputerDAO {
 		Statement statement = null;
 		Computer computerResult = new Computer();
 		ResultSet queryResult = null;
-		StringBuffer buffer = new StringBuffer();
-		String sql = buffer.append("SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name ").
+		StringBuilder builder = new StringBuilder();
+		String sql = builder.append("SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name ").
 				append("FROM computer ").
 				append("RIGHT JOIN company ON computer.company_id = company.id ").
 				append("WHERE computer.id = ").
@@ -190,48 +189,4 @@ public class ComputerDAO {
 		}
 		return result;
 	}
-	
-	//---test main----//
-//	public static void main(String args[]) throws SQLException, ParseException {
-//		ComputerDAO cdao = new ComputerDAO();
-//		CompanyDAO codao = new CompanyDAO();
-//		System.out.println("DAO créés");
-//		
-//		
-//		Company company = new Company("patate");
-//		Computer computer = new Computer(company, "mac", java.sql.Timestamp.valueOf("2012-12-12 00:00:00"), java.sql.Timestamp.valueOf("2012-12-12 00:00:00"));
-//		System.out.println("computer a chercher créé");
-				
-//		Company c = new Company("rca");
-//		List<Company> res = codao.find(c);
-//		System.out.println("company Trouvé" + res);
-//		
-//		Company company = new Company(res.get(0).getName(), res.get(0).getId());
-//		System.out.println("company créé pour ajout" + company);
-//		
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//		
-//		java.sql.Timestamp introduced = java.sql.Timestamp.valueOf("2012-12-12 00:00:00");
-//		
-//		java.sql.Timestamp discontinued = java.sql.Timestamp.valueOf("2012-12-13 00:00:00");		
-//		
-//		Computer comp = new Computer(company, "mon premier telephone", introduced, discontinued);
-//		System.out.println("computer créé" + comp);
-//		
-//		cdao.create(comp);
-//		System.out.println("computer crée en base");
-//		List<Computer> res = cdao.find(computer);
-//		for (Computer computers:res) {
-//			System.out.println(computers);
-//		}
-//		List<Company> res = cdao.find(c);
-//		cdao.create(c);
-//		List<Computer> res = cdao.findAll();
-//		for (Computer computer:res) {
-//			System.out.println(computer);
-//		}
-//		cdao.delete(46);
-//		System.out.println("c'est fait");
-//	}
-
 }
