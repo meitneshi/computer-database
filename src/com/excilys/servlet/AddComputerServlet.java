@@ -40,6 +40,7 @@ public class AddComputerServlet extends HttpServlet {
 		
 		CompanyDAO companyDao = new CompanyDAO();
 		request.setAttribute("companyList", companyDao.findAll());
+		request.setAttribute("displayDiv", false);
 		
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/addComputer.jsp");
 		dispatcher.forward(request,response);
@@ -50,31 +51,43 @@ public class AddComputerServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
-		String discontinuedStr = "0000-00-00 00:00:00";
-		String introducedStr = "0000-00-00 00:00:00";
+		ComputerDAO computerDAO = new ComputerDAO();
+		CompanyDAO companyDAO = new CompanyDAO();
+		String name = "";
+		Computer computerToAdd = null;
+		String discontinuedStr = "";
+		String introducedStr = "";
 		Timestamp introduced = null;
 		Timestamp discontinued = null;
 		
-		if (request.getParameter("introducedDate") != "") {
+		name = request.getParameter("computerName");
+		
+		if (!request.getParameter("introducedDate").equals("")) {
 			introducedStr = request.getParameter("introducedDate") + " 00:00:00";
 			introduced = java.sql.Timestamp.valueOf(introducedStr);
 		}
 		
-		if (request.getParameter("discontinuedDate") != "") {
+		if (!request.getParameter("discontinuedDate").equals("")) {
 			discontinuedStr = request.getParameter("discontinuedDate") + " 00:00:00";
 			discontinued = java.sql.Timestamp.valueOf(discontinuedStr);
 		}
 		
-		String name = request.getParameter("computerName");
+		if (Integer.parseInt(request.getParameter("company")) == 0) {
+			Company company = new Company(null);
+			computerToAdd = new Computer(company, name, introduced, discontinued);
+		} else {
+			Company company = new Company(Integer.parseInt(request.getParameter("company")));
+			Company company2 = companyDAO.find(company).get(0);
+			computerToAdd = new Computer(company2, name, introduced, discontinued);
+		}
+//		PrintWriter out = response.getWriter();
+//		out.println(computerToAdd);
 		
-		PrintWriter out = response.getWriter();
-		Company company = new Company(Integer.parseInt(request.getParameter("company")));
-//		out.println(company);
-		CompanyDAO companyDAO = new CompanyDAO();
-		Company company2 = companyDAO.find(company).get(0);
-//	    out.println(company2);
-		Computer computerToAdd = new Computer(company2, name, introduced, discontinued);
-		ComputerDAO computerDAO = new ComputerDAO();
 		computerDAO.create(computerToAdd);
+		
+		request.setAttribute("displayDiv", true);
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/addComputer.jsp");
+		dispatcher.forward(request,response);
+		
 	}
 }

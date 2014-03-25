@@ -16,7 +16,13 @@
 	<h1>Add Computer</h1>
 	
 	<hr>
-		<small>Les champs marqués d'un astérisque (*) sont obligatoires</small>
+
+	<small>Les champs marqués d'un astérisque (*) sont obligatoires</small>
+	
+	<c:if test="${displayDiv}">
+		<div class="alert alert-success">Your computer have been added</div>
+	</c:if>
+	
 	
 	<div class="container-fluid">
 		<form method="POST" action="/computer_database/AddComputer">

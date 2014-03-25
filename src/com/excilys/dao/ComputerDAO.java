@@ -38,14 +38,22 @@ public class ComputerDAO {
 		String sql = buffer.append("INSERT INTO computer (id, name, introduced, discontinued, company_id) VALUES").
 				append(" (null, '").
 				append(computerToAdd.getName()).
-				append("', '").
-				append(computerToAdd.getIntroduced()).
-				append("', '").
-				append(computerToAdd.getDiscontinued()).
-				append("', '").
-				append(computerToAdd.getCompany().getId()).
-				append("');").
-				toString();
+				append("', '").toString();
+		if (computerToAdd.getIntroduced() == null) {
+			sql += "0000-00-00 00:00:00', ";
+		} else {
+			sql += computerToAdd.getIntroduced() + "', '";
+		}
+		if (computerToAdd.getDiscontinued() == null) {
+			sql += "'0000-00-00 00:00:00', ";
+		} else {
+			sql += computerToAdd.getDiscontinued() + "', ";
+		}
+		if (computerToAdd.getCompany().getId() == 0) {
+			sql += "null);";
+		} else {
+			sql += "'" + computerToAdd.getCompany().getId() + "');";
+		}
 		System.out.println(sql);
 		this.executeSQLQuery(sql);
 	}
