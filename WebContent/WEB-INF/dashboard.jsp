@@ -26,6 +26,10 @@
 			</div>
 		</div>
 	</nav>
+	
+	<c:if test="${displayDivEdit}">
+		<div class="alert alert-success">Your computer have been successfully edited</div>
+	</c:if>
 
 	<table class="table table-striped table-hover">
 		<thead>
@@ -41,7 +45,7 @@
 				<tr>
 					<td>
 						
-						<a href="#" onclick="">
+						<a href="/computer_database/EditComputer?id=${computer.id }" onclick="">
 							<c:out value="${computer.name }"/>
 						</a>
 					</td>

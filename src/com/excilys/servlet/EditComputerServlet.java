@@ -1,9 +1,11 @@
 package com.excilys.servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Timestamp;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,18 +17,17 @@ import com.excilys.dao.ComputerDAO;
 import com.excilys.domainClass.Company;
 import com.excilys.domainClass.Computer;
 
-
 /**
- * Servlet implementation class AddComputerServlet
+ * Servlet implementation class EditComputerServlet
  */
-@WebServlet("/AddComputer")
-public class AddComputerServlet extends HttpServlet {
+@WebServlet("/EditComputer")
+public class EditComputerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddComputerServlet() {
+    public EditComputerServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,11 +38,21 @@ public class AddComputerServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		
-		CompanyDAO companyDao = new CompanyDAO();
-		request.setAttribute("companyList", companyDao.findAll());
-		request.setAttribute("displayDivAdd", false);
-				
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/addComputer.jsp");
+		request.setAttribute("displayDivEdit", false);
+		
+		ComputerDAO computerDAO = new ComputerDAO();
+		CompanyDAO companyDAO = new CompanyDAO();
+		
+		Computer finalComputer = computerDAO.findById(Integer.parseInt(request.getParameter("id")));
+		
+		request.setAttribute("computer", finalComputer);
+		request.setAttribute("companyList", companyDAO.findAll());
+		
+		
+//		PrintWriter out = response.getWriter();
+//		out.println(finalComputer);
+		
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/editComputer.jsp");
 		dispatcher.forward(request,response);
 	}
 
@@ -50,16 +61,16 @@ public class AddComputerServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
+		
 		ComputerDAO computerDAO = new ComputerDAO();
 		CompanyDAO companyDAO = new CompanyDAO();
-		String name = "";
-		Computer computerToAdd = null;
-		String discontinuedStr = "";
-		String introducedStr = "";
+		String name = request.getParameter("computerName");
+		Computer computerToModify = new Computer();
+		String discontinuedStr = request.getParameter("introducedDate");
+		String introducedStr = request.getParameter("discontinuedDate");
 		Timestamp introduced = null;
 		Timestamp discontinued = null;
-		
-		name = request.getParameter("computerName");
+		int id = Integer.parseInt(request.getParameter("computerId"));
 		
 		if (!request.getParameter("introducedDate").equals("")) {
 			introducedStr = request.getParameter("introducedDate") + " 00:00:00";
@@ -73,18 +84,37 @@ public class AddComputerServlet extends HttpServlet {
 		
 		if (Integer.parseInt(request.getParameter("company")) == 0) {
 			Company company = new Company(null);
-			computerToAdd = new Computer(company, name, introduced, discontinued);
+			computerToModify.setId(id);
+			computerToModify.setCompany(company);
+			computerToModify.setName(name);
+			computerToModify.setIntroduced(introduced);
+			computerToModify.setDiscontinued(discontinued);
 		} else {
 			Company company = new Company(Integer.parseInt(request.getParameter("company")));
 			Company company2 = companyDAO.find(company).get(0);
-			computerToAdd = new Computer(company2, name, introduced, discontinued);
+			computerToModify.setId(id);
+			computerToModify.setCompany(company2);
+			computerToModify.setName(name);
+			computerToModify.setIntroduced(introduced);
+			computerToModify.setDiscontinued(discontinued);
 		}
 		
-		computerDAO.create(computerToAdd);
+//		PrintWriter out = response.getWriter();
+//		out.println(computerToModify);
 		
-		request.setAttribute("displayDivAdd", true);
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/addComputer.jsp");
-		dispatcher.forward(request,response);
+		computerDAO.update(computerToModify);
+		
+		request.setAttribute("displayDivEdit", true);
+		
+		response.sendRedirect("/computer_database/Dashboard");
+		
+//		ServletContext context= getServletContext();
+//		RequestDispatcher dispatcher= context.getRequestDispatcher("/Dashboard");
+//		dispatcher.forward(request, response);
+		
+//		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/dashboard.jsp");
+//		dispatcher.forward(request,response);
 		
 	}
+
 }

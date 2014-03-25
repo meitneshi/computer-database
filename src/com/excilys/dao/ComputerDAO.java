@@ -59,7 +59,22 @@ public class ComputerDAO {
 	}
 	
 	public void update(Computer computerToUpdate) {
-		//TODO
+		//initailisation
+		StringBuffer buffer = new StringBuffer();
+		String sql = buffer.append("UPDATE computer SET name = '").
+				append(computerToUpdate.getName()).
+				append("', introduced = '").
+				append(computerToUpdate.getIntroduced()).
+				append("', discontinued = '").
+				append(computerToUpdate.getDiscontinued()).
+				append("', company_id = '").
+				append(computerToUpdate.getCompany().getId()).
+				append("' WHERE id= ").
+				append(computerToUpdate.getId()).
+				append(";").toString();
+		System.out.println(sql);		
+		//update the computer
+		this.executeSQLQuery(sql);
 	}
 	
 	public void delete(int computerIdToDelete) {
@@ -68,7 +83,7 @@ public class ComputerDAO {
 		this.executeSQLQuery(sql);
 	}
 	
-	public List<Computer> find (Computer computerTofind) throws SQLException {
+	public List<Computer> find (Computer computerTofind) {
 		Connection connection = null;
 		Statement statement = null;
 		List<Computer> computersResult = new ArrayList<Computer>();
@@ -102,6 +117,39 @@ public class ComputerDAO {
 			DAOFactory.safeClose(connection, statement, queryResult);
 		}
 		return computersResult;
+	}
+	
+	public Computer findById (int id) {
+		Connection connection = null;
+		Statement statement = null;
+		Computer computerResult = new Computer();
+		ResultSet queryResult = null;
+		StringBuffer buffer = new StringBuffer();
+		String sql = buffer.append("SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name ").
+				append("FROM computer ").
+				append("RIGHT JOIN company ON computer.company_id = company.id ").
+				append("WHERE computer.id = ").
+				append(id).
+				toString();
+		System.out.println(sql);
+		try {
+			connection = this.connectionManager.getConnection();
+			statement = (Statement) connection.createStatement();
+			queryResult = statement.executeQuery(sql);
+			while (queryResult.next()) {
+				Company company = new Company(queryResult.getString("company.name"), queryResult.getInt("company_id"));
+				computerResult.setId(id);
+				computerResult.setName(queryResult.getString("name"));
+				computerResult.setIntroduced(queryResult.getTimestamp("introduced"));
+				computerResult.setDiscontinued(queryResult.getTimestamp("discontinued"));
+				computerResult.setCompany(company);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DAOFactory.safeClose(connection, statement, queryResult);
+		}
+		return computerResult;
 	}
 	
 	public List<Computer> findAll() {
