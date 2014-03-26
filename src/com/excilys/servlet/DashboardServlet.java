@@ -1,6 +1,7 @@
 package com.excilys.servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.excilys.dao.ComputerDAO;
 import com.excilys.dao.ComputerPaginationDAO;
+import com.excilys.domainClass.Computer;
 
 /**
  * Servlet implementation class DashboardServlet
@@ -56,13 +58,23 @@ public class DashboardServlet extends HttpServlet {
 			offsetSQL = 0; //default
 		}
 		
+		if (request.getParameter("filter") != null) {
+			request.setAttribute("filter", request.getParameter("filter"));
+			Computer computer = new Computer(null, request.getParameter("filter"), null, null);
+			ComputerDAO cdao = new ComputerDAO();
+			List<Computer> result = cdao.find(computer);
+			request.setAttribute("computerPageList", result);
+		} else {
+			request.setAttribute("computerPageList", cppdao.findAllInPage(currentPageNumber, entitiesPerPage));
+		}
+		
 		double entitiesPerPageDouble = (double) entitiesPerPage;
 		double numberOfComputerDouble = (double) numberOfComputer;
 		
 		double pageMaxDouble = numberOfComputerDouble/entitiesPerPageDouble;
 		int pageMax = (int) Math.ceil(pageMaxDouble);
 				
-		request.setAttribute("computerPageList", cppdao.findAllInPage(currentPageNumber, entitiesPerPage));
+		
 		request.setAttribute("numberOfComputer", numberOfComputer);
 		request.setAttribute("pageMax", pageMax);
 		request.setAttribute("offsetSQL", offsetSQL);
@@ -87,12 +99,27 @@ public class DashboardServlet extends HttpServlet {
 		//if search
 		if (request.getParameter("filter") != null) {
 			epp = Integer.parseInt(request.getParameter("epp"));
+			request.setAttribute("epp", epp);
+			
 			String filter = request.getParameter("filter");
-			response.sendRedirect("/computer_database/Dashboard?epp="+request.getParameter("epp")+"&search="+filter);
+			request.setAttribute("filter", filter);
+			
+			this.doGet(request, response);
+			
+//			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/dashboard.jsp");
+//			dispatcher.forward(request,response);
+			//find computer where name like %filter%
+//			Computer computerToFind = new Computer(null, filter, null, null);
+//			ComputerDAO computerDAO = new ComputerDAO();
+//			List<Computer> result = computerDAO.find(computerToFind);
+			
+			
+//			response.sendRedirect("/computer_database/Dashboard?epp="+request.getParameter("epp")+"&search="+filter);
 		}else{//default Dashboard
 			epp = Integer.parseInt(request.getParameter("epp"));
 			request.setAttribute("epp", epp);
-			response.sendRedirect("/computer_database/Dashboard?epp="+request.getParameter("epp"));
+			this.doGet(request, response);
+//			response.sendRedirect("/computer_database/Dashboard?epp="+request.getParameter("epp"));
 		}
 		
 		

@@ -23,11 +23,10 @@
 				<button type="submit" class="btn btn-default">Filter by name</button>
 			</form>
 			
+			
 <!-- Dropdown select number of entites to show -->
-			<div>
-				Number of computer to show per page: 
-			</div>
-			<div>
+			<div class="navbar-left">
+				Number of computer to show per page:
 				<form method ="POST" action="/computer_database/Dashboard">
 					<select id="entitiesPerPage" name="epp" onChange="this.form.submit();">
 						<c:choose>
@@ -69,7 +68,12 @@
 						</c:choose>
 					</select>
 				</form>
-				Total number of page found : <c:out value="${pageMax }"></c:out>
+			</div>
+			<div class="navbar-left">
+				Total number of page found : <c:out value="${pageMax }"></c:out><br>
+				<c:if test="${filter != null}">
+					Search Criteria : "<c:out value="${filter }"></c:out>"
+				</c:if>
 			</div>
 			
 			
