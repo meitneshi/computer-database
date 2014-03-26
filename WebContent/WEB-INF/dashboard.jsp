@@ -12,14 +12,14 @@
 			<c:out value="${numberOfComputer}"/> Computer found (over <c:out value= "${nbTotal}"/> computers)
 		</c:if>
 		<c:out value= "${numberOfComputer}"/> Computers found (over <c:out value= "${nbTotal}"/> computers)
-		alo : <c:out value= "${order}"/>
-		ala : <c:out value= "${criteria}"/>
 	</h1>
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<form class="navbar-form navbar-left" method="POST" action="/computer_database/Dashboard">
 				<div class="form-group">
 					<input type="hidden" name="epp" value="${entitiesPerPage }">
+					<input type="hidden" name="on" value="asc">
+					<input type="hidden" name="c" value="name">
 					<input type="text" name="filter" class="form-control" placeholder="Search by name">
 				</div>
 				<button type="submit" class="btn btn-default">Filter by name</button>
@@ -107,32 +107,32 @@
 				
 				<th>
 					Introduced Date
-					<a type="button" href="" class="btn btn-mini">
-						<span class="glyphicon glyphicon-chevron-up" ></span>
-					</a>
-					<a type="button" href="" class="btn btn-mini">
-						<span class="glyphicon glyphicon-chevron-down" ></span>
-					</a>
+<!-- 					<a type="button" href="" class="btn btn-mini"> -->
+<!-- 						<span class="glyphicon glyphicon-chevron-up" ></span> -->
+<!-- 					</a> -->
+<!-- 					<a type="button" href="" class="btn btn-mini"> -->
+<!-- 						<span class="glyphicon glyphicon-chevron-down" ></span> -->
+<!-- 					</a> -->
 				</th>
 				
 				<th>
 					Discontinued Date
-					<a type="button" href="" class="btn btn-mini">
-						<span class="glyphicon glyphicon-chevron-up" ></span>
-					</a>
-					<a type="button" href="" class="btn btn-mini">
-						<span class="glyphicon glyphicon-chevron-down" ></span>
-					</a>
+<!-- 					<a type="button" href="" class="btn btn-mini"> -->
+<!-- 						<span class="glyphicon glyphicon-chevron-up" ></span> -->
+<!-- 					</a> -->
+<!-- 					<a type="button" href="" class="btn btn-mini"> -->
+<!-- 						<span class="glyphicon glyphicon-chevron-down" ></span> -->
+<!-- 					</a> -->
 				</th>
 				
 				<th>
 					Company
-					<a type="button" href="" class="btn btn-mini">
-						<span class="glyphicon glyphicon-chevron-up" ></span>
-					</a>
-					<a type="button" href="" class="btn btn-mini">
-						<span class="glyphicon glyphicon-chevron-down" ></span>
-					</a>
+<!-- 					<a type="button" href="" class="btn btn-mini"> -->
+<!-- 						<span class="glyphicon glyphicon-chevron-up" ></span> -->
+<!-- 					</a> -->
+<!-- 					<a type="button" href="" class="btn btn-mini"> -->
+<!-- 						<span class="glyphicon glyphicon-chevron-down" ></span> -->
+<!-- 					</a> -->
 				</th>
 				
 				<th>Actions</th>

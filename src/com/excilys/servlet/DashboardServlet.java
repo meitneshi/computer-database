@@ -44,7 +44,6 @@ public class DashboardServlet extends HttpServlet {
 		int offsetSQL = 0;
 		int numberOfComputer = 0;
 		int numberTotalOfComputer = 0;
-		String order = "";
 		
 		//traitement entitiesPerPage
 		if(request.getParameter("epp") != null) {
@@ -74,7 +73,6 @@ public class DashboardServlet extends HttpServlet {
 				if (request.getParameter("on").equals("asc")) {
 					result = cppdao.findSearchInPage(currentPageNumber, entitiesPerPage, request.getParameter("filter").toString(), "ASC", request.getParameter("c").toString());
 				}
-				
 			}else { //default order (name ASC)
 				result = cppdao.findSearchInPage(currentPageNumber, entitiesPerPage, request.getParameter("filter").toString(), "ASC", "name");
 			}
@@ -118,7 +116,6 @@ public class DashboardServlet extends HttpServlet {
 			request.setAttribute("entitiesPerPage", entitiesPerPage);
 		}
 		
-		
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/dashboard.jsp");
 		dispatcher.forward(request,response);
 	}
@@ -129,11 +126,18 @@ public class DashboardServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		int epp = 0;
+		//if order
 		//if search
 		if (request.getParameter("filter") != null) {
+			System.out.println(request.getParameter("filter"));
 			epp = Integer.parseInt(request.getParameter("epp"));
 			request.setAttribute("epp", epp);
-			
+//			if (request.getParameter("c") != null) {
+//				request.setAttribute("c", request.getParameter("c"));
+//			}
+//			if(request.getParameter("on") != null) {
+//				request.setAttribute("on", request.getParameter("on"));
+//			}
 			String filter = request.getParameter("filter");
 			request.setAttribute("filter", filter);
 			
@@ -141,6 +145,8 @@ public class DashboardServlet extends HttpServlet {
 		}else{//default Dashboard
 			epp = Integer.parseInt(request.getParameter("epp"));
 			request.setAttribute("epp", epp);
+			request.setAttribute("c", "name");
+			request.setAttribute("on", "asc");
 			this.doGet(request, response);
 		}
 		

@@ -40,7 +40,8 @@ public class ComputerPaginationDAO {
 				+ "LEFT JOIN company "
 				+ "ON computer.company_id = company.id ").
 				append("ORDER BY computer.").
-				append(criteria+" ").
+				append(criteria).
+				append(" ").
 				append(order).
 				append(" LIMIT ").
 				append(entitiesPerPage).
@@ -79,7 +80,8 @@ public class ComputerPaginationDAO {
 				append(filter).
 				append("%' ").
 				append("ORDER BY computer.").
-				append(criteria+" ").
+				append(criteria).
+				append(" ").
 				append(order).
 				append(" LIMIT ").
 				append(entitiesPerPage).
