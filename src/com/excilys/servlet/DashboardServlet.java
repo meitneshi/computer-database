@@ -107,21 +107,10 @@ public class DashboardServlet extends HttpServlet {
 			request.setAttribute("filter", filter);
 			
 			this.doGet(request, response);
-			
-//			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/dashboard.jsp");
-//			dispatcher.forward(request,response);
-			//find computer where name like %filter%
-//			Computer computerToFind = new Computer(null, filter, null, null);
-//			ComputerDAO computerDAO = new ComputerDAO();
-//			List<Computer> result = computerDAO.find(computerToFind);
-			
-			
-//			response.sendRedirect("/computer_database/Dashboard?epp="+request.getParameter("epp")+"&search="+filter);
 		}else{//default Dashboard
 			epp = Integer.parseInt(request.getParameter("epp"));
 			request.setAttribute("epp", epp);
 			this.doGet(request, response);
-//			response.sendRedirect("/computer_database/Dashboard?epp="+request.getParameter("epp"));
 		}
 		
 		

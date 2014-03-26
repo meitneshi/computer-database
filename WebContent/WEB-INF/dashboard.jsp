@@ -27,7 +27,8 @@
 <!-- Dropdown select number of entites to show -->
 			<div class="navbar-left">
 				Number of computer to show per page:
-				<form method ="POST" action="/computer_database/Dashboard">
+				<form name="selectNumberOfEntitiesPerPage" method ="POST" action="/computer_database/Dashboard">
+					<input type="hidden" name="filter" value="${filter }">
 					<select id="entitiesPerPage" name="epp" onChange="this.form.submit();">
 						<c:choose>
 							<c:when test="${entitiesPerPage == 10 }">
@@ -70,9 +71,9 @@
 				</form>
 			</div>
 			<div class="navbar-left">
-				Total number of page found : <c:out value="${pageMax }"></c:out><br>
+				Total number of page found : <c:out value="${pageMax }"/><br>
 				<c:if test="${filter != null}">
-					Search Criteria : "<c:out value="${filter }"></c:out>"
+					Search Criteria : "<c:out value="${filter }"/>"
 				</c:if>
 			</div>
 			
@@ -87,7 +88,7 @@
 		<div class="alert alert-success">Your computer have been successfully edited</div>
 	</c:if>
 	
-	<page:pagination pageMax="${pageMax }" currentPageNumber="${currentPageNumber }" offsetSQL="${offsetSQL }"></page:pagination>	
+	<page:pagination pageMax="${pageMax }" currentPageNumber="${currentPageNumber }" offsetSQL="${offsetSQL }" filter="${filter }"></page:pagination>	
 
 	<table class="table table-striped table-hover">
 		<thead>

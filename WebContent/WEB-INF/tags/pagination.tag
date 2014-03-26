@@ -13,10 +13,19 @@
 
 <ul class="pagination">
 <!-- button first page -->
-	<li>
-		<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=1">&laquo;</a>
-	</li>
-
+	<c:choose>
+		<c:when test="${filter != null }">
+			<li>
+				<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=1&filter=${filter}">&laquo;</a>
+			</li>
+		</c:when>
+		<c:otherwise>
+			<li>
+				<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=1">&laquo;</a>
+			</li>
+		</c:otherwise>
+	</c:choose>
+	
 <!-- 	disable previous button if page 1 -->
 	<c:choose>
 		<c:when test="${currentPageNumber == 1}">
@@ -25,54 +34,118 @@
 			</li>
 		</c:when>
 		<c:otherwise>
-			<li>
-				<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 1}">&lt;</a>
-			</li>
+			<c:choose>
+				<c:when test="${filter != null }">
+					<li>
+						<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 1}&filter=${filter}">&lt;</a>
+					</li>
+				</c:when>
+				<c:otherwise>
+					<li>
+						<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 1}">&lt;</a>
+					</li>
+				</c:otherwise>
+			</c:choose>
 		</c:otherwise>
 	</c:choose>
 	
 <!-- Display page Number and +2/-2 pages with activation-->
 <!-- Page -2 (if exist)  -->
 	<c:if test="${currentPageNumber-2 > 0 }">
-		<li>
-			<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 2}">
-				<c:out value="${currentPageNumber - 2 }"></c:out>
-			</a>
-		</li>
+		<c:choose>
+			<c:when test="${filter != null }">
+				<li>
+					<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 2}&filter=${filter}">
+						<c:out value="${currentPageNumber - 2 }"/>
+					</a>
+				</li>
+			</c:when>
+			<c:otherwise>
+				<li>
+					<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 2}">
+						<c:out value="${currentPageNumber - 2 }"/>
+					</a>
+				</li>
+			</c:otherwise>
+		</c:choose>
 	</c:if>
 	
 <!-- Page -1 (if exists) -->
 	<c:if test="${currentPageNumber-1 > 0 }">
-		<li>
-			<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 1}">
-				<c:out value="${currentPageNumber - 1 }"></c:out>
-			</a>
-		</li>
+		<c:choose>
+			<c:when test="${filter != null }">
+				<li>
+					<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 1}&filter=${filter}">
+						<c:out value="${currentPageNumber - 1 }"/>
+					</a>
+				</li>
+			</c:when>
+			<c:otherwise>
+				<li>
+					<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 1}">
+						<c:out value="${currentPageNumber - 1 }"/>
+					</a>
+				</li>
+			</c:otherwise>
+		</c:choose>
 	</c:if>
 	
 <!-- Current page -->
-	<li class="active">
-		<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber }">
-			<c:out value="${currentPageNumber }"></c:out>
-		</a>
-	</li>
+	<c:choose>
+		<c:when test="${filter != null }">
+			<li class="active">
+				<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber }&filter=${filter}">
+					<c:out value="${currentPageNumber }"/>
+				</a>
+			</li>
+		</c:when>
+		<c:otherwise>
+			<li class="active">
+				<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber }">
+					<c:out value="${currentPageNumber }"/>
+				</a>
+			</li>
+		</c:otherwise>
+	</c:choose>
 	
 <!-- Page +1 (if exists) -->
 	<c:if test="${currentPageNumber+1 <= pageMax }">
-		<li>
-			<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber + 1}">
-				<c:out value="${currentPageNumber + 1 }"></c:out>
-			</a>
-		</li>
+		<c:choose>
+			<c:when test="${filter != null }">
+				<li>
+					<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber + 1}&filter=${filter}">
+						<c:out value="${currentPageNumber + 1 }"/>
+					</a>
+				</li>
+			</c:when>
+			<c:otherwise>
+				<li>
+					<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber + 1}">
+						<c:out value="${currentPageNumber + 1 }"/>
+					</a>
+				</li>
+			</c:otherwise>
+		</c:choose>
 	</c:if>
 	
 <!-- Page +2 (if exists) -->
 	<c:if test="${currentPageNumber+2 <= pageMax }">
-		<li>
-			<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber + 2}">
-				<c:out value="${currentPageNumber + 2 }"></c:out>
-			</a>
-		</li>
+		<c:choose>
+			<c:when test="${filter != null }">
+				<li>
+					<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber + 2}&filter=${filter}">
+						<c:out value="${currentPageNumber + 2 }"/>
+					</a>
+				</li>
+			</c:when>
+			<c:otherwise>
+				<li>
+					<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber + 2}">
+						<c:out value="${currentPageNumber + 2 }"/>
+					</a>
+				</li>
+			</c:otherwise>
+		</c:choose>
 	</c:if>
 	
 <!-- disable next button if last page -->
@@ -83,15 +156,32 @@
 			</li>
 		</c:when>
 		<c:otherwise>
-			<li>
-				<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber + 1}">&gt;</a>
-			</li>
+			<c:choose>
+				<c:when test="${filter != null }">
+					<li>
+						<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber + 1}&filter=${filter}">&gt;</a>
+					</li>
+				</c:when>
+				<c:otherwise>
+					<li>
+						<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber + 1}">&gt;</a>
+					</li>
+				</c:otherwise>
+			</c:choose>
 		</c:otherwise>
 	</c:choose>
 
 <!-- button last page -->
-	<li>
-		<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${pageMax }">&raquo;</a>
-	</li>
+	<c:choose>
+		<c:when test="${filter != null }">
+			<li>
+				<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${pageMax }&filter=${filter}">&raquo;</a>
+			</li>
+		</c:when>
+		<c:otherwise>
+			<li>
+				<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${pageMax}">&raquo;</a>
+			</li>
+		</c:otherwise>
+	</c:choose>
 </ul>
-

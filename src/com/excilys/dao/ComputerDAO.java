@@ -203,8 +203,6 @@ public class ComputerDAO {
 					append(filter).
 					append("%';").toString();
 		}
-		
-		
 		try {
 			connection = this.connectionManager.getConnection();
 			statement = (Statement) connection.createStatement();
