@@ -62,16 +62,15 @@ public class DashboardServlet extends HttpServlet {
 		double pageMaxDouble = numberOfComputerDouble/entitiesPerPageDouble;
 		int pageMax = (int) Math.ceil(pageMaxDouble);
 				
+		request.setAttribute("computerPageList", cppdao.findAllInPage(currentPageNumber, entitiesPerPage));
 		request.setAttribute("numberOfComputer", numberOfComputer);
 		request.setAttribute("pageMax", pageMax);
 		request.setAttribute("offsetSQL", offsetSQL);
 		request.setAttribute("currentPageNumber", currentPageNumber);
 		if (entitiesPerPage == 0) {
 			request.setAttribute("entitiesPerPage", numberOfComputer);
-			request.setAttribute("computerPageList", cppdao.findAllInPage(1, numberOfComputer));
 		} else {
 			request.setAttribute("entitiesPerPage", entitiesPerPage);
-			request.setAttribute("computerPageList", cppdao.findAllInPage(currentPageNumber, entitiesPerPage));
 		}
 		
 		
