@@ -79,18 +79,19 @@
 				<th>Introduced Date</th>
 				<th>Discontinued Date</th>
 				<th>Company</th>
+				<th>Actions</th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:forEach items="${computerPageList}" var="computer">
 				<tr>
-					<td>
+					<td id="name">
 						
 						<a href="/computer_database/EditComputer?id=${computer.id }" onclick="">
 							<c:out value="${computer.name }"/>
 						</a>
 					</td>
-					<td>
+					<td id="introduced">
 						<c:choose>
 							<c:when test="${computer.introduced == null}">
 								<c:out value="N/A"/>
@@ -100,7 +101,7 @@
 							</c:otherwise>
 						</c:choose>
 					</td>
-					<td>
+					<td id="discontinued">
 						<c:choose>
 							<c:when test="${computer.discontinued == null}">
 								<c:out value="N/A"/>
@@ -110,7 +111,7 @@
 							</c:otherwise>
 						</c:choose>
 					</td>
-					<td>
+					<td id="company_name">
 						<c:choose>
 							<c:when test="${computer.company.name == null}">
 								<c:out value="N/A"/>
@@ -120,10 +121,18 @@
 							</c:otherwise>
 						</c:choose>
 					</td>
+					
+					<td id="actions">
+						<a type="button" href="/computer_database/EditComputer?id=${computer.id }" class="btn btn-info">
+							<span class="glyphicon glyphicon-pencil" ></span>
+						</a>
+						<a type="button" href="/computer_database/DeleteComputer?id=${computer.id }" class="btn btn-danger"onclick="return confirm('Are you sure you want to delete this computer ?')">
+							<span class="glyphicon glyphicon-trash" ></span>
+						</a>
+					</td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
 </section>
-
 <jsp:include page="include/footer.jsp" />
