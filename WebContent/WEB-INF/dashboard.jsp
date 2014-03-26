@@ -72,7 +72,7 @@
 			</div>
 			<div class="navbar-left">
 				Total number of page found : <c:out value="${pageMax }"/><br>
-				<c:if test="${filter != null}">
+				<c:if test="${!empty filter}">
 					Search Criteria : "<c:out value="${filter }"/>"
 				</c:if>
 			</div>

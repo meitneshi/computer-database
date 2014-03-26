@@ -64,7 +64,7 @@ public class ComputerPaginationDAO {
 		return computers;
 	}
 	
-	public List<Computer> findSearchInPage (int numPage, int entitiesPerPage, String filter, String order) {
+	public List<Computer> findSearchInPage (int numPage, int entitiesPerPage, String filter, String order, String criteria) {
 		Connection connection = null;
 		Statement statement = null;
 		List<Computer> computers = new ArrayList<Computer>();
@@ -78,7 +78,8 @@ public class ComputerPaginationDAO {
 				append("WHERE computer.name LIKE '%").
 				append(filter).
 				append("%' ").
-				append("ORDER BY computer.id ").
+				append("ORDER BY computer.").
+				append(criteria+" ").
 				append(order).
 				append(" LIMIT ").
 				append(entitiesPerPage).

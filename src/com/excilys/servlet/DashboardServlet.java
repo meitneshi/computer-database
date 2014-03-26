@@ -67,10 +67,16 @@ public class DashboardServlet extends HttpServlet {
 		if (request.getParameter("filter") != null) {
 			request.setAttribute("filter", request.getParameter("filter"));
 			numberOfComputer = compuDAO.count(request.getParameter("filter"));
-			if(request.getParameter("on") != null) {//order name DESC
-				result = cppdao.findSearchInPage(currentPageNumber, entitiesPerPage, request.getAttribute("filter").toString(), "DESC");
+			if(request.getParameter("on") != null && request.getParameter("c") != null) {//order specified
+				if (request.getParameter("on").equals("des")){
+					result = cppdao.findSearchInPage(currentPageNumber, entitiesPerPage, request.getParameter("filter").toString(), "DESC", request.getParameter("c").toString());
+				}
+				if (request.getParameter("on").equals("asc")) {
+					result = cppdao.findSearchInPage(currentPageNumber, entitiesPerPage, request.getParameter("filter").toString(), "ASC", request.getParameter("c").toString());
+				}
+				
 			}else { //default order (name ASC)
-				result = cppdao.findSearchInPage(currentPageNumber, entitiesPerPage, request.getAttribute("filter").toString(), "ASC");
+				result = cppdao.findSearchInPage(currentPageNumber, entitiesPerPage, request.getParameter("filter").toString(), "ASC", "name");
 			}
 			request.setAttribute("computerPageList", result);
 			

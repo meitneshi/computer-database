@@ -14,7 +14,7 @@
 <ul class="pagination">
 <!-- button first page -->
 	<c:choose>
-		<c:when test="${filter != null }">
+		<c:when test="${!empty filter }">
 			<li>
 				<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=1&filter=${filter}">&laquo;</a>
 			</li>
@@ -35,7 +35,7 @@
 		</c:when>
 		<c:otherwise>
 			<c:choose>
-				<c:when test="${filter != null }">
+				<c:when test="${!empty filter }">
 					<li>
 						<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 1}&filter=${filter}">&lt;</a>
 					</li>
@@ -53,7 +53,10 @@
 <!-- Page -2 (if exist)  -->
 	<c:if test="${currentPageNumber-2 > 0 }">
 		<c:choose>
-			<c:when test="${filter != null }">
+			<c:when test="${!empty filter }">
+				<c:choose>
+				<c:when test="${!empty on && !empty c }"></c:when>
+				</c:choose>
 				<li>
 					<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 2}&filter=${filter}">
 						<c:out value="${currentPageNumber - 2 }"/>
@@ -73,7 +76,7 @@
 <!-- Page -1 (if exists) -->
 	<c:if test="${currentPageNumber-1 > 0 }">
 		<c:choose>
-			<c:when test="${filter != null }">
+			<c:when test="${!empty filter }">
 				<li>
 					<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 1}&filter=${filter}">
 						<c:out value="${currentPageNumber - 1 }"/>
@@ -92,7 +95,7 @@
 	
 <!-- Current page -->
 	<c:choose>
-		<c:when test="${filter != null }">
+		<c:when test="${!empty filter }">
 			<li class="active">
 				<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber }&filter=${filter}">
 					<c:out value="${currentPageNumber }"/>
@@ -111,7 +114,7 @@
 <!-- Page +1 (if exists) -->
 	<c:if test="${currentPageNumber+1 <= pageMax }">
 		<c:choose>
-			<c:when test="${filter != null }">
+			<c:when test="${!empty filter }">
 				<li>
 					<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber + 1}&filter=${filter}">
 						<c:out value="${currentPageNumber + 1 }"/>
@@ -131,7 +134,7 @@
 <!-- Page +2 (if exists) -->
 	<c:if test="${currentPageNumber+2 <= pageMax }">
 		<c:choose>
-			<c:when test="${filter != null }">
+			<c:when test="${!empty filter }">
 				<li>
 					<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber + 2}&filter=${filter}">
 						<c:out value="${currentPageNumber + 2 }"/>
@@ -157,7 +160,7 @@
 		</c:when>
 		<c:otherwise>
 			<c:choose>
-				<c:when test="${filter != null }">
+				<c:when test="${!empty filter }">
 					<li>
 						<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber + 1}&filter=${filter}">&gt;</a>
 					</li>
@@ -173,7 +176,7 @@
 
 <!-- button last page -->
 	<c:choose>
-		<c:when test="${filter != null }">
+		<c:when test="${!empty filter }">
 			<li>
 				<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${pageMax }&filter=${filter}">&raquo;</a>
 			</li>
