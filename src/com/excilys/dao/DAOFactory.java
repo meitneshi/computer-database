@@ -3,12 +3,12 @@
  */
 package com.excilys.dao;
 
-import java.io.FileInputStream;
+//import java.io.FileInputStream;		//uncomment when using config file
 import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Properties;
+//import java.util.Properties;			//uncomment when using config file
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;

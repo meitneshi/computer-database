@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.excilys.dao.ComputerDAO;
 
-import sun.text.CompactByteArray;
 
 /**
  * Servlet implementation class DeleteComputerServlet

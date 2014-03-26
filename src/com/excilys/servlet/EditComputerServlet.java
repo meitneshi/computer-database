@@ -1,11 +1,9 @@
 package com.excilys.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Timestamp;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
