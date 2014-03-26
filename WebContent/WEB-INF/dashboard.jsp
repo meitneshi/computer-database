@@ -9,9 +9,9 @@
 <section id="main">
 	<h1 id="homeTitle">
 		<c:if test="${numberOfComputer == 1}">
-			<c:out value="${numberOfComputer}"/> Computer found
+			<c:out value="${numberOfComputer}"/> Computer found (over <c:out value= "${nbTotal}"/> computers)
 		</c:if>
-		<c:out value= "${numberOfComputer}"/> Computers found
+		<c:out value= "${numberOfComputer}"/> Computers found (over <c:out value= "${nbTotal}"/> computers)
 	</h1>
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">

@@ -189,14 +189,22 @@ public class ComputerDAO {
 		return result;
 	}
 
-	public int count() {
-		//Calcul du nombre de computer
+	public int count(String filter) {
 		int numberFinal = 0;
 		ResultSet number = null;
 		Connection connection = null;
 		Statement statement = null;
 		StringBuilder builder = new StringBuilder();
-		String sql = builder.append("SELECT COUNT(id) FROM computer;").toString();
+		String sql = "";
+		if (filter.equals("")){ //count all computer
+			sql = builder.append("SELECT COUNT(id) FROM computer;").toString();
+		} else { //count searching computer
+			sql = builder.append("SELECT COUNT(id) FROM computer WHERE name LIKE '%").
+					append(filter).
+					append("%';").toString();
+		}
+		
+		
 		try {
 			connection = this.connectionManager.getConnection();
 			statement = (Statement) connection.createStatement();

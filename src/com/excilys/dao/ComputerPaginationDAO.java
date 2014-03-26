@@ -58,5 +58,41 @@ public class ComputerPaginationDAO {
 		}
 		return computers;
 	}
+	
+	public List<Computer> findSearchInPage (int numPage, int entitiesPerPage, String filter) {
+		Connection connection = null;
+		Statement statement = null;
+		List<Computer> computers = new ArrayList<Computer>();
+		ResultSet queryResult = null;
+		int offsetSQL = ((numPage-1)*entitiesPerPage);
+		StringBuilder builder = new StringBuilder();
+		String sql = builder.append("SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name "
+				+ "FROM computer "
+				+ "LEFT JOIN company "
+				+ "ON computer.company_id = company.id ").
+				append("WHERE computer.name LIKE '%").
+				append(filter).
+				append("%' ").
+				append("ORDER BY computer.id LIMIT ").
+				append(entitiesPerPage).
+				append(" OFFSET ").
+				append(offsetSQL).toString();
+		System.out.println(sql);
+		try {
+			connection = this.connectionManager.getConnection();
+			statement = (Statement) connection.createStatement();
+			queryResult = statement.executeQuery(sql);
+			while (queryResult.next()) {
+				Company company = new Company(queryResult.getString("company.name"), queryResult.getInt("company_id"));
+				Computer computer = new Computer(queryResult.getInt("id"), company, queryResult.getString("name"), queryResult.getTimestamp("introduced"), queryResult.getTimestamp("discontinued"));
+				computers.add(computer);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DAOFactory.safeClose(connection, statement, queryResult);
+		}
+		return computers;
+	}
 
 }

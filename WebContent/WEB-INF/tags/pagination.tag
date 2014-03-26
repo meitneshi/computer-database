@@ -9,6 +9,7 @@
 <%@ attribute name="currentPageNumber" %>
 <%@ attribute name="offsetSQL" %>
 <%@ attribute name="pageMax" %>
+<%@ attribute name="filter" %>
 
 <ul class="pagination">
 <!-- button first page -->

@@ -41,7 +41,8 @@ public class DashboardServlet extends HttpServlet {
 		int entitiesPerPage = 0;
 		int currentPageNumber = 0;
 		int offsetSQL = 0;
-		int numberOfComputer = compuDAO.count();
+		int numberOfComputer = 0;
+		int numberTotalOfComputer = 0;
 		
 		//traitement entitiesPerPage
 		if(request.getParameter("epp") != null) {
@@ -60,11 +61,11 @@ public class DashboardServlet extends HttpServlet {
 		
 		if (request.getParameter("filter") != null) {
 			request.setAttribute("filter", request.getParameter("filter"));
-			Computer computer = new Computer(null, request.getParameter("filter"), null, null);
-			ComputerDAO cdao = new ComputerDAO();
-			List<Computer> result = cdao.find(computer);
+			numberOfComputer = compuDAO.count(request.getParameter("filter"));
+			List<Computer> result = cppdao.findSearchInPage(currentPageNumber, entitiesPerPage, request.getAttribute("filter").toString());
 			request.setAttribute("computerPageList", result);
 		} else {
+			numberOfComputer = compuDAO.count("");
 			request.setAttribute("computerPageList", cppdao.findAllInPage(currentPageNumber, entitiesPerPage));
 		}
 		
@@ -74,7 +75,8 @@ public class DashboardServlet extends HttpServlet {
 		double pageMaxDouble = numberOfComputerDouble/entitiesPerPageDouble;
 		int pageMax = (int) Math.ceil(pageMaxDouble);
 				
-		
+		numberTotalOfComputer = compuDAO.count("");
+		request.setAttribute("nbTotal", numberTotalOfComputer);
 		request.setAttribute("numberOfComputer", numberOfComputer);
 		request.setAttribute("pageMax", pageMax);
 		request.setAttribute("offsetSQL", offsetSQL);
