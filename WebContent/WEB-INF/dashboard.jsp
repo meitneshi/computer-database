@@ -93,10 +93,46 @@
 	<table class="table table-striped table-hover">
 		<thead>
 			<tr>
-				<th>Computer Name</th>
-				<th>Introduced Date</th>
-				<th>Discontinued Date</th>
-				<th>Company</th>
+				<th>
+					Computer Name
+					<a type="button" href="/computer_database/Dashboard?on=asc&c=name" class="btn btn-mini">
+						<span class="glyphicon glyphicon-chevron-up" ></span>
+					</a>
+					<a type="button" href="/computer_database/Dashboard?on=des&c=name" class="btn btn-mini">
+						<span class="glyphicon glyphicon-chevron-down" ></span>
+					</a>
+				</th>
+				
+				<th>
+					Introduced Date
+					<a type="button" href="" class="btn btn-mini">
+						<span class="glyphicon glyphicon-chevron-up" ></span>
+					</a>
+					<a type="button" href="" class="btn btn-mini">
+						<span class="glyphicon glyphicon-chevron-down" ></span>
+					</a>
+				</th>
+				
+				<th>
+					Discontinued Date
+					<a type="button" href="" class="btn btn-mini">
+						<span class="glyphicon glyphicon-chevron-up" ></span>
+					</a>
+					<a type="button" href="" class="btn btn-mini">
+						<span class="glyphicon glyphicon-chevron-down" ></span>
+					</a>
+				</th>
+				
+				<th>
+					Company
+					<a type="button" href="" class="btn btn-mini">
+						<span class="glyphicon glyphicon-chevron-up" ></span>
+					</a>
+					<a type="button" href="" class="btn btn-mini">
+						<span class="glyphicon glyphicon-chevron-down" ></span>
+					</a>
+				</th>
+				
 				<th>Actions</th>
 			</tr>
 		</thead>

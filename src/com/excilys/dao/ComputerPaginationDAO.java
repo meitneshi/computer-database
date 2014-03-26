@@ -26,7 +26,9 @@ public class ComputerPaginationDAO {
 	}
 	
 	//select X entities according to page number
-	public List<Computer> findAllInPage (int numPage, int entitiesPerPage) {
+	//order = ASC ou DESC
+	//criteria = field to order by
+	public List<Computer> findAllInPage (int numPage, int entitiesPerPage, String order, String criteria) {
 		Connection connection = null;
 		Statement statement = null;
 		List<Computer> computers = new ArrayList<Computer>();
@@ -37,7 +39,10 @@ public class ComputerPaginationDAO {
 				+ "FROM computer "
 				+ "LEFT JOIN company "
 				+ "ON computer.company_id = company.id ").
-				append("ORDER BY computer.id LIMIT ").
+				append("ORDER BY computer.").
+				append(criteria+" ").
+				append(order).
+				append(" LIMIT ").
 				append(entitiesPerPage).
 				append(" OFFSET ").
 				append(offsetSQL).toString();
@@ -59,7 +64,7 @@ public class ComputerPaginationDAO {
 		return computers;
 	}
 	
-	public List<Computer> findSearchInPage (int numPage, int entitiesPerPage, String filter) {
+	public List<Computer> findSearchInPage (int numPage, int entitiesPerPage, String filter, String order) {
 		Connection connection = null;
 		Statement statement = null;
 		List<Computer> computers = new ArrayList<Computer>();
@@ -73,7 +78,9 @@ public class ComputerPaginationDAO {
 				append("WHERE computer.name LIKE '%").
 				append(filter).
 				append("%' ").
-				append("ORDER BY computer.id LIMIT ").
+				append("ORDER BY computer.id ").
+				append(order).
+				append(" LIMIT ").
 				append(entitiesPerPage).
 				append(" OFFSET ").
 				append(offsetSQL).toString();
