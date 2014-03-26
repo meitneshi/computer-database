@@ -89,9 +89,13 @@ public class DashboardServlet extends HttpServlet {
 				if (request.getParameter("on").equals("asc")) {
 					result = cppdao.findAllInPage(currentPageNumber, entitiesPerPage, "ASC", request.getParameter("c").toString());
 				}
+				request.setAttribute("order", request.getParameter("on"));
+				request.setAttribute("criteria", request.getParameter("c"));
 				
 			}else { //default order (name ASC)
 				result = cppdao.findAllInPage(currentPageNumber, entitiesPerPage, "ASC", "name");
+				request.setAttribute("order", "asc");
+				request.setAttribute("criteria", "name");
 			}
 			request.setAttribute("computerPageList", result);
 		}

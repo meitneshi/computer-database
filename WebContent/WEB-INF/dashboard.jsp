@@ -12,6 +12,8 @@
 			<c:out value="${numberOfComputer}"/> Computer found (over <c:out value= "${nbTotal}"/> computers)
 		</c:if>
 		<c:out value= "${numberOfComputer}"/> Computers found (over <c:out value= "${nbTotal}"/> computers)
+		alo : <c:out value= "${order}"/>
+		ala : <c:out value= "${criteria}"/>
 	</h1>
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
@@ -88,7 +90,7 @@
 		<div class="alert alert-success">Your computer have been successfully edited</div>
 	</c:if>
 	
-	<page:pagination pageMax="${pageMax }" currentPageNumber="${currentPageNumber }" offsetSQL="${offsetSQL }" filter="${filter }"></page:pagination>	
+	<page:pagination pageMax="${pageMax }" currentPageNumber="${currentPageNumber }" offsetSQL="${offsetSQL }" filter="${filter }" order="${order }" criteria="${criteria }"></page:pagination>	
 
 	<table class="table table-striped table-hover">
 		<thead>

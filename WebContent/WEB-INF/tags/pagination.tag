@@ -10,19 +10,39 @@
 <%@ attribute name="offsetSQL" %>
 <%@ attribute name="pageMax" %>
 <%@ attribute name="filter" %>
+<%@ attribute name="order" %>
+<%@ attribute name="criteria" %>
 
 <ul class="pagination">
 <!-- button first page -->
 	<c:choose>
 		<c:when test="${!empty filter }">
-			<li>
-				<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=1&filter=${filter}">&laquo;</a>
-			</li>
+			<c:choose>
+				<c:when test="${!empty order && !empty criteria }">
+					<li>
+						<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=1&filter=${filter}&on=${order}&c=${criteria}">&laquo;</a>
+					</li>
+				</c:when>
+				<c:otherwise>
+					<li>
+						<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=1&filter=${filter}">&laquo;</a>
+					</li>
+				</c:otherwise>
+			</c:choose>
 		</c:when>
 		<c:otherwise>
-			<li>
-				<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=1">&laquo;</a>
-			</li>
+			<c:choose>
+				<c:when test="${!empty order && !empty criteria }">
+					<li>
+						<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=1&on=${order}&c=${criteria}">&laquo;</a>
+					</li>
+				</c:when>
+				<c:otherwise>
+					<li>
+						<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=1">&laquo;</a>
+					</li>
+				</c:otherwise>
+			</c:choose>
 		</c:otherwise>
 	</c:choose>
 	
@@ -36,14 +56,32 @@
 		<c:otherwise>
 			<c:choose>
 				<c:when test="${!empty filter }">
-					<li>
-						<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 1}&filter=${filter}">&lt;</a>
-					</li>
+					<c:choose>
+						<c:when test="${!empty order && !empty criteria }">
+							<li>
+								<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 1}&filter=${filter}&on=${order}&c=${criteria}">&lt;</a>
+							</li>
+						</c:when>
+						<c:otherwise>
+							<li>
+								<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 1}&filter=${filter}">&lt;</a>
+							</li>
+						</c:otherwise>
+					</c:choose>
 				</c:when>
 				<c:otherwise>
-					<li>
-						<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 1}">&lt;</a>
-					</li>
+					<c:choose>
+						<c:when test="${!empty order && !empty criteria }">
+							<li>
+								<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 1}&on=${order}&c=${criteria}">&lt;</a>
+							</li>
+						</c:when>
+						<c:otherwise>
+							<li>
+								<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 1}">&lt;</a>
+							</li>
+						</c:otherwise>
+					</c:choose>
 				</c:otherwise>
 			</c:choose>
 		</c:otherwise>
@@ -55,20 +93,39 @@
 		<c:choose>
 			<c:when test="${!empty filter }">
 				<c:choose>
-				<c:when test="${!empty on && !empty c }"></c:when>
+					<c:when test="${!empty order && !empty criteria }">
+						<li>
+							<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 2}&filter=${filter}&on=${order}&c=${criteria}">
+								<c:out value="${currentPageNumber - 2 }"/>
+							</a>
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li>
+							<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 2}&filter=${filter}">
+								<c:out value="${currentPageNumber - 2 }"/>
+							</a>
+						</li>
+					</c:otherwise>
 				</c:choose>
-				<li>
-					<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 2}&filter=${filter}">
-						<c:out value="${currentPageNumber - 2 }"/>
-					</a>
-				</li>
 			</c:when>
 			<c:otherwise>
-				<li>
-					<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 2}">
-						<c:out value="${currentPageNumber - 2 }"/>
-					</a>
-				</li>
+				<c:choose>
+					<c:when test="${!empty order && !empty criteria }">
+						<li>
+							<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 2}&on=${order}&c=${criteria}">
+								<c:out value="${currentPageNumber - 2 }"/>
+							</a>
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li>
+							<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 2}">
+								<c:out value="${currentPageNumber - 2 }"/>
+							</a>
+						</li>
+					</c:otherwise>
+				</c:choose>
 			</c:otherwise>
 		</c:choose>
 	</c:if>
@@ -77,18 +134,40 @@
 	<c:if test="${currentPageNumber-1 > 0 }">
 		<c:choose>
 			<c:when test="${!empty filter }">
-				<li>
-					<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 1}&filter=${filter}">
-						<c:out value="${currentPageNumber - 1 }"/>
-					</a>
-				</li>
+				<c:choose>
+					<c:when test="${!empty order && !empty criteria }">
+						<li>
+							<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 1}&filter=${filter}&on=${order}&c=${criteria}">
+								<c:out value="${currentPageNumber - 1 }"/>
+							</a>
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li>
+							<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 1}&filter=${filter}">
+								<c:out value="${currentPageNumber - 1 }"/>
+							</a>
+						</li>
+					</c:otherwise>
+				</c:choose>
 			</c:when>
 			<c:otherwise>
-				<li>
-					<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 1}">
-						<c:out value="${currentPageNumber - 1 }"/>
-					</a>
-				</li>
+				<c:choose>
+					<c:when test="${!empty order && !empty criteria }">
+						<li>
+							<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 1}&on=${order}&c=${criteria}">
+								<c:out value="${currentPageNumber - 1 }"/>
+							</a>
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li>
+							<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 1}">
+								<c:out value="${currentPageNumber - 1 }"/>
+							</a>
+						</li>
+					</c:otherwise>
+				</c:choose>
 			</c:otherwise>
 		</c:choose>
 	</c:if>
@@ -111,22 +190,44 @@
 		</c:otherwise>
 	</c:choose>
 	
-<!-- Page +1 (if exists) -->
+<!-- Page +1 (if exist)  -->
 	<c:if test="${currentPageNumber+1 <= pageMax }">
 		<c:choose>
 			<c:when test="${!empty filter }">
-				<li>
-					<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber + 1}&filter=${filter}">
-						<c:out value="${currentPageNumber + 1 }"/>
-					</a>
-				</li>
+				<c:choose>
+					<c:when test="${!empty order && !empty criteria }">
+						<li>
+							<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber +1}&filter=${filter}&on=${order}&c=${criteria}">
+								<c:out value="${currentPageNumber +1 }"/>
+							</a>
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li>
+							<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber +1}&filter=${filter}">
+								<c:out value="${currentPageNumber +1 }"/>
+							</a>
+						</li>
+					</c:otherwise>
+				</c:choose>
 			</c:when>
 			<c:otherwise>
-				<li>
-					<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber + 1}">
-						<c:out value="${currentPageNumber + 1 }"/>
-					</a>
-				</li>
+				<c:choose>
+					<c:when test="${!empty order && !empty criteria }">
+						<li>
+							<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber +1}&on=${order}&c=${criteria}">
+								<c:out value="${currentPageNumber +1 }"/>
+							</a>
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li>
+							<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber +1}">
+								<c:out value="${currentPageNumber +1 }"/>
+							</a>
+						</li>
+					</c:otherwise>
+				</c:choose>
 			</c:otherwise>
 		</c:choose>
 	</c:if>
@@ -135,18 +236,40 @@
 	<c:if test="${currentPageNumber+2 <= pageMax }">
 		<c:choose>
 			<c:when test="${!empty filter }">
-				<li>
-					<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber + 2}&filter=${filter}">
-						<c:out value="${currentPageNumber + 2 }"/>
-					</a>
-				</li>
+				<c:choose>
+					<c:when test="${!empty order && !empty criteria }">
+						<li>
+							<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber +2}&filter=${filter}&on=${order}&c=${criteria}">
+								<c:out value="${currentPageNumber +2 }"/>
+							</a>
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li>
+							<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber +2}&filter=${filter}">
+								<c:out value="${currentPageNumber +2 }"/>
+							</a>
+						</li>
+					</c:otherwise>
+				</c:choose>
 			</c:when>
 			<c:otherwise>
-				<li>
-					<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber + 2}">
-						<c:out value="${currentPageNumber + 2 }"/>
-					</a>
-				</li>
+				<c:choose>
+					<c:when test="${!empty order && !empty criteria }">
+						<li>
+							<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber +2}&on=${order}&c=${criteria}">
+								<c:out value="${currentPageNumber +2 }"/>
+							</a>
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li>
+							<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber +2}">
+								<c:out value="${currentPageNumber +2 }"/>
+							</a>
+						</li>
+					</c:otherwise>
+				</c:choose>
 			</c:otherwise>
 		</c:choose>
 	</c:if>
@@ -161,14 +284,32 @@
 		<c:otherwise>
 			<c:choose>
 				<c:when test="${!empty filter }">
-					<li>
-						<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber + 1}&filter=${filter}">&gt;</a>
-					</li>
+					<c:choose>
+						<c:when test="${!empty order && !empty criteria }">
+							<li>
+								<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber + 1}&filter=${filter}&on=${order}&c=${criteria}">&gt;</a>
+							</li>
+						</c:when>
+						<c:otherwise>
+							<li>
+								<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber + 1}&filter=${filter}">&gt;</a>
+							</li>
+						</c:otherwise>
+					</c:choose>
 				</c:when>
 				<c:otherwise>
-					<li>
-						<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber + 1}">&gt;</a>
-					</li>
+					<c:choose>
+						<c:when test="${!empty order && !empty criteria }">
+							<li>
+								<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber + 1}&on=${order}&c=${criteria}">&gt;</a>
+							</li>
+						</c:when>
+						<c:otherwise>
+							<li>
+								<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber + 1}">&gt;</a>
+							</li>
+						</c:otherwise>
+					</c:choose>
 				</c:otherwise>
 			</c:choose>
 		</c:otherwise>
@@ -177,14 +318,32 @@
 <!-- button last page -->
 	<c:choose>
 		<c:when test="${!empty filter }">
-			<li>
-				<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${pageMax }&filter=${filter}">&raquo;</a>
-			</li>
+			<c:choose>
+				<c:when test="${!empty order && !empty criteria }">
+					<li>
+						<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${pageMax}&filter=${filter}&on=${order}&c=${criteria}">&raquo;</a>
+					</li>
+				</c:when>
+				<c:otherwise>
+					<li>
+						<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${pageMax}&filter=${filter}">&raquo;</a>
+					</li>
+				</c:otherwise>
+			</c:choose>
 		</c:when>
 		<c:otherwise>
-			<li>
-				<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${pageMax}">&raquo;</a>
-			</li>
+			<c:choose>
+				<c:when test="${!empty order && !empty criteria }">
+					<li>
+						<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${pageMax}&on=${order}&c=${criteria}">&raquo;</a>
+					</li>
+				</c:when>
+				<c:otherwise>
+					<li>
+						<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${pageMax}">&raquo;</a>
+					</li>
+				</c:otherwise>
+			</c:choose>
 		</c:otherwise>
 	</c:choose>
 </ul>
