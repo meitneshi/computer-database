@@ -13,7 +13,6 @@
 		</c:if>
 		<c:out value= "${numberOfComputer}"/> Computers found
 	</h1>
-	
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<form class="navbar-form navbar-left" method="POST">
@@ -32,8 +31,7 @@
 		<div class="alert alert-success">Your computer have been successfully edited</div>
 	</c:if>
 	
-	<page:pagination></page:pagination>
-	
+	<page:pagination pageMax="${pageMax }" currentPageNumber="${currentPageNumber }" offsetSQL="${offsetSQL }"></page:pagination>	
 
 	<table class="table table-striped table-hover">
 		<thead>

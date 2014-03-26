@@ -31,7 +31,7 @@ public class ComputerPaginationDAO {
 		Statement statement = null;
 		List<Computer> computers = new ArrayList<Computer>();
 		ResultSet queryResult = null;
-		int idMin = ((numPage-1)*entitiesPerPage);
+		int offsetSQL = ((numPage-1)*entitiesPerPage);
 		StringBuilder builder = new StringBuilder();
 		String sql = builder.append("SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name "
 				+ "FROM computer "
@@ -40,7 +40,7 @@ public class ComputerPaginationDAO {
 				append("ORDER BY computer.id LIMIT ").
 				append(entitiesPerPage).
 				append(" OFFSET ").
-				append(idMin).toString();
+				append(offsetSQL).toString();
 		System.out.println(sql);
 		try {
 			connection = this.connectionManager.getConnection();

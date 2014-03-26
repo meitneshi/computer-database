@@ -35,9 +35,37 @@ public class DashboardServlet extends HttpServlet {
 		
 		ComputerDAO compuDAO = new ComputerDAO();
 		ComputerPaginationDAO cppdao = new ComputerPaginationDAO();
-		request.setAttribute("computerPageList", cppdao.findAllInPage(1, 30));
+		
+		int entitiesPerPage = 0;
+		int currentPageNumber = 0;
+		int offsetSQL = 0;
+		
+		//traitement entitiesPerPage
+		if(request.getParameter("epp") != null) {
+			entitiesPerPage = Integer.parseInt(request.getParameter("epp"));
+		} else {
+			entitiesPerPage = 30; //default
+		}
+		
+		if(request.getParameter("p") != null) {
+			currentPageNumber = Integer.parseInt(request.getParameter("p"));
+			offsetSQL = (currentPageNumber-1)*entitiesPerPage;
+		} else {
+			currentPageNumber = 1; //default
+			offsetSQL = 0; //default
+		}
+		
+		double entitiesPerPageDouble = (double) entitiesPerPage;
+		double numberOfComputerDouble = (double) compuDAO.count();
+		
+		double pageMaxDouble = numberOfComputerDouble/entitiesPerPageDouble;
+		int pageMax = (int) Math.ceil(pageMaxDouble);
+				
+		request.setAttribute("computerPageList", cppdao.findAllInPage(currentPageNumber, entitiesPerPage));
 		request.setAttribute("numberOfComputer", compuDAO.count());
-		request.setAttribute("PageMax", compuDAO.findAll().size());
+		request.setAttribute("pageMax", pageMax);
+		request.setAttribute("offsetSQL", offsetSQL);
+		request.setAttribute("currentPageNumber", currentPageNumber);
 		
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/dashboard.jsp");
 		dispatcher.forward(request,response);
