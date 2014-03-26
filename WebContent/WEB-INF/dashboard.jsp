@@ -15,9 +15,10 @@
 	</h1>
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
-			<form class="navbar-form navbar-left" method="POST">
+			<form class="navbar-form navbar-left" method="POST" action="/computer_database/Dashboard">
 				<div class="form-group">
-					<input type="text" class="form-control" placeholder="Search by name">
+					<input type="hidden" name="epp" value="${entitiesPerPage }">
+					<input type="text" name="filter" class="form-control" placeholder="Search by name">
 				</div>
 				<button type="submit" class="btn btn-default">Filter by name</button>
 			</form>
@@ -30,33 +31,45 @@
 				<form method ="POST" action="/computer_database/Dashboard">
 					<select id="entitiesPerPage" name="epp" onChange="this.form.submit();">
 						<c:choose>
+							<c:when test="${entitiesPerPage == 10 }">
+								<option value="10" selected >10</option>
+								<option value="30">30</option>
+								<option value="50">50</option>
+								<option value="100">100</option>
+								<option value="${numberOfComputer}">Show all computers</option>
+							</c:when>
 							<c:when test="${entitiesPerPage == 30 }">
+								<option value="10">10</option>
 								<option value="30" selected >30</option>
 								<option value="50">50</option>
 								<option value="100">100</option>
-								<option value="0">Show all computers</option>
+								<option value="${numberOfComputer}">Show all computers</option>
 							</c:when>
 							<c:when test="${entitiesPerPage == 50 }">
+								<option value="10">10</option>
 								<option value="30">30</option>
 								<option value="50" selected >50</option>
 								<option value="100">100</option>
-								<option value="0">Show all computers</option>
+								<option value="${numberOfComputer}">Show all computers</option>
 							</c:when>
 							<c:when test="${entitiesPerPage == 100 }">
+								<option value="10">10</option>
 								<option value="30">30</option>
 								<option value="50">50</option>
 								<option value="100" selected >100</option>
-								<option value="0">Show all computers</option>
+								<option value="${numberOfComputer}">Show all computers</option>
 							</c:when>
-							<c:when test="${entitiesPerPage == 0 }">
+							<c:when test="${entitiesPerPage == numberOfComputer }">
+								<option value="10">10</option>
 								<option value="30">30</option>
 								<option value="50">50</option>
 								<option value="100">100</option>
-								<option value="0" selected >Show all computers</option>
+								<option value="${numberOfComputer}" selected >Show all computers</option>
 							</c:when>
 						</c:choose>
 					</select>
 				</form>
+				Total number of page found : <c:out value="${pageMax }"></c:out>
 			</div>
 			
 			

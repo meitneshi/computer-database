@@ -39,6 +39,7 @@ public class DashboardServlet extends HttpServlet {
 		int entitiesPerPage = 0;
 		int currentPageNumber = 0;
 		int offsetSQL = 0;
+		int numberOfComputer = compuDAO.count();
 		
 		//traitement entitiesPerPage
 		if(request.getParameter("epp") != null) {
@@ -56,17 +57,23 @@ public class DashboardServlet extends HttpServlet {
 		}
 		
 		double entitiesPerPageDouble = (double) entitiesPerPage;
-		double numberOfComputerDouble = (double) compuDAO.count();
+		double numberOfComputerDouble = (double) numberOfComputer;
 		
 		double pageMaxDouble = numberOfComputerDouble/entitiesPerPageDouble;
 		int pageMax = (int) Math.ceil(pageMaxDouble);
 				
-		request.setAttribute("computerPageList", cppdao.findAllInPage(currentPageNumber, entitiesPerPage));
-		request.setAttribute("numberOfComputer", compuDAO.count());
+		request.setAttribute("numberOfComputer", numberOfComputer);
 		request.setAttribute("pageMax", pageMax);
 		request.setAttribute("offsetSQL", offsetSQL);
 		request.setAttribute("currentPageNumber", currentPageNumber);
-		request.setAttribute("entitiesPerPage", entitiesPerPage);
+		if (entitiesPerPage == 0) {
+			request.setAttribute("entitiesPerPage", numberOfComputer);
+			request.setAttribute("computerPageList", cppdao.findAllInPage(1, numberOfComputer));
+		} else {
+			request.setAttribute("entitiesPerPage", entitiesPerPage);
+			request.setAttribute("computerPageList", cppdao.findAllInPage(currentPageNumber, entitiesPerPage));
+		}
+		
 		
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/dashboard.jsp");
 		dispatcher.forward(request,response);
@@ -77,8 +84,19 @@ public class DashboardServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
+		int epp = 0;
+		//if search
+		if (request.getParameter("filter") != null) {
+			epp = Integer.parseInt(request.getParameter("epp"));
+			String filter = request.getParameter("filter");
+			response.sendRedirect("/computer_database/Dashboard?epp="+request.getParameter("epp")+"&search="+filter);
+		}else{//default Dashboard
+			epp = Integer.parseInt(request.getParameter("epp"));
+			request.setAttribute("epp", epp);
+			response.sendRedirect("/computer_database/Dashboard?epp="+request.getParameter("epp"));
+		}
 		
-		response.sendRedirect("/computer_database/Dashboard?epp="+request.getParameter("epp"));
+		
 	}
 
 }
