@@ -21,6 +21,45 @@
 				</div>
 				<button type="submit" class="btn btn-default">Filter by name</button>
 			</form>
+			
+<!-- Dropdown select number of entites to show -->
+			<div>
+				Number of computer to show per page: 
+			</div>
+			<div>
+				<form method ="POST" action="/computer_database/Dashboard">
+					<select id="entitiesPerPage" name="epp" onChange="this.form.submit();">
+						<c:choose>
+							<c:when test="${entitiesPerPage == 30 }">
+								<option value="30" selected >30</option>
+								<option value="50">50</option>
+								<option value="100">100</option>
+								<option value="0">Show all computers</option>
+							</c:when>
+							<c:when test="${entitiesPerPage == 50 }">
+								<option value="30">30</option>
+								<option value="50" selected >50</option>
+								<option value="100">100</option>
+								<option value="0">Show all computers</option>
+							</c:when>
+							<c:when test="${entitiesPerPage == 100 }">
+								<option value="30">30</option>
+								<option value="50">50</option>
+								<option value="100" selected >100</option>
+								<option value="0">Show all computers</option>
+							</c:when>
+							<c:when test="${entitiesPerPage == 0 }">
+								<option value="30">30</option>
+								<option value="50">50</option>
+								<option value="100">100</option>
+								<option value="0" selected >Show all computers</option>
+							</c:when>
+						</c:choose>
+					</select>
+				</form>
+			</div>
+			
+			
 			<div class="navbar-right">
 				<a href="/computer_database/AddComputer" class="btn btn-success btn-lg active">Add Computer</a>
 			</div>

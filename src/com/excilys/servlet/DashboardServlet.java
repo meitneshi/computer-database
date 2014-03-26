@@ -66,6 +66,7 @@ public class DashboardServlet extends HttpServlet {
 		request.setAttribute("pageMax", pageMax);
 		request.setAttribute("offsetSQL", offsetSQL);
 		request.setAttribute("currentPageNumber", currentPageNumber);
+		request.setAttribute("entitiesPerPage", entitiesPerPage);
 		
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/dashboard.jsp");
 		dispatcher.forward(request,response);
@@ -75,7 +76,9 @@ public class DashboardServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		response.setContentType("text/html");
+		
+		response.sendRedirect("/computer_database/Dashboard?epp="+request.getParameter("epp"));
 	}
 
 }

@@ -56,8 +56,6 @@ public class ComputerPaginationDAO {
 		} finally {
 			DAOFactory.safeClose(connection, statement, queryResult);
 		}
-		
-		
 		return computers;
 	}
 
