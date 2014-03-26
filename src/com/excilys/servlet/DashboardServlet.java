@@ -61,6 +61,17 @@ public class DashboardServlet extends HttpServlet {
 			offsetSQL = 0; //default
 		}
 		
+		if (request.getParameter("c") != "") {
+			request.setAttribute("c", request.getParameter("c"));
+		} else {
+			request.setAttribute("c", "name");
+		}
+		if(request.getParameter("on") != "") {
+			request.setAttribute("on", "asc");
+		} else {
+			
+		}
+		
 		//traitement filtre et order
 		List<Computer> result = new ArrayList<Computer>();
 		if (request.getParameter("filter") != null) {
@@ -129,15 +140,16 @@ public class DashboardServlet extends HttpServlet {
 		//if order
 		//if search
 		if (request.getParameter("filter") != null) {
-			System.out.println(request.getParameter("filter"));
 			epp = Integer.parseInt(request.getParameter("epp"));
 			request.setAttribute("epp", epp);
-//			if (request.getParameter("c") != null) {
-//				request.setAttribute("c", request.getParameter("c"));
-//			}
-//			if(request.getParameter("on") != null) {
-//				request.setAttribute("on", request.getParameter("on"));
-//			}
+			System.out.println("c="+request.getParameter("c"));
+			System.out.println("on="+request.getParameter("on"));
+			if (request.getParameter("c") != null) {
+				request.setAttribute("c", request.getParameter("c"));
+			}
+			if(request.getParameter("on") != null) {
+				request.setAttribute("on", request.getParameter("on"));
+			}
 			String filter = request.getParameter("filter");
 			request.setAttribute("filter", filter);
 			

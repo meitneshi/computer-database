@@ -31,6 +31,8 @@
 				Number of computer to show per page:
 				<form name="selectNumberOfEntitiesPerPage" method ="POST" action="/computer_database/Dashboard">
 					<input type="hidden" name="filter" value="${filter }">
+					<input type="hidden" name="on" value="${on }">
+					<input type="hidden" name="c" value="${c }">
 					<select id="entitiesPerPage" name="epp" onChange="this.form.submit();">
 						<c:choose>
 							<c:when test="${entitiesPerPage == 10 }">
