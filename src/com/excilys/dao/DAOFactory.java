@@ -86,17 +86,4 @@ public class DAOFactory {
 			e.printStackTrace();
 		}
 	}
-	
-	//---test main----//
-//	public static void main(String args[]) {
-//		ConnectionManager connMan = new ConnectionManager();
-//		try {
-//			ResultSet res = connMan.connection.createStatement().executeQuery("SELECT * FROM company");
-//			while (res.next()){
-//				System.out.println(res.getString(2));
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//	}
 }
