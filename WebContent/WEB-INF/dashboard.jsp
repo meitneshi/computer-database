@@ -4,15 +4,20 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="page" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="link" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="option" %>
 
 <jsp:include page="include/header.jsp" />
 
 <section id="main">
 	<h1 id="homeTitle">
-		<c:if test="${numberOfComputer == 1}">
-			<c:out value="${numberOfComputer}"/> Computer found (over <c:out value= "${nbTotal}"/> computers)
-		</c:if>
-		<c:out value= "${numberOfComputer}"/> Computers found (over <c:out value= "${nbTotal}"/> computers)
+		<c:choose>
+			<c:when test="${numberOfComputer == 1}">
+				<c:out value="${numberOfComputer}"/> Computer found (over <c:out value= "${nbTotal}"/> computers)
+			</c:when>
+			<c:otherwise>
+				<c:out value= "${numberOfComputer}"/> Computers found (over <c:out value= "${nbTotal}"/> computers)
+			</c:otherwise>
+		</c:choose>
 	</h1>
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
@@ -36,44 +41,12 @@
 					<input type="hidden" name="page" value="1">
 					<input type="hidden" name="order" value="${order }">
 					<input type="hidden" name="criteria" value="${criteria }">
-					<select id="entitiesPerPage" name="entitiesperpage" onChange="this.form.submit();">
-						<c:choose>
-							<c:when test="${entitiesPerPage == 10 }">
-								<option value="10" selected >10</option>
-								<option value="30">30</option>
-								<option value="50">50</option>
-								<option value="100">100</option>
-								<option value="${numberOfComputer}">Show all computers</option>
-							</c:when>
-							<c:when test="${entitiesPerPage == 30 }">
-								<option value="10">10</option>
-								<option value="30" selected >30</option>
-								<option value="50">50</option>
-								<option value="100">100</option>
-								<option value="${numberOfComputer}">Show all computers</option>
-							</c:when>
-							<c:when test="${entitiesPerPage == 50 }">
-								<option value="10">10</option>
-								<option value="30">30</option>
-								<option value="50" selected >50</option>
-								<option value="100">100</option>
-								<option value="${numberOfComputer}">Show all computers</option>
-							</c:when>
-							<c:when test="${entitiesPerPage == 100 }">
-								<option value="10">10</option>
-								<option value="30">30</option>
-								<option value="50">50</option>
-								<option value="100" selected >100</option>
-								<option value="${numberOfComputer}">Show all computers</option>
-							</c:when>
-							<c:when test="${entitiesPerPage == numberOfComputer }">
-								<option value="10">10</option>
-								<option value="30">30</option>
-								<option value="50">50</option>
-								<option value="100">100</option>
-								<option value="${numberOfComputer}" selected >Show all computers</option>
-							</c:when>
-						</c:choose>
+					<select id="entitiesPerPage" name="entitiesperpage" onChange="this.form.submit();">	
+						<option:optionGen value="10" label="10" max="${numberOfComputer}"/>
+						<option:optionGen value="30" label="30" max="${numberOfComputer}"/>
+						<option:optionGen value="50" label="50" max="${numberOfComputer}"/>
+						<option:optionGen value="100" label="100" max="${numberOfComputer}"/>
+						<option:optionGen value="${numberOfComputer}" label="Show All Computers" max="${numberOfComputer}" entities="${entitiesPerPage }"/>
 					</select>
 				</form>
 			</div>
@@ -108,12 +81,10 @@
 				
 				<th>
 					Introduced Date
- 					
 				</th>
 				
 				<th>
 					Discontinued Date
-					
 				</th>
 				
 				<th>

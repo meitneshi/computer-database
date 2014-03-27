@@ -3,7 +3,9 @@ package com.excilys.servlet;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -55,40 +57,19 @@ public class AddComputerServlet extends HttpServlet {
 		ComputerService computerService = new ComputerService();
 		CompanyService companyService = new CompanyService();
 		String name = "";
-		Computer computerToAdd = null;
 		String discontinuedStr = request.getParameter("discontinuedDate");
 		String introducedStr = request.getParameter("introducedDate");
-		Date introduced = null;
-		Date discontinued = null;
 		
 		name = request.getParameter("computerName");
+		List<Date> dates = this.initDate(introducedStr, discontinuedStr);
 		
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		
-		if("".equals(introducedStr)) {
-			System.out.println("intro=chainevide");
-			try {
-				discontinued = formatter.parse(discontinuedStr);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
-		if("".equals(discontinuedStr)) {
-			System.out.println("disco=chainevide");
-			try {
-				introduced = formatter.parse(introducedStr);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
-		
+		Company company;
 		if (Integer.parseInt(request.getParameter("company")) == 0) {
-			Company company = new Company(null);
-			computerToAdd = new Computer(company, name, introduced, discontinued);
+			company = new Company(null);
 		} else {
-			Company company = companyService.findById(Integer.parseInt(request.getParameter("company")));
-			computerToAdd = new Computer(company, name, introduced, discontinued);
+			company = companyService.findById(Integer.parseInt(request.getParameter("company")));
 		}
+		Computer computerToAdd = new Computer(company, name, dates.get(0), dates.get(1));
 		
 		computerService.create(computerToAdd);
 		
@@ -96,5 +77,30 @@ public class AddComputerServlet extends HttpServlet {
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/addComputer.jsp");
 		dispatcher.forward(request,response);
 		
+	}
+
+	private List<Date> initDate(String introducedStr, String discontinuedStr) {
+		List<Date> dates = new ArrayList<Date>();
+		dates.add(0, null);//introduced
+		dates.add(1, null);//discontinued
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		if("".equals(introducedStr)) {
+			try {
+				Date discontinued = formatter.parse(discontinuedStr);
+				dates.set(1, discontinued);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		if("".equals(discontinuedStr)) {
+			try {
+				Date introduced = formatter.parse(introducedStr);
+				dates.set(0, introduced);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		return dates;
 	}
 }
