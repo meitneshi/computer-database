@@ -33,7 +33,7 @@
 				Number of computer to show per page:
 				<form name="selectNumberOfEntitiesPerPage" method ="POST" action="/computer_database/Dashboard">
 					<input type="hidden" name="filter" value="${filter }">
-					<input type="hidden" name="p" value="${currentPageNumber }">
+					<input type="hidden" name="p" value="1">
 					<input type="hidden" name="on" value="${on }">
 					<input type="hidden" name="c" value="${c }">
 					<select id="entitiesPerPage" name="epp" onChange="this.form.submit();">
@@ -118,7 +118,8 @@
 				
 				<th>
 					Company
-					
+					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-up' ></span>" servlet="Dashboard" epp="${entitiesPerPage }" p="${currentPageNumber }" filter="${filter }" on="asc" c="company"/>
+					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-down' ></span>" servlet="Dashboard" epp="${entitiesPerPage }" p="${currentPageNumber }" filter="${filter }" on="des" c="company"/>
 				</th>
 				
 				<th>Actions</th>

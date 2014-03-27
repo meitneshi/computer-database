@@ -35,18 +35,25 @@ public class ComputerPaginationDAO {
 		ResultSet queryResult = null;
 		int offsetSQL = ((numPage-1)*entitiesPerPage);
 		StringBuilder builder = new StringBuilder();
-		String sql = builder.append("SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name "
+		builder.append("SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name "
 				+ "FROM computer "
 				+ "LEFT JOIN company "
-				+ "ON computer.company_id = company.id ").
-				append("ORDER BY computer.").
-				append(criteria).
-				append(" ").
+				+ "ON computer.company_id = company.id "
+				+ "ORDER BY ");
+		if (criteria.equals("company")) { //field = company.name
+			builder.append("company.name");
+		} else { // field like computer.field
+			builder.append("computer.").
+			append(criteria);
+		}
+		builder.append(" ").
 				append(order).
 				append(" LIMIT ").
 				append(entitiesPerPage).
 				append(" OFFSET ").
-				append(offsetSQL).toString();
+				append(offsetSQL);
+		String sql = builder.toString();
+		
 		System.out.println(sql);
 		try {
 			connection = this.connectionManager.getConnection();
@@ -72,21 +79,27 @@ public class ComputerPaginationDAO {
 		ResultSet queryResult = null;
 		int offsetSQL = ((numPage-1)*entitiesPerPage);
 		StringBuilder builder = new StringBuilder();
-		String sql = builder.append("SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name "
+		builder.append("SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name "
 				+ "FROM computer "
 				+ "LEFT JOIN company "
 				+ "ON computer.company_id = company.id ").
 				append("WHERE computer.name LIKE '%").
 				append(filter).
 				append("%' ").
-				append("ORDER BY computer.").
-				append(criteria).
-				append(" ").
+				append("ORDER BY ");
+		if (criteria.equals("company")) { //field = company.name
+			builder.append("company.name");
+		} else { // field like computer.field
+			builder.append("computer.").
+			append(criteria);
+		}
+		builder.append(" ").
 				append(order).
 				append(" LIMIT ").
 				append(entitiesPerPage).
 				append(" OFFSET ").
-				append(offsetSQL).toString();
+				append(offsetSQL);
+		String sql = builder.toString();
 		System.out.println(sql);
 		try {
 			connection = this.connectionManager.getConnection();
