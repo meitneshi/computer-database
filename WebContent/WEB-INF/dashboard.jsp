@@ -19,6 +19,7 @@
 			<form class="navbar-form navbar-left" method="POST" action="/computer_database/Dashboard">
 				<div class="form-group">
 					<input type="hidden" name="epp" value="${entitiesPerPage }">
+					<input type="hidden" name="p" value="${currentPageNumber }">
 					<input type="hidden" name="on" value="asc">
 					<input type="hidden" name="c" value="name">
 					<input type="text" name="filter" class="form-control" placeholder="Search by name">
