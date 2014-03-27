@@ -81,42 +81,6 @@ public class ComputerDAO {
 		this.executeSQLQuery(sql);
 	}
 	
-	public List<Computer> find (Computer computerTofind) {
-		Connection connection = null;
-		Statement statement = null;
-		List<Computer> computersResult = new ArrayList<Computer>();
-		ResultSet queryResult = null;
-		StringBuilder builder = new StringBuilder();
-		String sql = builder.append("SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name ").
-				append("FROM computer ").
-				append("LEFT JOIN company ON computer.company_id = company.id ").
-				append("WHERE computer.name LIKE '%").
-				append(computerTofind.getName()).
-				append("%';").
-				toString();
-		System.out.println(sql);
-		try {
-			connection = this.connectionManager.getConnection();
-			statement = (Statement) connection.createStatement();
-			queryResult = statement.executeQuery(sql);
-			while (queryResult.next()) {
-				Company company = new Company(queryResult.getString("company.name"), queryResult.getInt("company_id"));
-				Computer computer = new Computer(
-						queryResult.getInt("id"), 
-						company, 
-						queryResult.getString("name"), 
-						queryResult.getTimestamp("introduced"), 
-						queryResult.getTimestamp("discontinued"));
-				computersResult.add(computer);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DAOFactory.safeClose(connection, statement, queryResult);
-		}
-		return computersResult;
-	}
-	
 	public Computer findById (int id) {
 		Connection connection = null;
 		Statement statement = null;
@@ -150,28 +114,98 @@ public class ComputerDAO {
 		return computerResult;
 	}
 	
-	public List<Computer> findAll() {
-		Connection connection = null;
-		Statement statement = null;
-		List<Computer> computers = new ArrayList<Computer>();
-		ResultSet queryResult = null;
-		String sql = "SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name FROM computer LEFT JOIN company ON computer.company_id = company.id;";
-		try {
-			connection = this.connectionManager.getConnection();
-			statement = (Statement) connection.createStatement();
-			queryResult = statement.executeQuery(sql);
-			while (queryResult.next()) {
-				Company company = new Company(queryResult.getString("company.name"), queryResult.getInt("company_id"));
-				Computer computer = new Computer(queryResult.getInt("id"), company, queryResult.getString("name"), queryResult.getTimestamp("introduced"), queryResult.getTimestamp("discontinued"));
-				computers.add(computer);
+	//select X entities according to page number
+		//order = ASC ou DESC
+		//criteria = field to order by
+		public List<Computer> findAllInPage (int numPage, int entitiesPerPage, String order, String criteria) {
+			Connection connection = null;
+			Statement statement = null;
+			List<Computer> computers = new ArrayList<Computer>();
+			ResultSet queryResult = null;
+			int offsetSQL = ((numPage-1)*entitiesPerPage);
+			StringBuilder builder = new StringBuilder();
+			builder.append("SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name "
+					+ "FROM computer "
+					+ "LEFT JOIN company "
+					+ "ON computer.company_id = company.id "
+					+ "ORDER BY ");
+			if (criteria.equals("company")) { //field = company.name
+				builder.append("company.name");
+			} else { // field like computer.field
+				builder.append("computer.").
+				append(criteria);
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DAOFactory.safeClose(connection, statement, queryResult);
+			builder.append(" ").
+					append(order).
+					append(" LIMIT ").
+					append(entitiesPerPage).
+					append(" OFFSET ").
+					append(offsetSQL);
+			String sql = builder.toString();
+			
+			System.out.println(sql);
+			try {
+				connection = this.connectionManager.getConnection();
+				statement = (Statement) connection.createStatement();
+				queryResult = statement.executeQuery(sql);
+				while (queryResult.next()) {
+					Company company = new Company(queryResult.getString("company.name"), queryResult.getInt("company_id"));
+					Computer computer = new Computer(queryResult.getInt("id"), company, queryResult.getString("name"), queryResult.getTimestamp("introduced"), queryResult.getTimestamp("discontinued"));
+					computers.add(computer);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				DAOFactory.safeClose(connection, statement, queryResult);
+			}
+			return computers;
 		}
-		return computers;
-	}
+		
+		public List<Computer> findSearchInPage (int numPage, int entitiesPerPage, String filter, String order, String criteria) {
+			Connection connection = null;
+			Statement statement = null;
+			List<Computer> computers = new ArrayList<Computer>();
+			ResultSet queryResult = null;
+			int offsetSQL = ((numPage-1)*entitiesPerPage);
+			StringBuilder builder = new StringBuilder();
+			builder.append("SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name "
+					+ "FROM computer "
+					+ "LEFT JOIN company "
+					+ "ON computer.company_id = company.id ").
+					append("WHERE computer.name LIKE '%").
+					append(filter).
+					append("%' ").
+					append("ORDER BY ");
+			if (criteria.equals("company")) { //field = company.name
+				builder.append("company.name");
+			} else { // field like computer.field
+				builder.append("computer.").
+				append(criteria);
+			}
+			builder.append(" ").
+					append(order).
+					append(" LIMIT ").
+					append(entitiesPerPage).
+					append(" OFFSET ").
+					append(offsetSQL);
+			String sql = builder.toString();
+			System.out.println(sql);
+			try {
+				connection = this.connectionManager.getConnection();
+				statement = (Statement) connection.createStatement();
+				queryResult = statement.executeQuery(sql);
+				while (queryResult.next()) {
+					Company company = new Company(queryResult.getString("company.name"), queryResult.getInt("company_id"));
+					Computer computer = new Computer(queryResult.getInt("id"), company, queryResult.getString("name"), queryResult.getTimestamp("introduced"), queryResult.getTimestamp("discontinued"));
+					computers.add(computer);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				DAOFactory.safeClose(connection, statement, queryResult);
+			}
+			return computers;
+		}
 	
 	public int executeSQLQuery(String sqlToExecute) {
 		Connection connection = null;
