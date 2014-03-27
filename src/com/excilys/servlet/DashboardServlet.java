@@ -44,30 +44,30 @@ public class DashboardServlet extends HttpServlet {
 		int numberTotalOfComputer = 0;
 		
 		//traitement entitiesPerPage
-		if(request.getParameter("epp") != null) {
-			entitiesPerPage = Integer.parseInt(request.getParameter("epp"));
+		if(request.getParameter("entitiesperpage") != null) {
+			entitiesPerPage = Integer.parseInt(request.getParameter("entitiesperpage"));
 		} else {
 			entitiesPerPage = 30; //default
 		}
 		
 		//traitement page
-		if(request.getParameter("p") != null) {
-			currentPageNumber = Integer.parseInt(request.getParameter("p"));
+		if(request.getParameter("page") != null) {
+			currentPageNumber = Integer.parseInt(request.getParameter("page"));
 			offsetSQL = (currentPageNumber-1)*entitiesPerPage;
 		} else {
 			currentPageNumber = 1; //default
 			offsetSQL = 0; //default
 		}
 		
-		if (request.getParameter("c") != null) {
-			request.setAttribute("c", request.getParameter("c"));
+		if (request.getParameter("criteria") != null) {
+			request.setAttribute("criteria", request.getParameter("criteria"));
 		} else {
-			request.setAttribute("c", "name");
+			request.setAttribute("criteria", "name");
 		}
-		if(request.getParameter("on") != null) {
-			request.setAttribute("on", request.getParameter("on"));
+		if(request.getParameter("order") != null) {
+			request.setAttribute("order", request.getParameter("order"));
 		} else {
-			request.setAttribute("c", "name");
+			request.setAttribute("order", "asc");
 		}
 		
 		//traitement filtre et order
@@ -75,13 +75,13 @@ public class DashboardServlet extends HttpServlet {
 		if (request.getParameter("filter") != null) {
 			request.setAttribute("filter", request.getParameter("filter"));
 			numberOfComputer = compuDAO.count(request.getParameter("filter"));
-			if(request.getParameter("on") != null && request.getParameter("c") != null) {//order specified
+			if(request.getParameter("order") != null && request.getParameter("criteria") != null) {//order specified
 				
-				if (request.getParameter("on").equals("des")){
-					result = compuDAO.findInPage(currentPageNumber, entitiesPerPage, request.getParameter("filter").toString(), "DESC", request.getParameter("c").toString());
+				if (request.getParameter("order").equals("des")){
+					result = compuDAO.findInPage(currentPageNumber, entitiesPerPage, request.getParameter("filter").toString(), "DESC", request.getParameter("criteria").toString());
 				}
-				if (request.getParameter("on").equals("asc")) {
-					result = compuDAO.findInPage(currentPageNumber, entitiesPerPage, request.getParameter("filter").toString(), "ASC", request.getParameter("c").toString());
+				if (request.getParameter("order").equals("asc")) {
+					result = compuDAO.findInPage(currentPageNumber, entitiesPerPage, request.getParameter("filter").toString(), "ASC", request.getParameter("criteria").toString());
 				}
 			}else { //default order (name ASC)
 				result = compuDAO.findInPage(currentPageNumber, entitiesPerPage, request.getParameter("filter").toString(), "ASC", "name");
@@ -90,15 +90,15 @@ public class DashboardServlet extends HttpServlet {
 			
 		} else {
 			numberOfComputer = compuDAO.count("");
-			if(request.getParameter("on") != null && request.getParameter("c") != null) {//order specified
-				if (request.getParameter("on").equals("des")){
-					result = compuDAO.findInPage(currentPageNumber, entitiesPerPage, "", "DESC", request.getParameter("c").toString());
+			if(request.getParameter("order") != null && request.getParameter("criteria") != null) {//order specified
+				if (request.getParameter("order").equals("des")){
+					result = compuDAO.findInPage(currentPageNumber, entitiesPerPage, "", "DESC", request.getParameter("criteria").toString());
 				}
-				if (request.getParameter("on").equals("asc")) {
-					result = compuDAO.findInPage(currentPageNumber, entitiesPerPage, "", "ASC", request.getParameter("c").toString());
+				if (request.getParameter("order").equals("asc")) {
+					result = compuDAO.findInPage(currentPageNumber, entitiesPerPage, "", "ASC", request.getParameter("criteria").toString());
 				}
-				request.setAttribute("order", request.getParameter("on"));
-				request.setAttribute("criteria", request.getParameter("c"));
+				request.setAttribute("order", request.getParameter("order"));
+				request.setAttribute("criteria", request.getParameter("criteria"));
 				
 			}else { //default order (name ASC)
 				result = compuDAO.findInPage(currentPageNumber, entitiesPerPage, "", "ASC", "name");
@@ -135,21 +135,21 @@ public class DashboardServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
-		int epp = 0;
-		int p = 0;
+		int entitiesperpage = 0;
+		int page = 0;
 		StringBuilder urlB = new StringBuilder();
 		urlB.append("/computer_database/Dashboard");
 		//if order
 		//if search
 		if (request.getParameter("filter") != null) {
-			epp = Integer.parseInt(request.getParameter("epp"));
-			p = Integer.parseInt(request.getParameter("p"));
-			urlB.append("?epp=").append(epp).append("&p=").append(p);
-			if (request.getParameter("c") != null) {
-				urlB.append("&c=").append(request.getParameter("c"));
+			entitiesperpage = Integer.parseInt(request.getParameter("entitiesperpage"));
+			page = Integer.parseInt(request.getParameter("page"));
+			urlB.append("?entitiesperpage=").append(entitiesperpage).append("&page=").append(page);
+			if (request.getParameter("criteria") != null) {
+				urlB.append("&criteria=").append(request.getParameter("criteria"));
 			}
-			if(request.getParameter("on") != null) {
-				urlB.append("&on=").append(request.getParameter("on"));
+			if(request.getParameter("order") != null) {
+				urlB.append("&order=").append(request.getParameter("order"));
 			}
 			String filter = request.getParameter("filter");
 			urlB.append("&filter=").append(filter);
@@ -157,14 +157,14 @@ public class DashboardServlet extends HttpServlet {
 			String url = urlB.toString();
 			response.sendRedirect(url);
 		}else{//default Dashboard
-			epp = Integer.parseInt(request.getParameter("epp"));
-			p = Integer.parseInt(request.getParameter("p"));
-			urlB.append("?epp=").append(epp).append("&p=").append(p);
-			if (request.getParameter("c") != null) {
-				urlB.append("&c=").append(request.getParameter("c"));
+			entitiesperpage = Integer.parseInt(request.getParameter("entitiesperpage"));
+			page = Integer.parseInt(request.getParameter("page"));
+			urlB.append("?entitiesperpage=").append(entitiesperpage).append("&page=").append(page);
+			if (request.getParameter("criteria") != null) {
+				urlB.append("&criteria=").append(request.getParameter("criteria"));
 			}
-			if(request.getParameter("on") != null) {
-				urlB.append("&on=").append(request.getParameter("on"));
+			if(request.getParameter("order") != null) {
+				urlB.append("&order=").append(request.getParameter("order"));
 			}
 			String filter = request.getParameter("filter");
 			urlB.append("&filter=").append(filter);

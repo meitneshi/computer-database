@@ -18,10 +18,10 @@
 		<div class="container-fluid">
 			<form class="navbar-form navbar-left" method="POST" action="/computer_database/Dashboard">
 				<div class="form-group">
-					<input type="hidden" name="epp" value="${entitiesPerPage }">
-					<input type="hidden" name="p" value="${currentPageNumber }">
-					<input type="hidden" name="on" value="asc">
-					<input type="hidden" name="c" value="name">
+					<input type="hidden" name="entitiesperpage" value="${entitiesPerPage }">
+					<input type="hidden" name="page" value="${currentPageNumber }">
+					<input type="hidden" name="order" value="asc">
+					<input type="hidden" name="criteria" value="name">
 					<input type="text" name="filter" class="form-control" placeholder="Search by name">
 				</div>
 				<button type="submit" class="btn btn-default">Filter by name</button>
@@ -33,10 +33,10 @@
 				Number of computer to show per page:
 				<form name="selectNumberOfEntitiesPerPage" method ="POST" action="/computer_database/Dashboard">
 					<input type="hidden" name="filter" value="${filter }">
-					<input type="hidden" name="p" value="1">
-					<input type="hidden" name="on" value="${on }">
-					<input type="hidden" name="c" value="${c }">
-					<select id="entitiesPerPage" name="epp" onChange="this.form.submit();">
+					<input type="hidden" name="page" value="1">
+					<input type="hidden" name="order" value="${order }">
+					<input type="hidden" name="criteria" value="${criteria }">
+					<select id="entitiesPerPage" name="entitiesperpage" onChange="this.form.submit();">
 						<c:choose>
 							<c:when test="${entitiesPerPage == 10 }">
 								<option value="10" selected >10</option>
@@ -95,15 +95,15 @@
 		<div class="alert alert-success">Your computer have been successfully edited</div>
 	</c:if>
 	
-	<page:pagination pageMax="${pageMax }" currentPageNumber="${currentPageNumber }" offsetSQL="${offsetSQL }" filter="${filter }" order="${on }" criteria="${c }"></page:pagination>	
+	<page:pagination pageMax="${pageMax }" currentPageNumber="${currentPageNumber }" offsetSQL="${offsetSQL }" filter="${filter }" order="${order }" criteria="${criteria }"></page:pagination>	
 	
 	<table class="table table-striped table-hover">
 		<thead>
 			<tr>
 				<th>
 					Computer Name
-					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-up' ></span>" servlet="Dashboard" epp="${entitiesPerPage }" p="${currentPageNumber }" filter="${filter }" on="asc" c="name"/>
-					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-down' ></span>" servlet="Dashboard" epp="${entitiesPerPage }" p="${currentPageNumber }" filter="${filter }" on="des" c="name"/>
+					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-up' ></span>" servlet="Dashboard" entitiesperpage="${entitiesPerPage }" page="${currentPageNumber }" filter="${filter }" order="asc" criteria="name"/>
+					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-down' ></span>" servlet="Dashboard" entitiesperpage="${entitiesPerPage }" page="${currentPageNumber }" filter="${filter }" order="des" criteria="name"/>
 				</th>
 				
 				<th>
@@ -118,8 +118,8 @@
 				
 				<th>
 					Company
-					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-up' ></span>" servlet="Dashboard" epp="${entitiesPerPage }" p="${currentPageNumber }" filter="${filter }" on="asc" c="company"/>
-					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-down' ></span>" servlet="Dashboard" epp="${entitiesPerPage }" p="${currentPageNumber }" filter="${filter }" on="des" c="company"/>
+					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-up' ></span>" servlet="Dashboard" entitiesperpage="${entitiesPerPage }" page="${currentPageNumber }" filter="${filter }" order="asc" criteria="company"/>
+					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-down' ></span>" servlet="Dashboard" entitiesperpage="${entitiesPerPage }" page="${currentPageNumber }" filter="${filter }" order="des" criteria="company"/>
 				</th>
 				
 				<th>Actions</th>
