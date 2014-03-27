@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="page" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="link" %>
 
 <jsp:include page="include/header.jsp" />
 
@@ -93,18 +94,16 @@
 	</c:if>
 	
 	<page:pagination pageMax="${pageMax }" currentPageNumber="${currentPageNumber }" offsetSQL="${offsetSQL }" filter="${filter }" order="${order }" criteria="${criteria }"></page:pagination>	
-
+	
+<%-- 	<link:linkGen label="${currentPageNumber }" servlet="Dashboard" epp="${entitiesPerPage }" p="${currentPageNumber }" filter="${filter }" on="${order }" c="${criteria }"/>	 --%>
+	
 	<table class="table table-striped table-hover">
 		<thead>
 			<tr>
 				<th>
 					Computer Name
-					<a type="button" href="/computer_database/Dashboard?on=asc&c=name" class="btn btn-mini">
-						<span class="glyphicon glyphicon-chevron-up" ></span>
-					</a>
-					<a type="button" href="/computer_database/Dashboard?on=des&c=name" class="btn btn-mini">
-						<span class="glyphicon glyphicon-chevron-down" ></span>
-					</a>
+					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-up' ></span>" servlet="Dashboard" epp="${entitiesPerPage }" p="${currentPageNumber }" filter="${filter }" on="asc" c="name"/>>
+					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-down' ></span>" servlet="Dashboard" epp="${entitiesPerPage }" p="${currentPageNumber }" filter="${filter }" on="des" c="name"/>
 				</th>
 				
 				<th>

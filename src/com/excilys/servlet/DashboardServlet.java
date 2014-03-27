@@ -61,15 +61,15 @@ public class DashboardServlet extends HttpServlet {
 			offsetSQL = 0; //default
 		}
 		
-		if (request.getParameter("c") != "") {
+		if (request.getParameter("c") != null) {
 			request.setAttribute("c", request.getParameter("c"));
 		} else {
 			request.setAttribute("c", "name");
 		}
-		if(request.getParameter("on") != "") {
-			request.setAttribute("on", "asc");
+		if(request.getParameter("on") != null) {
+			request.setAttribute("on", request.getParameter("on"));
 		} else {
-			
+			request.setAttribute("c", "name");
 		}
 		
 		//traitement filtre et order
@@ -78,10 +78,13 @@ public class DashboardServlet extends HttpServlet {
 			request.setAttribute("filter", request.getParameter("filter"));
 			numberOfComputer = compuDAO.count(request.getParameter("filter"));
 			if(request.getParameter("on") != null && request.getParameter("c") != null) {//order specified
+				
 				if (request.getParameter("on").equals("des")){
+					System.out.println("dans le get on est des");
 					result = cppdao.findSearchInPage(currentPageNumber, entitiesPerPage, request.getParameter("filter").toString(), "DESC", request.getParameter("c").toString());
 				}
 				if (request.getParameter("on").equals("asc")) {
+					System.out.println("dans le get on est asc");
 					result = cppdao.findSearchInPage(currentPageNumber, entitiesPerPage, request.getParameter("filter").toString(), "ASC", request.getParameter("c").toString());
 				}
 			}else { //default order (name ASC)
@@ -93,9 +96,11 @@ public class DashboardServlet extends HttpServlet {
 			numberOfComputer = compuDAO.count("");
 			if(request.getParameter("on") != null && request.getParameter("c") != null) {//order specified
 				if (request.getParameter("on").equals("des")){
+					System.out.println("dans le get on est des");
 					result = cppdao.findAllInPage(currentPageNumber, entitiesPerPage, "DESC", request.getParameter("c").toString());
 				}
 				if (request.getParameter("on").equals("asc")) {
+					System.out.println("dans le get on est asc");
 					result = cppdao.findAllInPage(currentPageNumber, entitiesPerPage, "ASC", request.getParameter("c").toString());
 				}
 				request.setAttribute("order", request.getParameter("on"));
@@ -146,9 +151,11 @@ public class DashboardServlet extends HttpServlet {
 			System.out.println("on="+request.getParameter("on"));
 			if (request.getParameter("c") != null) {
 				request.setAttribute("c", request.getParameter("c"));
+				System.out.println(request.getParameter("c"));
 			}
 			if(request.getParameter("on") != null) {
 				request.setAttribute("on", request.getParameter("on"));
+				System.out.println(request.getParameter("on"));
 			}
 			String filter = request.getParameter("filter");
 			request.setAttribute("filter", filter);

@@ -5,6 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 
+<%@ taglib tagdir="/WEB-INF/tags" prefix="link" %>
 
 <%@ attribute name="currentPageNumber" %>
 <%@ attribute name="offsetSQL" %>
@@ -15,36 +16,9 @@
 
 <ul class="pagination">
 <!-- button first page -->
-	<c:choose>
-		<c:when test="${!empty filter }">
-			<c:choose>
-				<c:when test="${!empty order && !empty criteria }">
-					<li>
-						<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=1&filter=${filter}&on=${order}&c=${criteria}">&laquo;</a>
-					</li>
-				</c:when>
-				<c:otherwise>
-					<li>
-						<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=1&filter=${filter}">&laquo;</a>
-					</li>
-				</c:otherwise>
-			</c:choose>
-		</c:when>
-		<c:otherwise>
-			<c:choose>
-				<c:when test="${!empty order && !empty criteria }">
-					<li>
-						<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=1&on=${order}&c=${criteria}">&laquo;</a>
-					</li>
-				</c:when>
-				<c:otherwise>
-					<li>
-						<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=1">&laquo;</a>
-					</li>
-				</c:otherwise>
-			</c:choose>
-		</c:otherwise>
-	</c:choose>
+	<li>
+		<link:linkGen label="&laquo;" servlet="Dashboard" epp="${entitiesPerPage }" p="1" filter="${filter }" on="${order }" c="${criteria }"/>
+	</li>
 	
 <!-- 	disable previous button if page 1 -->
 	<c:choose>
@@ -54,224 +28,44 @@
 			</li>
 		</c:when>
 		<c:otherwise>
-			<c:choose>
-				<c:when test="${!empty filter }">
-					<c:choose>
-						<c:when test="${!empty order && !empty criteria }">
-							<li>
-								<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 1}&filter=${filter}&on=${order}&c=${criteria}">&lt;</a>
-							</li>
-						</c:when>
-						<c:otherwise>
-							<li>
-								<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 1}&filter=${filter}">&lt;</a>
-							</li>
-						</c:otherwise>
-					</c:choose>
-				</c:when>
-				<c:otherwise>
-					<c:choose>
-						<c:when test="${!empty order && !empty criteria }">
-							<li>
-								<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 1}&on=${order}&c=${criteria}">&lt;</a>
-							</li>
-						</c:when>
-						<c:otherwise>
-							<li>
-								<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 1}">&lt;</a>
-							</li>
-						</c:otherwise>
-					</c:choose>
-				</c:otherwise>
-			</c:choose>
+			<li>
+				<link:linkGen label="&lt;" servlet="Dashboard" epp="${entitiesPerPage }" p="${currentPageNumber-1 }" filter="${filter }" on="${order }" c="${criteria }"/>
+			</li>
 		</c:otherwise>
 	</c:choose>
 	
 <!-- Display page Number and +2/-2 pages with activation-->
 <!-- Page -2 (if exist)  -->
 	<c:if test="${currentPageNumber-2 > 0 }">
-		<c:choose>
-			<c:when test="${!empty filter }">
-				<c:choose>
-					<c:when test="${!empty order && !empty criteria }">
-						<li>
-							<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 2}&filter=${filter}&on=${order}&c=${criteria}">
-								<c:out value="${currentPageNumber - 2 }"/>
-							</a>
-						</li>
-					</c:when>
-					<c:otherwise>
-						<li>
-							<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 2}&filter=${filter}">
-								<c:out value="${currentPageNumber - 2 }"/>
-							</a>
-						</li>
-					</c:otherwise>
-				</c:choose>
-			</c:when>
-			<c:otherwise>
-				<c:choose>
-					<c:when test="${!empty order && !empty criteria }">
-						<li>
-							<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 2}&on=${order}&c=${criteria}">
-								<c:out value="${currentPageNumber - 2 }"/>
-							</a>
-						</li>
-					</c:when>
-					<c:otherwise>
-						<li>
-							<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 2}">
-								<c:out value="${currentPageNumber - 2 }"/>
-							</a>
-						</li>
-					</c:otherwise>
-				</c:choose>
-			</c:otherwise>
-		</c:choose>
+		<li>
+			<link:linkGen label="${currentPageNumber-2 }" servlet="Dashboard" epp="${entitiesPerPage }" p="${currentPageNumber-2 }" filter="${filter }" on="${order }" c="${criteria }"/>
+		</li>
 	</c:if>
 	
 <!-- Page -1 (if exists) -->
 	<c:if test="${currentPageNumber-1 > 0 }">
-		<c:choose>
-			<c:when test="${!empty filter }">
-				<c:choose>
-					<c:when test="${!empty order && !empty criteria }">
-						<li>
-							<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 1}&filter=${filter}&on=${order}&c=${criteria}">
-								<c:out value="${currentPageNumber - 1 }"/>
-							</a>
-						</li>
-					</c:when>
-					<c:otherwise>
-						<li>
-							<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 1}&filter=${filter}">
-								<c:out value="${currentPageNumber - 1 }"/>
-							</a>
-						</li>
-					</c:otherwise>
-				</c:choose>
-			</c:when>
-			<c:otherwise>
-				<c:choose>
-					<c:when test="${!empty order && !empty criteria }">
-						<li>
-							<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 1}&on=${order}&c=${criteria}">
-								<c:out value="${currentPageNumber - 1 }"/>
-							</a>
-						</li>
-					</c:when>
-					<c:otherwise>
-						<li>
-							<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber - 1}">
-								<c:out value="${currentPageNumber - 1 }"/>
-							</a>
-						</li>
-					</c:otherwise>
-				</c:choose>
-			</c:otherwise>
-		</c:choose>
+		<li>
+			<link:linkGen label="${currentPageNumber-1 }" servlet="Dashboard" epp="${entitiesPerPage }" p="${currentPageNumber-1 }" filter="${filter }" on="${order }" c="${criteria }"/>
+		</li>
 	</c:if>
 	
 <!-- Current page -->
-	<c:choose>
-		<c:when test="${!empty filter }">
-			<li class="active">
-				<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber }&filter=${filter}">
-					<c:out value="${currentPageNumber }"/>
-				</a>
-			</li>
-		</c:when>
-		<c:otherwise>
-			<li class="active">
-				<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber }">
-					<c:out value="${currentPageNumber }"/>
-				</a>
-			</li>
-		</c:otherwise>
-	</c:choose>
+	<li class="active">
+		<link:linkGen label="${currentPageNumber }" servlet="Dashboard" epp="${entitiesPerPage }" p="${currentPageNumber }" filter="${filter }" on="${order }" c="${criteria }"/>
+	</li>
 	
 <!-- Page +1 (if exist)  -->
 	<c:if test="${currentPageNumber+1 <= pageMax }">
-		<c:choose>
-			<c:when test="${!empty filter }">
-				<c:choose>
-					<c:when test="${!empty order && !empty criteria }">
-						<li>
-							<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber +1}&filter=${filter}&on=${order}&c=${criteria}">
-								<c:out value="${currentPageNumber +1 }"/>
-							</a>
-						</li>
-					</c:when>
-					<c:otherwise>
-						<li>
-							<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber +1}&filter=${filter}">
-								<c:out value="${currentPageNumber +1 }"/>
-							</a>
-						</li>
-					</c:otherwise>
-				</c:choose>
-			</c:when>
-			<c:otherwise>
-				<c:choose>
-					<c:when test="${!empty order && !empty criteria }">
-						<li>
-							<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber +1}&on=${order}&c=${criteria}">
-								<c:out value="${currentPageNumber +1 }"/>
-							</a>
-						</li>
-					</c:when>
-					<c:otherwise>
-						<li>
-							<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber +1}">
-								<c:out value="${currentPageNumber +1 }"/>
-							</a>
-						</li>
-					</c:otherwise>
-				</c:choose>
-			</c:otherwise>
-		</c:choose>
+		<li>
+			<link:linkGen label="${currentPageNumber+1 }" servlet="Dashboard" epp="${entitiesPerPage }" p="${currentPageNumber+1 }" filter="${filter }" on="${order }" c="${criteria }"/>
+		</li>
 	</c:if>
 	
 <!-- Page +2 (if exists) -->
 	<c:if test="${currentPageNumber+2 <= pageMax }">
-		<c:choose>
-			<c:when test="${!empty filter }">
-				<c:choose>
-					<c:when test="${!empty order && !empty criteria }">
-						<li>
-							<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber +2}&filter=${filter}&on=${order}&c=${criteria}">
-								<c:out value="${currentPageNumber +2 }"/>
-							</a>
-						</li>
-					</c:when>
-					<c:otherwise>
-						<li>
-							<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber +2}&filter=${filter}">
-								<c:out value="${currentPageNumber +2 }"/>
-							</a>
-						</li>
-					</c:otherwise>
-				</c:choose>
-			</c:when>
-			<c:otherwise>
-				<c:choose>
-					<c:when test="${!empty order && !empty criteria }">
-						<li>
-							<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber +2}&on=${order}&c=${criteria}">
-								<c:out value="${currentPageNumber +2 }"/>
-							</a>
-						</li>
-					</c:when>
-					<c:otherwise>
-						<li>
-							<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber +2}">
-								<c:out value="${currentPageNumber +2 }"/>
-							</a>
-						</li>
-					</c:otherwise>
-				</c:choose>
-			</c:otherwise>
-		</c:choose>
+		<li>
+			<link:linkGen label="${currentPageNumber+2 }" servlet="Dashboard" epp="${entitiesPerPage }" p="${currentPageNumber+2 }" filter="${filter }" on="${order }" c="${criteria }"/>
+		</li>
 	</c:if>
 	
 <!-- disable next button if last page -->
@@ -282,68 +76,14 @@
 			</li>
 		</c:when>
 		<c:otherwise>
-			<c:choose>
-				<c:when test="${!empty filter }">
-					<c:choose>
-						<c:when test="${!empty order && !empty criteria }">
-							<li>
-								<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber + 1}&filter=${filter}&on=${order}&c=${criteria}">&gt;</a>
-							</li>
-						</c:when>
-						<c:otherwise>
-							<li>
-								<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber + 1}&filter=${filter}">&gt;</a>
-							</li>
-						</c:otherwise>
-					</c:choose>
-				</c:when>
-				<c:otherwise>
-					<c:choose>
-						<c:when test="${!empty order && !empty criteria }">
-							<li>
-								<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber + 1}&on=${order}&c=${criteria}">&gt;</a>
-							</li>
-						</c:when>
-						<c:otherwise>
-							<li>
-								<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${currentPageNumber + 1}">&gt;</a>
-							</li>
-						</c:otherwise>
-					</c:choose>
-				</c:otherwise>
-			</c:choose>
+			<li>
+				<link:linkGen label="&gt;" servlet="Dashboard" epp="${entitiesPerPage }" p="${currentPageNumber+1 }" filter="${filter }" on="${order }" c="${criteria }"/>
+			</li>
 		</c:otherwise>
 	</c:choose>
 
 <!-- button last page -->
-	<c:choose>
-		<c:when test="${!empty filter }">
-			<c:choose>
-				<c:when test="${!empty order && !empty criteria }">
-					<li>
-						<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${pageMax}&filter=${filter}&on=${order}&c=${criteria}">&raquo;</a>
-					</li>
-				</c:when>
-				<c:otherwise>
-					<li>
-						<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${pageMax}&filter=${filter}">&raquo;</a>
-					</li>
-				</c:otherwise>
-			</c:choose>
-		</c:when>
-		<c:otherwise>
-			<c:choose>
-				<c:when test="${!empty order && !empty criteria }">
-					<li>
-						<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${pageMax}&on=${order}&c=${criteria}">&raquo;</a>
-					</li>
-				</c:when>
-				<c:otherwise>
-					<li>
-						<a href="/computer_database/Dashboard?epp=${entitiesPerPage }&p=${pageMax}">&raquo;</a>
-					</li>
-				</c:otherwise>
-			</c:choose>
-		</c:otherwise>
-	</c:choose>
+	<li>
+		<link:linkGen label="&raquo;" servlet="Dashboard" epp="${entitiesPerPage }" p="${pageMax }" filter="${filter }" on="${order }" c="${criteria }"/>
+	</li>
 </ul>
