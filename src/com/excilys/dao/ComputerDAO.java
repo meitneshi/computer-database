@@ -28,8 +28,8 @@ public class ComputerDAO {
 		super();
 	}
 	
-	//Find Update
-
+	
+//a refaire
 	public void create(Computer computerToAdd){
 		System.out.println(computerToAdd);
 		StringBuilder builder = new StringBuilder();
@@ -52,14 +52,13 @@ public class ComputerDAO {
 		} else {
 			sql += "'" + computerToAdd.getCompany().getId() + "');";
 		}
-		System.out.println(sql);
-		this.executeSQLQuery(sql);
+		this.executeSQLQuery(builder.toString());
 	}
 	
 	public void update(Computer computerToUpdate) {
 		//initailisation
 		StringBuilder builder = new StringBuilder();
-		String sql = builder.append("UPDATE computer SET name = '").
+		builder.append("UPDATE computer SET name = '").
 				append(computerToUpdate.getName()).
 				append("', introduced = '").
 				append(computerToUpdate.getIntroduced()).
@@ -69,10 +68,9 @@ public class ComputerDAO {
 				append(computerToUpdate.getCompany().getId()).
 				append("' WHERE id= ").
 				append(computerToUpdate.getId()).
-				append(";").toString();
-		System.out.println(sql);		
+				append(";");
 		//update the computer
-		this.executeSQLQuery(sql);
+		this.executeSQLQuery(builder.toString());
 	}
 	
 	public void delete(int computerIdToDelete) {
@@ -87,17 +85,15 @@ public class ComputerDAO {
 		Computer computerResult = new Computer();
 		ResultSet queryResult = null;
 		StringBuilder builder = new StringBuilder();
-		String sql = builder.append("SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name ").
+		builder.append("SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name ").
 				append("FROM computer ").
 				append("LEFT JOIN company ON computer.company_id = company.id ").
 				append("WHERE computer.id = ").
-				append(id).
-				toString();
-		System.out.println(sql);
+				append(id);
 		try {
 			connection = this.connectionManager.getConnection();
 			statement = (Statement) connection.createStatement();
-			queryResult = statement.executeQuery(sql);
+			queryResult = statement.executeQuery(builder.toString());
 			while (queryResult.next()) {
 				Company company = new Company(queryResult.getString("company.name"), queryResult.getInt("company_id"));
 				computerResult.setId(id);
@@ -141,13 +137,10 @@ public class ComputerDAO {
 					append(entitiesPerPage).
 					append(" OFFSET ").
 					append(offsetSQL);
-			String sql = builder.toString();
-			
-			System.out.println(sql);
 			try {
 				connection = this.connectionManager.getConnection();
 				statement = (Statement) connection.createStatement();
-				queryResult = statement.executeQuery(sql);
+				queryResult = statement.executeQuery(builder.toString());
 				while (queryResult.next()) {
 					Company company = new Company(queryResult.getString("company.name"), queryResult.getInt("company_id"));
 					Computer computer = new Computer(queryResult.getInt("id"), company, queryResult.getString("name"), queryResult.getTimestamp("introduced"), queryResult.getTimestamp("discontinued"));
@@ -176,7 +169,7 @@ public class ComputerDAO {
 					append(filter).
 					append("%' ").
 					append("ORDER BY ");
-			if (criteria.equals("company")) { //field = company.name
+			if ("company".equals(criteria)) { //field = company.name
 				builder.append("company.name");
 			} else { // field like computer.field
 				builder.append("computer.").
@@ -188,12 +181,10 @@ public class ComputerDAO {
 					append(entitiesPerPage).
 					append(" OFFSET ").
 					append(offsetSQL);
-			String sql = builder.toString();
-			System.out.println(sql);
 			try {
 				connection = this.connectionManager.getConnection();
 				statement = (Statement) connection.createStatement();
-				queryResult = statement.executeQuery(sql);
+				queryResult = statement.executeQuery(builder.toString());
 				while (queryResult.next()) {
 					Company company = new Company(queryResult.getString("company.name"), queryResult.getInt("company_id"));
 					Computer computer = new Computer(queryResult.getInt("id"), company, queryResult.getString("name"), queryResult.getTimestamp("introduced"), queryResult.getTimestamp("discontinued"));
