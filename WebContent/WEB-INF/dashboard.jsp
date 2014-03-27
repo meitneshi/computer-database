@@ -41,7 +41,8 @@
 					<input type="hidden" name="page" value="1">
 					<input type="hidden" name="order" value="${order }">
 					<input type="hidden" name="criteria" value="${criteria }">
-					<select id="entitiesPerPage" name="entitiesperpage" onChange="this.form.submit();">	
+					<select id="entitiesPerPage" name="entitiesperpage" onChange="this.form.submit();">
+<%-- 						<option value="5" <c:if test="${numberofComputer == 5 }">selected</c:if>>5</option>	 --%>
 						<option:optionGen value="10" label="10" max="${numberOfComputer}"/>
 						<option:optionGen value="30" label="30" max="${numberOfComputer}"/>
 						<option:optionGen value="50" label="50" max="${numberOfComputer}"/>

@@ -9,10 +9,9 @@
 <%@ attribute name="label" %>				<!-- label for option -->
 <%@ attribute name="selected" %>			<!-- selected or not -->
 <%@ attribute name="max" %>					<!-- number max of computer -->
-<%@ attribute name="entities" %>		<!-- number of entities per page -->
+<%@ attribute name="entities" %>			<!-- number of entities per page -->
 
 <c:set var="valueopt" value="${value}"/>
-
 
 <c:choose>
 	<c:when test="${value == max }">
