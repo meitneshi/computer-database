@@ -32,6 +32,7 @@
 				Number of computer to show per page:
 				<form name="selectNumberOfEntitiesPerPage" method ="POST" action="/computer_database/Dashboard">
 					<input type="hidden" name="filter" value="${filter }">
+					<input type="hidden" name="p" value="${currentPageNumber }">
 					<input type="hidden" name="on" value="${on }">
 					<input type="hidden" name="c" value="${c }">
 					<select id="entitiesPerPage" name="epp" onChange="this.form.submit();">
@@ -102,38 +103,23 @@
 			<tr>
 				<th>
 					Computer Name
-					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-up' ></span>" servlet="Dashboard" epp="${entitiesPerPage }" p="${currentPageNumber }" filter="${filter }" on="asc" c="name"/>>
+					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-up' ></span>" servlet="Dashboard" epp="${entitiesPerPage }" p="${currentPageNumber }" filter="${filter }" on="asc" c="name"/>
 					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-down' ></span>" servlet="Dashboard" epp="${entitiesPerPage }" p="${currentPageNumber }" filter="${filter }" on="des" c="name"/>
 				</th>
 				
 				<th>
 					Introduced Date
-<!-- 					<a type="button" href="" class="btn btn-mini"> -->
-<!-- 						<span class="glyphicon glyphicon-chevron-up" ></span> -->
-<!-- 					</a> -->
-<!-- 					<a type="button" href="" class="btn btn-mini"> -->
-<!-- 						<span class="glyphicon glyphicon-chevron-down" ></span> -->
-<!-- 					</a> -->
+ 					
 				</th>
 				
 				<th>
 					Discontinued Date
-<!-- 					<a type="button" href="" class="btn btn-mini"> -->
-<!-- 						<span class="glyphicon glyphicon-chevron-up" ></span> -->
-<!-- 					</a> -->
-<!-- 					<a type="button" href="" class="btn btn-mini"> -->
-<!-- 						<span class="glyphicon glyphicon-chevron-down" ></span> -->
-<!-- 					</a> -->
+					
 				</th>
 				
 				<th>
 					Company
-<!-- 					<a type="button" href="" class="btn btn-mini"> -->
-<!-- 						<span class="glyphicon glyphicon-chevron-up" ></span> -->
-<!-- 					</a> -->
-<!-- 					<a type="button" href="" class="btn btn-mini"> -->
-<!-- 						<span class="glyphicon glyphicon-chevron-down" ></span> -->
-<!-- 					</a> -->
+					
 				</th>
 				
 				<th>Actions</th>

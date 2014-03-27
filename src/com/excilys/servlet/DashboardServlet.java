@@ -80,11 +80,9 @@ public class DashboardServlet extends HttpServlet {
 			if(request.getParameter("on") != null && request.getParameter("c") != null) {//order specified
 				
 				if (request.getParameter("on").equals("des")){
-					System.out.println("dans le get on est des");
 					result = cppdao.findSearchInPage(currentPageNumber, entitiesPerPage, request.getParameter("filter").toString(), "DESC", request.getParameter("c").toString());
 				}
 				if (request.getParameter("on").equals("asc")) {
-					System.out.println("dans le get on est asc");
 					result = cppdao.findSearchInPage(currentPageNumber, entitiesPerPage, request.getParameter("filter").toString(), "ASC", request.getParameter("c").toString());
 				}
 			}else { //default order (name ASC)
@@ -96,11 +94,9 @@ public class DashboardServlet extends HttpServlet {
 			numberOfComputer = compuDAO.count("");
 			if(request.getParameter("on") != null && request.getParameter("c") != null) {//order specified
 				if (request.getParameter("on").equals("des")){
-					System.out.println("dans le get on est des");
 					result = cppdao.findAllInPage(currentPageNumber, entitiesPerPage, "DESC", request.getParameter("c").toString());
 				}
 				if (request.getParameter("on").equals("asc")) {
-					System.out.println("dans le get on est asc");
 					result = cppdao.findAllInPage(currentPageNumber, entitiesPerPage, "ASC", request.getParameter("c").toString());
 				}
 				request.setAttribute("order", request.getParameter("on"));
@@ -142,31 +138,41 @@ public class DashboardServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		int epp = 0;
+		int p = 0;
+		StringBuilder urlB = new StringBuilder();
+		urlB.append("/computer_database/Dashboard");
 		//if order
 		//if search
 		if (request.getParameter("filter") != null) {
 			epp = Integer.parseInt(request.getParameter("epp"));
-			request.setAttribute("epp", epp);
-			System.out.println("c="+request.getParameter("c"));
-			System.out.println("on="+request.getParameter("on"));
+			p = Integer.parseInt(request.getParameter("p"));
+			urlB.append("?epp=").append(epp).append("&p=").append(p);
 			if (request.getParameter("c") != null) {
-				request.setAttribute("c", request.getParameter("c"));
-				System.out.println(request.getParameter("c"));
+				urlB.append("&c=").append(request.getParameter("c"));
 			}
 			if(request.getParameter("on") != null) {
-				request.setAttribute("on", request.getParameter("on"));
-				System.out.println(request.getParameter("on"));
+				urlB.append("&on=").append(request.getParameter("on"));
 			}
 			String filter = request.getParameter("filter");
-			request.setAttribute("filter", filter);
+			urlB.append("&filter=").append(filter);
 			
-			this.doGet(request, response);
+			String url = urlB.toString();
+			response.sendRedirect(url);
 		}else{//default Dashboard
 			epp = Integer.parseInt(request.getParameter("epp"));
-			request.setAttribute("epp", epp);
-			request.setAttribute("c", "name");
-			request.setAttribute("on", "asc");
-			this.doGet(request, response);
+			p = Integer.parseInt(request.getParameter("p"));
+			urlB.append("?epp=").append(epp).append("&p=").append(p);
+			if (request.getParameter("c") != null) {
+				urlB.append("&c=").append(request.getParameter("c"));
+			}
+			if(request.getParameter("on") != null) {
+				urlB.append("&on=").append(request.getParameter("on"));
+			}
+			String filter = request.getParameter("filter");
+			urlB.append("&filter=").append(filter);
+			
+			String url = urlB.toString();
+			response.sendRedirect(url);
 		}
 		
 		
