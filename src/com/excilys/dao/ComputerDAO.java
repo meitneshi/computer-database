@@ -112,8 +112,8 @@ public class ComputerDAO {
 	
 	//select X entities according to page number
 		//order = ASC ou DESC
-		//criteria = field to order by
-		public List<Computer> findAllInPage (int numPage, int entitiesPerPage, String order, String criteria) {
+		//criteria = field to order by		
+		public List<Computer> findInPage (int numPage, int entitiesPerPage, String filter, String order, String criteria) {
 			Connection connection = null;
 			Statement statement = null;
 			List<Computer> computers = new ArrayList<Computer>();
@@ -123,8 +123,11 @@ public class ComputerDAO {
 			builder.append("SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name "
 					+ "FROM computer "
 					+ "LEFT JOIN company "
-					+ "ON computer.company_id = company.id "
-					+ "ORDER BY ");
+					+ "ON computer.company_id = company.id ");
+			if (!"".equals(filter)){
+				builder.append("WHERE computer.name LIKE '%").append(filter).append("%' ");
+			}
+			builder.append("ORDER BY ");
 			if (criteria.equals("company")) { //field = company.name
 				builder.append("company.name");
 			} else { // field like computer.field
@@ -154,49 +157,6 @@ public class ComputerDAO {
 			return computers;
 		}
 		
-		public List<Computer> findSearchInPage (int numPage, int entitiesPerPage, String filter, String order, String criteria) {
-			Connection connection = null;
-			Statement statement = null;
-			List<Computer> computers = new ArrayList<Computer>();
-			ResultSet queryResult = null;
-			int offsetSQL = ((numPage-1)*entitiesPerPage);
-			StringBuilder builder = new StringBuilder();
-			builder.append("SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name "
-					+ "FROM computer "
-					+ "LEFT JOIN company "
-					+ "ON computer.company_id = company.id ").
-					append("WHERE computer.name LIKE '%").
-					append(filter).
-					append("%' ").
-					append("ORDER BY ");
-			if ("company".equals(criteria)) { //field = company.name
-				builder.append("company.name");
-			} else { // field like computer.field
-				builder.append("computer.").
-				append(criteria);
-			}
-			builder.append(" ").
-					append(order).
-					append(" LIMIT ").
-					append(entitiesPerPage).
-					append(" OFFSET ").
-					append(offsetSQL);
-			try {
-				connection = this.connectionManager.getConnection();
-				statement = (Statement) connection.createStatement();
-				queryResult = statement.executeQuery(builder.toString());
-				while (queryResult.next()) {
-					Company company = new Company(queryResult.getString("company.name"), queryResult.getInt("company_id"));
-					Computer computer = new Computer(queryResult.getInt("id"), company, queryResult.getString("name"), queryResult.getTimestamp("introduced"), queryResult.getTimestamp("discontinued"));
-					computers.add(computer);
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				DAOFactory.safeClose(connection, statement, queryResult);
-			}
-			return computers;
-		}
 	
 	public int executeSQLQuery(String sqlToExecute) {
 		Connection connection = null;

@@ -78,13 +78,13 @@ public class DashboardServlet extends HttpServlet {
 			if(request.getParameter("on") != null && request.getParameter("c") != null) {//order specified
 				
 				if (request.getParameter("on").equals("des")){
-					result = compuDAO.findSearchInPage(currentPageNumber, entitiesPerPage, request.getParameter("filter").toString(), "DESC", request.getParameter("c").toString());
+					result = compuDAO.findInPage(currentPageNumber, entitiesPerPage, request.getParameter("filter").toString(), "DESC", request.getParameter("c").toString());
 				}
 				if (request.getParameter("on").equals("asc")) {
-					result = compuDAO.findSearchInPage(currentPageNumber, entitiesPerPage, request.getParameter("filter").toString(), "ASC", request.getParameter("c").toString());
+					result = compuDAO.findInPage(currentPageNumber, entitiesPerPage, request.getParameter("filter").toString(), "ASC", request.getParameter("c").toString());
 				}
 			}else { //default order (name ASC)
-				result = compuDAO.findSearchInPage(currentPageNumber, entitiesPerPage, request.getParameter("filter").toString(), "ASC", "name");
+				result = compuDAO.findInPage(currentPageNumber, entitiesPerPage, request.getParameter("filter").toString(), "ASC", "name");
 			}
 			request.setAttribute("computerPageList", result);
 			
@@ -92,16 +92,16 @@ public class DashboardServlet extends HttpServlet {
 			numberOfComputer = compuDAO.count("");
 			if(request.getParameter("on") != null && request.getParameter("c") != null) {//order specified
 				if (request.getParameter("on").equals("des")){
-					result = compuDAO.findAllInPage(currentPageNumber, entitiesPerPage, "DESC", request.getParameter("c").toString());
+					result = compuDAO.findInPage(currentPageNumber, entitiesPerPage, null, "DESC", request.getParameter("c").toString());
 				}
 				if (request.getParameter("on").equals("asc")) {
-					result = compuDAO.findAllInPage(currentPageNumber, entitiesPerPage, "ASC", request.getParameter("c").toString());
+					result = compuDAO.findInPage(currentPageNumber, entitiesPerPage, null, "ASC", request.getParameter("c").toString());
 				}
 				request.setAttribute("order", request.getParameter("on"));
 				request.setAttribute("criteria", request.getParameter("c"));
 				
 			}else { //default order (name ASC)
-				result = compuDAO.findAllInPage(currentPageNumber, entitiesPerPage, "ASC", "name");
+				result = compuDAO.findInPage(currentPageNumber, entitiesPerPage, null, "ASC", "name");
 				request.setAttribute("order", "asc");
 				request.setAttribute("criteria", "name");
 			}
