@@ -1,14 +1,14 @@
-package com.excilys.domainClass;
+package com.excilys.om;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 public class Computer {
 	
-	private int id;
+	private long id;
 	private Company company;
 	private String name;
-	private Timestamp introduced;
-	private Timestamp discontinued;
+	private Date introduced;
+	private Date discontinued;
 	
 	/**
 	 * @param id the id to set
@@ -20,7 +20,7 @@ public class Computer {
 	/**
 	 * @return the id
 	 */
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -55,28 +55,28 @@ public class Computer {
 	/**
 	 * @return the introduced
 	 */
-	public Timestamp getIntroduced() {
+	public Date getIntroduced() {
 		return introduced;
 	}
 
 	/**
 	 * @param introduced the introduced to set
 	 */
-	public void setIntroduced(Timestamp introduced) {
+	public void setIntroduced(Date introduced) {
 		this.introduced = introduced;
 	}
 
 	/**
 	 * @return the discontinued
 	 */
-	public Timestamp getDiscontinued() {
+	public Date getDiscontinued() {
 		return discontinued;
 	}
 
 	/**
 	 * @param discontinued the discontinued to set
 	 */
-	public void setDiscontinued(Timestamp discontinued) {
+	public void setDiscontinued(Date discontinued) {
 		this.discontinued = discontinued;
 	}
 
@@ -84,14 +84,14 @@ public class Computer {
 		super();
 	}
 	
-	public Computer(Company company, String name, Timestamp introduced, Timestamp discontinued) {
+	public Computer(Company company, String name, Date introduced, Date discontinued) {
 		this.company = company;
 		this.name = name;
 		this.introduced = introduced;
 		this.discontinued = discontinued;
 	}
 	
-	public Computer(int id, Company company, String name, Timestamp introduced, Timestamp discontinued) {
+	public Computer(long id, Company company, String name, Date introduced, Date discontinued) {
 		this.id = id;
 		this.company = company;
 		this.name = name;

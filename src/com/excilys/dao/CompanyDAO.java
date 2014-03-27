@@ -1,17 +1,18 @@
 package com.excilys.dao;
 
 import com.mysql.jdbc.Connection;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.excilys.domainClass.Company;
+import com.excilys.om.Company;
 import com.mysql.jdbc.Statement;
 
 public class CompanyDAO {
 
-	DAOFactory connectionManager = DAOFactory.getInstance();
+	DAOFactory daoFactory = DAOFactory.getInstance();
 		
 	private final static CompanyDAO _instance = new CompanyDAO();
 	
@@ -31,7 +32,7 @@ public class CompanyDAO {
 				append(companyToAdd.getName()).
 				append("');").
 				toString();
-		this.executeSQLQuery(sql);
+		daoFactory.executeSQLQuery(sql);
 	}
 	
 	/**
@@ -51,7 +52,7 @@ public class CompanyDAO {
 				append(companytofind.getId()).
 				toString();
 		try {
-			connection = this.connectionManager.getConnection();
+			connection = daoFactory.getConnection();
 			statement = (Statement) connection.createStatement();
 			queryResult = statement.executeQuery(sql);
 			while (queryResult.next()) {
@@ -73,7 +74,7 @@ public class CompanyDAO {
 		ResultSet queryResult = null;
 		String sql = "SELECT id, name FROM company ;";
 		try {
-			connection = this.connectionManager.getConnection();
+			connection = daoFactory.getConnection();
 			statement = (Statement) connection.createStatement();
 			queryResult = statement.executeQuery(sql);
 			while (queryResult.next()) {
@@ -106,7 +107,7 @@ public class CompanyDAO {
 				append(companytoUpdate.getId()).
 				append (";").
 				toString();
-		this.executeSQLQuery(sql);
+		daoFactory.executeSQLQuery(sql);
 	}
 	
 	public void delete(int companyIdToDelete) {
@@ -115,22 +116,6 @@ public class CompanyDAO {
 				append(companyIdToDelete).
 				append (";").
 				toString();
-		this.executeSQLQuery(sql);
-	}
-	
-	public int executeSQLQuery(String sqlToExecute) {
-		Connection connection = null;
-		Statement statement = null;
-		int result = 0;
-		try {
-			connection = this.connectionManager.getConnection();
-			statement = (Statement) connection.createStatement();
-			result = statement.executeUpdate(sqlToExecute);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DAOFactory.safeClose(connection, statement, null);
-		}
-		return result;
+		daoFactory.executeSQLQuery(sql);
 	}
 }

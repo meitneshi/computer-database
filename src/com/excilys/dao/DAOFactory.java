@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 //import java.util.Properties;			//uncomment when using config file
 
+
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
@@ -62,10 +63,7 @@ public class DAOFactory {
 		try {
 			this.initParam();
 			return (Connection) DriverManager.getConnection(url, user, password);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		} catch (IOException | SQLException e) {
 			e.printStackTrace();
 		}
 		return connection;
@@ -85,5 +83,21 @@ public class DAOFactory {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public int executeSQLQuery(String sqlToExecute) {
+		Connection connection = null;
+		Statement statement = null;
+		int result = 0;
+		try {
+			connection = DAOFactory.getInstance().getConnection();
+			statement = (Statement) connection.createStatement();
+			result = statement.executeUpdate(sqlToExecute);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DAOFactory.safeClose(connection, statement, null);
+		}
+		return result;
 	}
 }

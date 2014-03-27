@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.excilys.dao.CompanyDAO;
 import com.excilys.dao.ComputerDAO;
-import com.excilys.domainClass.Company;
-import com.excilys.domainClass.Computer;
+import com.excilys.om.Company;
+import com.excilys.om.Computer;
 
 /**
  * Servlet implementation class EditComputerServlet

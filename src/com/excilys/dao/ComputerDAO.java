@@ -8,14 +8,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.excilys.domainClass.Company;
-import com.excilys.domainClass.Computer;
+import com.excilys.om.Company;
+import com.excilys.om.Computer;
 import com.mysql.jdbc.Statement;
 
 
 public class ComputerDAO {
 	
-	DAOFactory connectionManager = DAOFactory.getInstance();
+	DAOFactory daoFactory = DAOFactory.getInstance();
 	
 	private final static ComputerDAO _instance = new ComputerDAO();
 	
@@ -28,31 +28,32 @@ public class ComputerDAO {
 		super();
 	}
 	
-	
-//a refaire
 	public void create(Computer computerToAdd){
-		System.out.println(computerToAdd);
+//		System.out.println(computerToAdd);
 		StringBuilder builder = new StringBuilder();
-		String sql = builder.append("INSERT INTO computer (id, name, introduced, discontinued, company_id) VALUES").
+		System.out.println(computerToAdd.getDiscontinued());
+		builder.append("INSERT INTO computer (id, name, introduced, discontinued, company_id) VALUES").
 				append(" (null, '").
 				append(computerToAdd.getName()).
-				append("', '").toString();
-		if (computerToAdd.getIntroduced() == null) {
-			sql += "0000-00-00 00:00:00', ";
+				append("', ");
+		if(computerToAdd.getIntroduced()==null) {
+			builder.append("null, ");
 		} else {
-			sql += computerToAdd.getIntroduced() + "', '";
+			builder.append("(FROM_UNIXTIME(").append(computerToAdd.getIntroduced().getTime()/1000).append(")), ");
 		}
-		if (computerToAdd.getDiscontinued() == null) {
-			sql += "'0000-00-00 00:00:00', ";
+		if(computerToAdd.getDiscontinued() == null) {
+			builder.append("null, ");
 		} else {
-			sql += computerToAdd.getDiscontinued() + "', ";
+			builder.append("(FROM_UNIXTIME(").append(computerToAdd.getDiscontinued().getTime()/1000).append(")), ");
 		}
+		
 		if (computerToAdd.getCompany().getId() == 0) {
-			sql += "null);";
+			builder.append("null);");
 		} else {
-			sql += "'" + computerToAdd.getCompany().getId() + "');";
+			builder.append("'").append(computerToAdd.getCompany().getId()).append("');");
 		}
-		this.executeSQLQuery(builder.toString());
+		System.out.println(builder.toString());
+		daoFactory.executeSQLQuery(builder.toString());
 	}
 	
 	public void update(Computer computerToUpdate) {
@@ -70,13 +71,13 @@ public class ComputerDAO {
 				append(computerToUpdate.getId()).
 				append(";");
 		//update the computer
-		this.executeSQLQuery(builder.toString());
+		daoFactory.executeSQLQuery(builder.toString());
 	}
 	
 	public void delete(int computerIdToDelete) {
 		StringBuilder builder = new StringBuilder();
 		String sql = builder.append("DELETE FROM computer WHERE computer.id=").append(computerIdToDelete).append (";").toString();
-		this.executeSQLQuery(sql);
+		daoFactory.executeSQLQuery(sql);
 	}
 	
 	public Computer findById (int id) {
@@ -91,7 +92,7 @@ public class ComputerDAO {
 				append("WHERE computer.id = ").
 				append(id);
 		try {
-			connection = this.connectionManager.getConnection();
+			connection = daoFactory.getConnection();
 			statement = (Statement) connection.createStatement();
 			queryResult = statement.executeQuery(builder.toString());
 			while (queryResult.next()) {
@@ -124,9 +125,7 @@ public class ComputerDAO {
 					+ "FROM computer "
 					+ "LEFT JOIN company "
 					+ "ON computer.company_id = company.id ");
-			if (!"".equals(filter)){
-				builder.append("WHERE computer.name LIKE '%").append(filter).append("%' ");
-			}
+			builder.append("WHERE computer.name LIKE '%").append(filter).append("%' ");
 			builder.append("ORDER BY ");
 			if (criteria.equals("company")) { //field = company.name
 				builder.append("company.name");
@@ -141,7 +140,7 @@ public class ComputerDAO {
 					append(" OFFSET ").
 					append(offsetSQL);
 			try {
-				connection = this.connectionManager.getConnection();
+				connection = daoFactory.getConnection();
 				statement = (Statement) connection.createStatement();
 				queryResult = statement.executeQuery(builder.toString());
 				while (queryResult.next()) {
@@ -156,23 +155,6 @@ public class ComputerDAO {
 			}
 			return computers;
 		}
-		
-	
-	public int executeSQLQuery(String sqlToExecute) {
-		Connection connection = null;
-		Statement statement = null;
-		int result = 0;
-		try {
-			connection = this.connectionManager.getConnection();
-			statement = (Statement) connection.createStatement();
-			result = statement.executeUpdate(sqlToExecute);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DAOFactory.safeClose(connection, statement, null);
-		}
-		return result;
-	}
 
 	public int count(String filter) {
 		int numberFinal = 0;
@@ -189,7 +171,7 @@ public class ComputerDAO {
 					append("%';").toString();
 		}
 		try {
-			connection = this.connectionManager.getConnection();
+			connection = daoFactory.getConnection();
 			statement = (Statement) connection.createStatement();
 			number = statement.executeQuery(sql);
 			while (number.next()) {

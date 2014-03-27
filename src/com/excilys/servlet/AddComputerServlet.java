@@ -2,6 +2,9 @@ package com.excilys.servlet;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,8 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.excilys.dao.CompanyDAO;
 import com.excilys.dao.ComputerDAO;
-import com.excilys.domainClass.Company;
-import com.excilys.domainClass.Computer;
+import com.excilys.om.Company;
+import com.excilys.om.Computer;
 
 
 /**
@@ -54,22 +57,43 @@ public class AddComputerServlet extends HttpServlet {
 		CompanyDAO companyDAO = new CompanyDAO();
 		String name = "";
 		Computer computerToAdd = null;
-		String discontinuedStr = "";
-		String introducedStr = "";
-		Timestamp introduced = null;
-		Timestamp discontinued = null;
+		String discontinuedStr = request.getParameter("discontinuedDate");
+		String introducedStr = request.getParameter("introducedDate");
+		Date introduced = null;
+		Date discontinued = null;
 		
 		name = request.getParameter("computerName");
 		
-		if (!request.getParameter("introducedDate").equals("")) {
-			introducedStr = request.getParameter("introducedDate") + " 00:00:00";
-			introduced = java.sql.Timestamp.valueOf(introducedStr);
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		
+		if("".equals(introducedStr)) {
+			System.out.println("intro=chainevide");
+			try {
+				discontinued = formatter.parse(discontinuedStr);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		if("".equals(discontinuedStr)) {
+			System.out.println("disco=chainevide");
+			try {
+				introduced = formatter.parse(introducedStr);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 		}
 		
-		if (!request.getParameter("discontinuedDate").equals("")) {
-			discontinuedStr = request.getParameter("discontinuedDate") + " 00:00:00";
-			discontinued = java.sql.Timestamp.valueOf(discontinuedStr);
-		}
+		System.out.println(introduced +"/////" + discontinued);
+		
+//		if (!"".equals(request.getParameter("introducedDate"))) {
+//			introducedStr = request.getParameter("introducedDate") + " 00:00:00";
+//			introduced = java.sql.Timestamp.valueOf(introducedStr);
+//		}
+//		
+//		if (!request.getParameter("discontinuedDate").equals("")) {
+//			discontinuedStr = request.getParameter("discontinuedDate") + " 00:00:00";
+//			discontinued = java.sql.Timestamp.valueOf(discontinuedStr);
+//		}
 		
 		if (Integer.parseInt(request.getParameter("company")) == 0) {
 			Company company = new Company(null);

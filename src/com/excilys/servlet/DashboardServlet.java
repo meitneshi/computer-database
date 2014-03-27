@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.excilys.dao.ComputerDAO;
-import com.excilys.domainClass.Computer;
+import com.excilys.om.Computer;
 
 /**
  * Servlet implementation class DashboardServlet
@@ -92,16 +92,16 @@ public class DashboardServlet extends HttpServlet {
 			numberOfComputer = compuDAO.count("");
 			if(request.getParameter("on") != null && request.getParameter("c") != null) {//order specified
 				if (request.getParameter("on").equals("des")){
-					result = compuDAO.findInPage(currentPageNumber, entitiesPerPage, null, "DESC", request.getParameter("c").toString());
+					result = compuDAO.findInPage(currentPageNumber, entitiesPerPage, "", "DESC", request.getParameter("c").toString());
 				}
 				if (request.getParameter("on").equals("asc")) {
-					result = compuDAO.findInPage(currentPageNumber, entitiesPerPage, null, "ASC", request.getParameter("c").toString());
+					result = compuDAO.findInPage(currentPageNumber, entitiesPerPage, "", "ASC", request.getParameter("c").toString());
 				}
 				request.setAttribute("order", request.getParameter("on"));
 				request.setAttribute("criteria", request.getParameter("c"));
 				
 			}else { //default order (name ASC)
-				result = compuDAO.findInPage(currentPageNumber, entitiesPerPage, null, "ASC", "name");
+				result = compuDAO.findInPage(currentPageNumber, entitiesPerPage, "", "ASC", "name");
 				request.setAttribute("order", "asc");
 				request.setAttribute("criteria", "name");
 			}
