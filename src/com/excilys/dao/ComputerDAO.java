@@ -29,9 +29,7 @@ public class ComputerDAO {
 	}
 	
 	public void create(Computer computerToAdd){
-//		System.out.println(computerToAdd);
 		StringBuilder builder = new StringBuilder();
-		System.out.println(computerToAdd.getDiscontinued());
 		builder.append("INSERT INTO computer (id, name, introduced, discontinued, company_id) VALUES").
 				append(" (null, '").
 				append(computerToAdd.getName()).
@@ -52,7 +50,6 @@ public class ComputerDAO {
 		} else {
 			builder.append("'").append(computerToAdd.getCompany().getId()).append("');");
 		}
-		System.out.println(builder.toString());
 		daoFactory.executeSQLQuery(builder.toString());
 	}
 	
@@ -65,12 +62,19 @@ public class ComputerDAO {
 				append(computerToUpdate.getIntroduced()).
 				append("', discontinued = '").
 				append(computerToUpdate.getDiscontinued()).
-				append("', company_id = '").
+				append("', company_id =");
+		if(computerToUpdate.getCompany().getId() == 0) {
+			builder.append("null");
+		} else {
+			builder.append("'").
 				append(computerToUpdate.getCompany().getId()).
-				append("' WHERE id= ").
+				append("'");
+		}
+			builder.append(" WHERE id= ").
 				append(computerToUpdate.getId()).
 				append(";");
 		//update the computer
+		System.out.println(builder.toString());
 		daoFactory.executeSQLQuery(builder.toString());
 	}
 	

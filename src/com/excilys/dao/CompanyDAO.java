@@ -39,32 +39,28 @@ public class CompanyDAO {
 	 * 
 	 * @return ResulSet of Company
 	 */
-	public List<Company> find(Company companytofind) {
+	public Company findById(int id) {
 		Connection connection = null;
 		Statement statement = null;
-		List<Company> companiesResult = new ArrayList<Company>();
+		Company company = new Company();
 		ResultSet queryResult = null;
 		StringBuilder builder = new StringBuilder();
-		String sql = builder.append("SELECT * FROM company WHERE company.name LIKE '%").
-				append(companytofind.getName()).
-				append("%' ").
-				append("OR company.id = ").
-				append(companytofind.getId()).
-				toString();
+		builder.append("SELECT * FROM company WHERE company.id=").
+				append(id);
 		try {
 			connection = daoFactory.getConnection();
 			statement = (Statement) connection.createStatement();
-			queryResult = statement.executeQuery(sql);
+			queryResult = statement.executeQuery(builder.toString());
 			while (queryResult.next()) {
-				Company company = new Company(queryResult.getString(2).toString(), queryResult.getInt(1));
-				companiesResult.add(company);
+				company.setId(id);
+				company.setName(queryResult.getString("name"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			DAOFactory.safeClose(connection, statement, queryResult);
 		}
-		return companiesResult;
+		return company;
 	}
 	
 	public List<Company> findAll() {

@@ -46,10 +46,6 @@ public class EditComputerServlet extends HttpServlet {
 		request.setAttribute("computer", finalComputer);
 		request.setAttribute("companyList", companyDAO.findAll());
 		
-		
-//		PrintWriter out = response.getWriter();
-//		out.println(finalComputer);
-		
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/editComputer.jsp");
 		dispatcher.forward(request,response);
 	}
@@ -63,7 +59,6 @@ public class EditComputerServlet extends HttpServlet {
 		ComputerDAO computerDAO = new ComputerDAO();
 		CompanyDAO companyDAO = new CompanyDAO();
 		String name = request.getParameter("computerName");
-		Computer computerToModify = new Computer();
 		String discontinuedStr = request.getParameter("introducedDate");
 		String introducedStr = request.getParameter("discontinuedDate");
 		Timestamp introduced = null;
@@ -80,22 +75,13 @@ public class EditComputerServlet extends HttpServlet {
 			discontinued = java.sql.Timestamp.valueOf(discontinuedStr);
 		}
 		
+		Company company;
 		if (Integer.parseInt(request.getParameter("company")) == 0) {
-			Company company = new Company(null);
-			computerToModify.setId(id);
-			computerToModify.setCompany(company);
-			computerToModify.setName(name);
-			computerToModify.setIntroduced(introduced);
-			computerToModify.setDiscontinued(discontinued);
+			company = new Company(null);
 		} else {
-			Company company = new Company(Integer.parseInt(request.getParameter("company")));
-			Company company2 = companyDAO.find(company).get(0);
-			computerToModify.setId(id);
-			computerToModify.setCompany(company2);
-			computerToModify.setName(name);
-			computerToModify.setIntroduced(introduced);
-			computerToModify.setDiscontinued(discontinued);
+			company = companyDAO.findById(Integer.parseInt(request.getParameter("company")));
 		}
+		Computer computerToModify = new Computer(id, company, name, introduced, discontinued);
 		
 		computerDAO.update(computerToModify);
 		
@@ -103,5 +89,7 @@ public class EditComputerServlet extends HttpServlet {
 		
 		response.sendRedirect("/computer_database/Dashboard");		
 	}
+	
+	
 
 }
