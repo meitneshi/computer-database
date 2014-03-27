@@ -1,7 +1,6 @@
 package com.excilys.servlet;
 
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,10 +12,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.excilys.dao.CompanyDAO;
-import com.excilys.dao.ComputerDAO;
 import com.excilys.om.Company;
 import com.excilys.om.Computer;
+import com.excilys.service.CompanyService;
+import com.excilys.service.ComputerService;
 
 
 /**
@@ -40,8 +39,8 @@ public class AddComputerServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		
-		CompanyDAO companyDao = new CompanyDAO();
-		request.setAttribute("companyList", companyDao.findAll());
+		CompanyService companyservice = new CompanyService();
+		request.setAttribute("companyList", companyservice.findAll());
 		request.setAttribute("displayDivAdd", false);
 				
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/addComputer.jsp");
@@ -53,8 +52,8 @@ public class AddComputerServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
-		ComputerDAO computerDAO = new ComputerDAO();
-		CompanyDAO companyDAO = new CompanyDAO();
+		ComputerService computerService = new ComputerService();
+		CompanyService companyService = new CompanyService();
 		String name = "";
 		Computer computerToAdd = null;
 		String discontinuedStr = request.getParameter("discontinuedDate");
@@ -87,11 +86,11 @@ public class AddComputerServlet extends HttpServlet {
 			Company company = new Company(null);
 			computerToAdd = new Computer(company, name, introduced, discontinued);
 		} else {
-			Company company = companyDAO.findById(Integer.parseInt(request.getParameter("company")));
+			Company company = companyService.findById(Integer.parseInt(request.getParameter("company")));
 			computerToAdd = new Computer(company, name, introduced, discontinued);
 		}
 		
-		computerDAO.create(computerToAdd);
+		computerService.create(computerToAdd);
 		
 		request.setAttribute("displayDivAdd", true);
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/addComputer.jsp");

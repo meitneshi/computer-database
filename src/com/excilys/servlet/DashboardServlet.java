@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.excilys.dao.ComputerDAO;
+import com.excilys.service.ComputerService;
 import com.excilys.om.Computer;
 
 /**
@@ -35,13 +35,26 @@ public class DashboardServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		
-		ComputerDAO compuDAO = new ComputerDAO();
+		ComputerService computerService = new ComputerService();
 		
 		int entitiesPerPage = 0;
 		int currentPageNumber = 0;
 		int offsetSQL = 0;
 		int numberOfComputer = 0;
 		int numberTotalOfComputer = 0;
+		
+//		String criteria = request.getParameter("criteria");
+//		String order = request.getParameter("order");
+//		String filter = request.getParameter("filter");
+		
+//		try {
+//			entitiesPerPage = Integer.parseInt(request.getParameter("entitiesperpage"));
+//			currentPageNumber = Integer.parseInt(request.getParameter("page"));
+//		} catch (NumberFormatException e) {
+//			e.printStackTrace();
+//		}
+		
+//		this.initParameters(entitiesPerPage, currentPageNumber, criteria, order, filter);
 		
 		//traitement entitiesPerPage
 		if(request.getParameter("entitiesperpage") != null) {
@@ -74,34 +87,34 @@ public class DashboardServlet extends HttpServlet {
 		List<Computer> result = new ArrayList<Computer>();
 		if (request.getParameter("filter") != null) {
 			request.setAttribute("filter", request.getParameter("filter"));
-			numberOfComputer = compuDAO.count(request.getParameter("filter"));
+			numberOfComputer = computerService.count(request.getParameter("filter"));
 			if(request.getParameter("order") != null && request.getParameter("criteria") != null) {//order specified
 				
 				if (request.getParameter("order").equals("des")){
-					result = compuDAO.findInPage(currentPageNumber, entitiesPerPage, request.getParameter("filter").toString(), "DESC", request.getParameter("criteria").toString());
+					result = computerService.findInPage(currentPageNumber, entitiesPerPage, request.getParameter("filter").toString(), "DESC", request.getParameter("criteria").toString());
 				}
 				if (request.getParameter("order").equals("asc")) {
-					result = compuDAO.findInPage(currentPageNumber, entitiesPerPage, request.getParameter("filter").toString(), "ASC", request.getParameter("criteria").toString());
+					result = computerService.findInPage(currentPageNumber, entitiesPerPage, request.getParameter("filter").toString(), "ASC", request.getParameter("criteria").toString());
 				}
 			}else { //default order (name ASC)
-				result = compuDAO.findInPage(currentPageNumber, entitiesPerPage, request.getParameter("filter").toString(), "ASC", "name");
+				result = computerService.findInPage(currentPageNumber, entitiesPerPage, request.getParameter("filter").toString(), "ASC", "name");
 			}
 			request.setAttribute("computerPageList", result);
 			
 		} else {
-			numberOfComputer = compuDAO.count("");
+			numberOfComputer = computerService.count("");
 			if(request.getParameter("order") != null && request.getParameter("criteria") != null) {//order specified
 				if (request.getParameter("order").equals("des")){
-					result = compuDAO.findInPage(currentPageNumber, entitiesPerPage, "", "DESC", request.getParameter("criteria").toString());
+					result = computerService.findInPage(currentPageNumber, entitiesPerPage, "", "DESC", request.getParameter("criteria").toString());
 				}
 				if (request.getParameter("order").equals("asc")) {
-					result = compuDAO.findInPage(currentPageNumber, entitiesPerPage, "", "ASC", request.getParameter("criteria").toString());
+					result = computerService.findInPage(currentPageNumber, entitiesPerPage, "", "ASC", request.getParameter("criteria").toString());
 				}
 				request.setAttribute("order", request.getParameter("order"));
 				request.setAttribute("criteria", request.getParameter("criteria"));
 				
 			}else { //default order (name ASC)
-				result = compuDAO.findInPage(currentPageNumber, entitiesPerPage, "", "ASC", "name");
+				result = computerService.findInPage(currentPageNumber, entitiesPerPage, "", "ASC", "name");
 				request.setAttribute("order", "asc");
 				request.setAttribute("criteria", "name");
 			}
@@ -114,7 +127,7 @@ public class DashboardServlet extends HttpServlet {
 		double pageMaxDouble = numberOfComputerDouble/entitiesPerPageDouble;
 		int pageMax = (int) Math.ceil(pageMaxDouble);
 				
-		numberTotalOfComputer = compuDAO.count("");
+		numberTotalOfComputer = computerService.count("");
 		request.setAttribute("nbTotal", numberTotalOfComputer);
 		request.setAttribute("numberOfComputer", numberOfComputer);
 		request.setAttribute("pageMax", pageMax);

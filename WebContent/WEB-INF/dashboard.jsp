@@ -95,7 +95,7 @@
 		<div class="alert alert-success">Your computer have been successfully edited</div>
 	</c:if>
 	
-	<page:pagination pageMax="${pageMax }" currentPageNumber="${currentPageNumber }" offsetSQL="${offsetSQL }" filter="${filter }" order="${order }" criteria="${criteria }"></page:pagination>	
+	<page:pagination pageMax="${pageMax }" currentPageNumber="${currentPageNumber }" filter="${filter }" order="${order }" criteria="${criteria }"></page:pagination>	
 	
 	<table class="table table-striped table-hover">
 		<thead>

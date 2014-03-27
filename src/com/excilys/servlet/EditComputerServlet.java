@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.excilys.dao.CompanyDAO;
-import com.excilys.dao.ComputerDAO;
+import com.excilys.service.CompanyService;
+import com.excilys.service.ComputerService;
 import com.excilys.om.Company;
 import com.excilys.om.Computer;
 
@@ -38,13 +38,13 @@ public class EditComputerServlet extends HttpServlet {
 		
 		request.setAttribute("displayDivEdit", false);
 		
-		ComputerDAO computerDAO = new ComputerDAO();
-		CompanyDAO companyDAO = new CompanyDAO();
+		ComputerService computerService = new ComputerService();
+		CompanyService companyService = new CompanyService();
 		
-		Computer finalComputer = computerDAO.findById(Integer.parseInt(request.getParameter("id")));
+		Computer finalComputer = computerService.findById(Integer.parseInt(request.getParameter("id")));
 		
 		request.setAttribute("computer", finalComputer);
-		request.setAttribute("companyList", companyDAO.findAll());
+		request.setAttribute("companyList", companyService.findAll());
 		
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/editComputer.jsp");
 		dispatcher.forward(request,response);
@@ -56,8 +56,8 @@ public class EditComputerServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		
-		ComputerDAO computerDAO = new ComputerDAO();
-		CompanyDAO companyDAO = new CompanyDAO();
+		ComputerService computerService = new ComputerService();
+		CompanyService companyService = new CompanyService();
 		String name = request.getParameter("computerName");
 		String discontinuedStr = request.getParameter("introducedDate");
 		String introducedStr = request.getParameter("discontinuedDate");
@@ -79,11 +79,11 @@ public class EditComputerServlet extends HttpServlet {
 		if (Integer.parseInt(request.getParameter("company")) == 0) {
 			company = new Company(null);
 		} else {
-			company = companyDAO.findById(Integer.parseInt(request.getParameter("company")));
+			company = companyService.findById(Integer.parseInt(request.getParameter("company")));
 		}
 		Computer computerToModify = new Computer(id, company, name, introduced, discontinued);
 		
-		computerDAO.update(computerToModify);
+		computerService.update(computerToModify);
 		
 		request.setAttribute("displayDivEdit", true);
 		

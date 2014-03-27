@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.excilys.dao.ComputerDAO;
+import com.excilys.service.ComputerService;
 
 
 /**
@@ -33,8 +33,8 @@ public class DeleteComputerServlet extends HttpServlet {
 		response.setContentType("text/html");
 		
 		int idToDelete = Integer.parseInt(request.getParameter("id"));
-		ComputerDAO computerDAO = new ComputerDAO();
-		computerDAO.delete(idToDelete);
+		ComputerService computerService = new ComputerService();
+		computerService.delete(idToDelete);
 		
 		response.sendRedirect("/computer_database/Dashboard");
 		

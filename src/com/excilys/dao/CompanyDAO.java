@@ -12,7 +12,7 @@ import com.mysql.jdbc.Statement;
 
 public class CompanyDAO {
 
-	DAOFactory daoFactory = DAOFactory.getInstance();
+	static DAOFactory daoFactory = DAOFactory.getInstance();
 		
 	private final static CompanyDAO _instance = new CompanyDAO();
 	
@@ -39,7 +39,7 @@ public class CompanyDAO {
 	 * 
 	 * @return ResulSet of Company
 	 */
-	public Company findById(int id) {
+	public static Company findById(int id) {
 		Connection connection = null;
 		Statement statement = null;
 		Company company = new Company();

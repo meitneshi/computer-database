@@ -8,7 +8,6 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="link" %>
 
 <%@ attribute name="currentPageNumber" %>
-<%@ attribute name="offsetSQL" %>
 <%@ attribute name="pageMax" %>
 <%@ attribute name="filter" %>
 <%@ attribute name="order" %>
