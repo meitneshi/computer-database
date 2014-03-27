@@ -95,9 +95,7 @@
 		<div class="alert alert-success">Your computer have been successfully edited</div>
 	</c:if>
 	
-	<page:pagination pageMax="${pageMax }" currentPageNumber="${currentPageNumber }" offsetSQL="${offsetSQL }" filter="${filter }" order="${order }" criteria="${criteria }"></page:pagination>	
-	
-<%-- 	<link:linkGen label="${currentPageNumber }" servlet="Dashboard" epp="${entitiesPerPage }" p="${currentPageNumber }" filter="${filter }" on="${order }" c="${criteria }"/>	 --%>
+	<page:pagination pageMax="${pageMax }" currentPageNumber="${currentPageNumber }" offsetSQL="${offsetSQL }" filter="${filter }" order="${on }" criteria="${c }"></page:pagination>	
 	
 	<table class="table table-striped table-hover">
 		<thead>
