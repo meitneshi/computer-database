@@ -26,7 +26,6 @@ public class DashboardServlet extends HttpServlet {
      */
     public DashboardServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -39,105 +38,57 @@ public class DashboardServlet extends HttpServlet {
 		
 		int entitiesPerPage = 0;
 		int currentPageNumber = 0;
-		int offsetSQL = 0;
 		int numberOfComputer = 0;
 		int numberTotalOfComputer = 0;
 		
-//		String criteria = request.getParameter("criteria");
-//		String order = request.getParameter("order");
-//		String filter = request.getParameter("filter");
+//		traitement entitiesPerPage
+		entitiesPerPage = this.initEntitiesPerPage(request.getParameter("entitiesperpage"));
 		
-//		try {
-//			entitiesPerPage = Integer.parseInt(request.getParameter("entitiesperpage"));
-//			currentPageNumber = Integer.parseInt(request.getParameter("page"));
-//		} catch (NumberFormatException e) {
-//			e.printStackTrace();
-//		}
+//		traitement page
+		currentPageNumber = this.initCurrentPageNumber(request.getParameter("page"));
 		
-//		this.initParameters(entitiesPerPage, currentPageNumber, criteria, order, filter);
-		
-		//traitement entitiesPerPage
-		if(request.getParameter("entitiesperpage") != null) {
-			entitiesPerPage = Integer.parseInt(request.getParameter("entitiesperpage"));
-		} else {
-			entitiesPerPage = 30; //default
-		}
-		
-		//traitement page
-		if(request.getParameter("page") != null) {
-			currentPageNumber = Integer.parseInt(request.getParameter("page"));
-			offsetSQL = (currentPageNumber-1)*entitiesPerPage;
-		} else {
-			currentPageNumber = 1; //default
-			offsetSQL = 0; //default
-		}
-		
+//		set Criteria
+		String criteria = null;
 		if (request.getParameter("criteria") != null) {
 			request.setAttribute("criteria", request.getParameter("criteria"));
+			criteria = request.getParameter("criteria");
 		} else {
 			request.setAttribute("criteria", "name");
+			criteria = "name";
 		}
+		
+//		set Order
+		String order = null;
 		if(request.getParameter("order") != null) {
 			request.setAttribute("order", request.getParameter("order"));
+			order = request.getParameter("order");
 		} else {
 			request.setAttribute("order", "asc");
+			order = "asc";
 		}
 		
-		//traitement filtre et order
-		List<Computer> result = new ArrayList<Computer>();
-		if (request.getParameter("filter") != null) {
-			request.setAttribute("filter", request.getParameter("filter"));
+//		traitement filtre
+		if ((request.getParameter("filter")) != null) {
 			numberOfComputer = computerService.count(request.getParameter("filter"));
-			if(request.getParameter("order") != null && request.getParameter("criteria") != null) {//order specified
-				
-				if (request.getParameter("order").equals("des")){
-					result = computerService.findInPage(currentPageNumber, entitiesPerPage, request.getParameter("filter").toString(), "DESC", request.getParameter("criteria").toString());
-				}
-				if (request.getParameter("order").equals("asc")) {
-					result = computerService.findInPage(currentPageNumber, entitiesPerPage, request.getParameter("filter").toString(), "ASC", request.getParameter("criteria").toString());
-				}
-			}else { //default order (name ASC)
-				result = computerService.findInPage(currentPageNumber, entitiesPerPage, request.getParameter("filter").toString(), "ASC", "name");
-			}
+			request.setAttribute("filter", request.getParameter("filter"));
+			String filter = request.getParameter("filter");
+			List<Computer> result = this.findComputer(currentPageNumber, entitiesPerPage, filter, criteria, order);
 			request.setAttribute("computerPageList", result);
-			
 		} else {
 			numberOfComputer = computerService.count("");
-			if(request.getParameter("order") != null && request.getParameter("criteria") != null) {//order specified
-				if (request.getParameter("order").equals("des")){
-					result = computerService.findInPage(currentPageNumber, entitiesPerPage, "", "DESC", request.getParameter("criteria").toString());
-				}
-				if (request.getParameter("order").equals("asc")) {
-					result = computerService.findInPage(currentPageNumber, entitiesPerPage, "", "ASC", request.getParameter("criteria").toString());
-				}
-				request.setAttribute("order", request.getParameter("order"));
-				request.setAttribute("criteria", request.getParameter("criteria"));
-				
-			}else { //default order (name ASC)
-				result = computerService.findInPage(currentPageNumber, entitiesPerPage, "", "ASC", "name");
-				request.setAttribute("order", "asc");
-				request.setAttribute("criteria", "name");
-			}
+			request.setAttribute("filter", "");
+			List<Computer> result = this.findComputer(currentPageNumber, entitiesPerPage, "", "name", order);
 			request.setAttribute("computerPageList", result);
 		}
 		
-		double entitiesPerPageDouble = (double) entitiesPerPage;
-		double numberOfComputerDouble = (double) numberOfComputer;
-		
-		double pageMaxDouble = numberOfComputerDouble/entitiesPerPageDouble;
-		int pageMax = (int) Math.ceil(pageMaxDouble);
+//		Evalutaion de Page max
+		int pageMax = this.initPageMax(entitiesPerPage, numberOfComputer);
 				
 		numberTotalOfComputer = computerService.count("");
 		request.setAttribute("nbTotal", numberTotalOfComputer);
 		request.setAttribute("numberOfComputer", numberOfComputer);
 		request.setAttribute("pageMax", pageMax);
-		request.setAttribute("offsetSQL", offsetSQL);
 		request.setAttribute("currentPageNumber", currentPageNumber);
-		if (entitiesPerPage == 0) {
-			request.setAttribute("entitiesPerPage", numberOfComputer);
-		} else {
-			request.setAttribute("entitiesPerPage", entitiesPerPage);
-		}
 		
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/dashboard.jsp");
 		dispatcher.forward(request,response);
@@ -147,46 +98,64 @@ public class DashboardServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html");
-		int entitiesperpage = 0;
-		int page = 0;
-		StringBuilder urlB = new StringBuilder();
-		urlB.append("/computer_database/Dashboard");
-		//if order
-		//if search
-		if (request.getParameter("filter") != null) {
-			entitiesperpage = Integer.parseInt(request.getParameter("entitiesperpage"));
-			page = Integer.parseInt(request.getParameter("page"));
-			urlB.append("?entitiesperpage=").append(entitiesperpage).append("&page=").append(page);
-			if (request.getParameter("criteria") != null) {
-				urlB.append("&criteria=").append(request.getParameter("criteria"));
-			}
-			if(request.getParameter("order") != null) {
-				urlB.append("&order=").append(request.getParameter("order"));
-			}
-			String filter = request.getParameter("filter");
-			urlB.append("&filter=").append(filter);
-			
-			String url = urlB.toString();
-			response.sendRedirect(url);
-		}else{//default Dashboard
-			entitiesperpage = Integer.parseInt(request.getParameter("entitiesperpage"));
-			page = Integer.parseInt(request.getParameter("page"));
-			urlB.append("?entitiesperpage=").append(entitiesperpage).append("&page=").append(page);
-			if (request.getParameter("criteria") != null) {
-				urlB.append("&criteria=").append(request.getParameter("criteria"));
-			}
-			if(request.getParameter("order") != null) {
-				urlB.append("&order=").append(request.getParameter("order"));
-			}
-			String filter = request.getParameter("filter");
-			urlB.append("&filter=").append(filter);
-			
-			String url = urlB.toString();
-			response.sendRedirect(url);
-		}
-		
-		
+		//nothing to do for the moment
 	}
+	
+	
+	/******************************************************/
+	/*                     Functions                      */
+	/******************************************************/
+
+//	Traitement de currentPage
+	private int initCurrentPageNumber(String currentPageNumberS) {
+		int currentPageNumber = 1; //default
+		if(currentPageNumberS != null) {
+			try {
+				currentPageNumber = Integer.parseInt(currentPageNumberS);
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			}
+		}
+		return currentPageNumber;
+	}
+	
+//	Initialisation de page Max
+	private int initPageMax(int entitiesPerPage, int numberOfComputer) {
+		double entitiesPerPageDouble = (double) entitiesPerPage;
+		double numberOfComputerDouble = (double) numberOfComputer;
+		double pageMaxDouble = numberOfComputerDouble/entitiesPerPageDouble;
+		return (int) Math.ceil(pageMaxDouble);
+	}
+
+//	initialisation de entities par page
+	private int initEntitiesPerPage(String entitiesPerPageS){
+		int entitiesperpage = 30; //default
+		if(entitiesPerPageS != null) {
+			try {
+				entitiesperpage =  Integer.parseInt(entitiesPerPageS);
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			}
+		}
+		return entitiesperpage;
+	}
+
+//	generate list of computer to be show on screen with order
+	private List<Computer> findComputer(int currentPageNumber, int entitiesPerPage, String filter, String criteria, String order) {
+		List<Computer> result = new ArrayList<Computer>();
+		ComputerService computerService = new ComputerService();
+		String filterS = "";
+		if (filter != null) { //filter specified
+			filterS = filter;
+		}
+		if ("desc".equals(order)) {
+			result = computerService.findInPage(currentPageNumber, entitiesPerPage, filterS, order, criteria);
+		}
+		if ("asc".equals(order)) {
+			result = computerService.findInPage(currentPageNumber, entitiesPerPage, filterS, order, criteria);
+		}
+		return result;
+	}
+
 
 }

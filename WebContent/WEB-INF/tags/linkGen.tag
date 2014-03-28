@@ -45,9 +45,14 @@
 
 
 <!-- Add the filter if exist -->
-<c:if test="${!empty filter }">
-	<c:set var="url" value="${url }&filter=${filter }"></c:set>
-</c:if>
+<c:choose>
+	<c:when test="${!empty filter }">
+		<c:set var="url" value="${url }&filter=${filter }"/>
+	</c:when>
+	<c:otherwise>
+		<c:set var="url" value="${url }&filter="/>
+	</c:otherwise>
+</c:choose>
 
 <!-- Add the order criteria (default = asc (ie ascendant)) -->
 <c:choose>

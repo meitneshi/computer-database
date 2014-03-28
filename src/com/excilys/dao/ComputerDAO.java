@@ -167,7 +167,7 @@ public class ComputerDAO {
 		Statement statement = null;
 		StringBuilder builder = new StringBuilder();
 		String sql = "";
-		if (filter.equals("")){ //count all computer
+		if ("".equals(filter)){ //count all computer
 			sql = builder.append("SELECT COUNT(id) FROM computer;").toString();
 		} else { //count searching computer
 			sql = builder.append("SELECT COUNT(id) FROM computer WHERE name LIKE '%").

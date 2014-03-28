@@ -55,20 +55,14 @@ public class AddComputerServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		ComputerService computerService = new ComputerService();
-		CompanyService companyService = new CompanyService();
 		String name = "";
 		String discontinuedStr = request.getParameter("discontinuedDate");
 		String introducedStr = request.getParameter("introducedDate");
 		
 		name = request.getParameter("computerName");
 		List<Date> dates = this.initDate(introducedStr, discontinuedStr);
+		Company company = this.initCompany(request.getParameter("company"));
 		
-		Company company;
-		if (Integer.parseInt(request.getParameter("company")) == 0) {
-			company = new Company(null);
-		} else {
-			company = companyService.findById(Integer.parseInt(request.getParameter("company")));
-		}
 		Computer computerToAdd = new Computer(company, name, dates.get(0), dates.get(1));
 		
 		computerService.create(computerToAdd);
@@ -77,6 +71,23 @@ public class AddComputerServlet extends HttpServlet {
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/addComputer.jsp");
 		dispatcher.forward(request,response);
 		
+	}
+
+	private Company initCompany(String companyId) {
+		Company company;
+		int companyIdInt = 0;
+		CompanyService companyService = new CompanyService();
+		try {
+			companyIdInt = Integer.parseInt(companyId);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
+		if (companyIdInt == 0) {
+			company = new Company(null);
+		} else {
+			company = companyService.findById(companyIdInt);
+		}
+		return company;
 	}
 
 	private List<Date> initDate(String introducedStr, String discontinuedStr) {

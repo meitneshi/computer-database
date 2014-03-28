@@ -21,10 +21,10 @@
 	</h1>
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
-			<form class="navbar-form navbar-left" method="POST" action="/computer_database/Dashboard">
+			<form class="navbar-form navbar-left" method="GET" action="/computer_database/Dashboard">
 				<div class="form-group">
 					<input type="hidden" name="entitiesperpage" value="${entitiesPerPage }">
-					<input type="hidden" name="page" value="${currentPageNumber }">
+					<input type="hidden" name="page" value="1">
 					<input type="hidden" name="order" value="asc">
 					<input type="hidden" name="criteria" value="name">
 					<input type="text" name="filter" class="form-control" placeholder="Search by name">
@@ -36,7 +36,7 @@
 <!-- Dropdown select number of entites to show -->
 			<div class="navbar-left">
 				Number of computer to show per page:
-				<form name="selectNumberOfEntitiesPerPage" method ="POST" action="/computer_database/Dashboard">
+				<form name="selectNumberOfEntitiesPerPage" method ="GET" action="/computer_database/Dashboard">
 					<input type="hidden" name="filter" value="${filter }">
 					<input type="hidden" name="page" value="1">
 					<input type="hidden" name="order" value="${order }">
@@ -75,8 +75,8 @@
 			<tr>
 				<th>
 					Computer Name
-					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-up' ></span>" servlet="Dashboard" entitiesperpage="${entitiesPerPage }" page="${currentPageNumber }" filter="${filter }" order="asc" criteria="name"/>
-					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-down' ></span>" servlet="Dashboard" entitiesperpage="${entitiesPerPage }" page="${currentPageNumber }" filter="${filter }" order="des" criteria="name"/>
+					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-up' ></span>" servlet="Dashboard" entitiesperpage="${entitiesPerPage }" page="1" filter="${filter }" order="asc" criteria="name"/>
+					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-down' ></span>" servlet="Dashboard" entitiesperpage="${entitiesPerPage }" page="1" filter="${filter }" order="desc" criteria="name"/>
 				</th>
 				
 				<th>
@@ -89,8 +89,8 @@
 				
 				<th>
 					Company
-					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-up' ></span>" servlet="Dashboard" entitiesperpage="${entitiesPerPage }" page="${currentPageNumber }" filter="${filter }" order="asc" criteria="company"/>
-					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-down' ></span>" servlet="Dashboard" entitiesperpage="${entitiesPerPage }" page="${currentPageNumber }" filter="${filter }" order="des" criteria="company"/>
+					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-up' ></span>" servlet="Dashboard" entitiesperpage="${entitiesPerPage }" page="1" filter="${filter }" order="asc" criteria="company"/>
+					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-down' ></span>" servlet="Dashboard" entitiesperpage="${entitiesPerPage }" page="1" filter="${filter }" order="desc" criteria="company"/>
 				</th>
 				
 				<th>Actions</th>
