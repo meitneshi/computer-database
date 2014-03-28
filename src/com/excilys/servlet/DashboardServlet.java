@@ -11,7 +11,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.LoggerFactory;
+
+import ch.qos.logback.classic.Logger;
+
 import com.excilys.service.ComputerService;
+import com.excilys.dao.DAOFactory;
 import com.excilys.om.Computer;
 
 /**
@@ -20,6 +25,7 @@ import com.excilys.om.Computer;
 @WebServlet("/Dashboard")
 public class DashboardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private final static Logger logger = (Logger) LoggerFactory.getLogger(DAOFactory.class);
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -113,7 +119,7 @@ public class DashboardServlet extends HttpServlet {
 			try {
 				currentPageNumber = Integer.parseInt(currentPageNumberS);
 			} catch (NumberFormatException e) {
-				e.printStackTrace();
+				logger.debug("failed to parse current Page number into int "+e.getMessage());
 			}
 		}
 		return currentPageNumber;
@@ -134,7 +140,7 @@ public class DashboardServlet extends HttpServlet {
 			try {
 				entitiesperpage =  Integer.parseInt(entitiesPerPageS);
 			} catch (NumberFormatException e) {
-				e.printStackTrace();
+				logger.debug("failed to parse number of entities per Page into int "+e.getMessage());
 			}
 		}
 		return entitiesperpage;

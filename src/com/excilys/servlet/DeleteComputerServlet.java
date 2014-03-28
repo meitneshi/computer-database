@@ -8,6 +8,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.LoggerFactory;
+
+import ch.qos.logback.classic.Logger;
+
+import com.excilys.dao.DAOFactory;
 import com.excilys.service.ComputerService;
 
 
@@ -17,7 +22,8 @@ import com.excilys.service.ComputerService;
 @WebServlet("/DeleteComputer")
 public class DeleteComputerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private final static Logger logger = (Logger) LoggerFactory.getLogger(DAOFactory.class);
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -32,12 +38,14 @@ public class DeleteComputerServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		
-		int idToDelete = Integer.parseInt(request.getParameter("id"));
-		ComputerService computerService = new ComputerService();
-		computerService.delete(idToDelete);
-		
+		try {
+			int idToDelete = Integer.parseInt(request.getParameter("id"));
+			ComputerService computerService = new ComputerService();
+			computerService.delete(idToDelete);
+		} catch (NumberFormatException e) {
+			logger.debug("failed to parse id to delete into int "+e.getMessage());
+		}
 		response.sendRedirect("/computer_database/Dashboard");
-		
 	}
 
 	/**

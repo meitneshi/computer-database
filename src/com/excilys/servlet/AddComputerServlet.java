@@ -12,6 +12,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.LoggerFactory;
+
+import ch.qos.logback.classic.Logger;
+
+import com.excilys.dao.DAOFactory;
 import com.excilys.om.Company;
 import com.excilys.om.Computer;
 import com.excilys.service.CompanyService;
@@ -24,7 +29,11 @@ import com.excilys.service.ComputerService;
 @WebServlet("/AddComputer")
 public class AddComputerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    
+	
+	private final static Logger logger = (Logger) LoggerFactory.getLogger(DAOFactory.class);
+	
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -56,7 +65,6 @@ public class AddComputerServlet extends HttpServlet {
 		String name = "";
 		String discontinuedStr = request.getParameter("discontinuedDate");
 		String introducedStr = request.getParameter("introducedDate");
-		System.out.println(discontinuedStr);
 		
 		Date introduced = null;
 		Date discontinued = null;
@@ -67,20 +75,20 @@ public class AddComputerServlet extends HttpServlet {
 			try {
 				discontinued = formatter.parse(discontinuedStr);
 			} catch (ParseException e) {
-				e.printStackTrace();
+				logger.debug("failed to format the discontinued date" +e.getMessage());
 			}
 		} else if("".equals(discontinuedStr)) {
 			try {
 				introduced = formatter.parse(introducedStr);
 			} catch (ParseException e) {
-				e.printStackTrace();
+				logger.debug("failed to format the introduced date" +e.getMessage());
 			}
 		} else{
 			try {
 				discontinued = formatter.parse(discontinuedStr);
 				introduced = formatter.parse(introducedStr);
 			} catch (ParseException e) {
-				e.printStackTrace();
+				logger.debug("failed to format the introduced date and the discontinued date" +e.getMessage());
 			}
 		}
 		
@@ -88,7 +96,6 @@ public class AddComputerServlet extends HttpServlet {
 		
 		Computer computer = new Computer(company, name, introduced, discontinued);
 		
-		System.out.println(computer);
 		computerService.save(computer);
 		
 		request.setAttribute("displayDivAdd", true);
@@ -104,7 +111,7 @@ public class AddComputerServlet extends HttpServlet {
 		try {
 			companyIdInt = Integer.parseInt(companyId);
 		} catch (NumberFormatException e) {
-			e.printStackTrace();
+			logger.debug("failed to parseInt the company Id "+e.getMessage());
 		}
 		if (companyIdInt == 0) {
 			company = new Company(null);

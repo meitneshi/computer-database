@@ -110,7 +110,6 @@ public class ComputerDAO {
 				preparedStatement.setString(1, "%"+filter+"%");
 				preparedStatement.setInt(2, ((numPage-1)*entitiesPerPage));
 				preparedStatement.setInt(3, entitiesPerPage);
-				System.out.println(preparedStatement);
 				queryResult = preparedStatement.executeQuery();
 				while(queryResult.next()) {
 					Company company = new Company(queryResult.getString("company.name"), queryResult.getInt("company_id"));
@@ -190,7 +189,6 @@ public class ComputerDAO {
 				preparedStatement.setLong(5, computer.getCompany().getId());
 				preparedStatement.setLong(9, computer.getCompany().getId());
 			}
-			System.out.println(preparedStatement);
 			preparedStatement.executeUpdate();
 			logger.info("save is successfull");
 		} catch (SQLException e) {

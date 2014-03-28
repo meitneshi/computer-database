@@ -12,8 +12,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.LoggerFactory;
+
+import ch.qos.logback.classic.Logger;
+
 import com.excilys.service.CompanyService;
 import com.excilys.service.ComputerService;
+import com.excilys.dao.DAOFactory;
 import com.excilys.om.Company;
 import com.excilys.om.Computer;
 
@@ -23,7 +28,7 @@ import com.excilys.om.Computer;
 @WebServlet("/EditComputer")
 public class EditComputerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private final static Logger logger = (Logger) LoggerFactory.getLogger(DAOFactory.class);
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -41,8 +46,15 @@ public class EditComputerServlet extends HttpServlet {
 		
 		ComputerService computerService = new ComputerService();
 		CompanyService companyService = new CompanyService();
+		int id;
+		Computer finalComputer = null;
 		
-		Computer finalComputer = computerService.findById(Integer.parseInt(request.getParameter("id")));
+		try {
+			id = Integer.parseInt(request.getParameter("id"));
+			finalComputer = computerService.findById(id);
+		} catch (NumberFormatException e){
+			logger.debug("failed to parse id into int "+e.getMessage());
+		}
 		
 		request.setAttribute("computer", finalComputer);
 		request.setAttribute("companyList", companyService.findAll());
