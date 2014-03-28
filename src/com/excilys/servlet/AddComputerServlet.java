@@ -58,16 +58,31 @@ public class AddComputerServlet extends HttpServlet {
 		String name = "";
 		String discontinuedStr = request.getParameter("discontinuedDate");
 		String introducedStr = request.getParameter("introducedDate");
+		Date introduced = null;
+		Date discontinued = null;
 		
 		name = request.getParameter("computerName");
-		List<Date> dates = this.initDate(introducedStr, discontinuedStr);
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		if("".equals(introducedStr)) {
+			try {
+				discontinued = formatter.parse(discontinuedStr);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		if("".equals(discontinuedStr)) {
+			try {
+				introduced = formatter.parse(introducedStr);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		Company company = this.initCompany(request.getParameter("company"));
 		
-//		Computer computerToAdd = new Computer(company, name, dates.get(0), dates.get(1));
-		Computer computer = new Computer(0, company, name, dates.get(0), dates.get(1));
+		Computer computer = new Computer(company, name, introduced, discontinued);
 		
 		computerService.save(computer);
-//		computerService.create(computerToAdd);
 		
 		request.setAttribute("displayDivAdd", true);
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/addComputer.jsp");
@@ -90,34 +105,5 @@ public class AddComputerServlet extends HttpServlet {
 			company = companyService.findById(companyIdInt);
 		}
 		return company;
-	}
-
-	private List<Date> initDate(String introducedStr, String discontinuedStr) {
-		List<Date> dates = new ArrayList<Date>();
-		dates.add(0, null);//introduced
-		dates.add(1, null);//discontinued
-		
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		if("".equals(introducedStr)) {
-			try {
-				Date discontinued = formatter.parse(discontinuedStr);
-				dates.remove(1);
-				dates.set(1, discontinued);
-
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
-		if("".equals(discontinuedStr)) {
-			try {
-				Date introduced = formatter.parse(introducedStr);
-				dates.remove(0);
-				dates.add(0, introduced);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
-		System.out.println(dates.get(0));
-		return dates;
 	}
 }

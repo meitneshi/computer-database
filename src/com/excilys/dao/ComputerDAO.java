@@ -191,10 +191,51 @@ public class ComputerDAO {
 	}
 
 	public void save(Computer computer) {
-		if(computer.getId() == 0) {//new computer, create
-			this.create(computer);
-		} else { //existing computer , update
-			this.update(computer);
+		//initailisation
+		StringBuilder builder = new StringBuilder();
+		builder.append("INSERT INTO computer (id, name, introduced, discontinued, company_id) ").
+				append("VALUE (");
+		if(computer.getId() == 0){
+			builder.append("null, ");
+		}else{
+			builder.append(computer.getId()).append(", ");
 		}
+		builder.append("'").append(computer.getName()).append("', ");
+		if(computer.getIntroduced()==null) {
+			builder.append("null, ");
+		} else {
+			builder.append("(FROM_UNIXTIME(").append(computer.getIntroduced().getTime()/1000).append(")), ");
+		}
+		if(computer.getDiscontinued() == null) {
+			builder.append("null, ");
+		} else {
+			builder.append("(FROM_UNIXTIME(").append(computer.getDiscontinued().getTime()/1000).append(")), ");
+		}
+		if(computer.getCompany().getId() == 0) {
+			builder.append("null) ");
+		} else {
+			builder.append("'").append(computer.getCompany().getId()).append("') ");
+		}
+		builder.append("ON DUPLICATE KEY UPDATE id=LAST_INSERT_ID(id), ").
+			append("name=").append("'").append(computer.getName()).append("', ").
+			append("introduced=");
+		if(computer.getIntroduced()==null) {
+			builder.append("null, ");
+		} else {
+			builder.append("(FROM_UNIXTIME(").append(computer.getIntroduced().getTime()/1000).append(")), ");
+		}
+		builder.append("discontinued=");
+		if(computer.getDiscontinued() == null) {
+			builder.append("null, ");
+		} else {
+			builder.append("(FROM_UNIXTIME(").append(computer.getDiscontinued().getTime()/1000).append(")), ");
+		}
+		if(computer.getCompany().getId() == 0) {
+			builder.append("company_id=null ");
+		} else {
+			builder.append("company_id='").append(computer.getCompany().getId()).append("' ");
+		}		
+		System.out.println(builder.toString());
+		daoFactory.executeSQLQuery(builder.toString());
 	}
 }

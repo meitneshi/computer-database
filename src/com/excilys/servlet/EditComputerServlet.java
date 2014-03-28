@@ -2,6 +2,11 @@ package com.excilys.servlet;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -55,41 +60,56 @@ public class EditComputerServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
-		
 		ComputerService computerService = new ComputerService();
-		CompanyService companyService = new CompanyService();
-		String name = request.getParameter("computerName");
-		String discontinuedStr = request.getParameter("introducedDate");
-		String introducedStr = request.getParameter("discontinuedDate");
-		Timestamp introduced = null;
-		Timestamp discontinued = null;
+		String name = "";
 		int id = Integer.parseInt(request.getParameter("computerId"));
+		String discontinuedStr = request.getParameter("discontinuedDate");
+		String introducedStr = request.getParameter("introducedDate");
+		Date discontinued = null;
+		Date introduced = null;
 		
-		if (!request.getParameter("introducedDate").equals("")) {
-			introducedStr = request.getParameter("introducedDate") + " 00:00:00";
-			introduced = java.sql.Timestamp.valueOf(introducedStr);
+		name = request.getParameter("computerName");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		if("".equals(introducedStr)) {
+			try {
+				discontinued = formatter.parse(discontinuedStr);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		if("".equals(discontinuedStr)) {
+			try {
+				introduced = formatter.parse(introducedStr);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 		}
 		
-		if (!request.getParameter("discontinuedDate").equals("")) {
-			discontinuedStr = request.getParameter("discontinuedDate") + " 00:00:00";
-			discontinued = java.sql.Timestamp.valueOf(discontinuedStr);
-		}
+		Company company = this.initCompany(request.getParameter("company"));
 		
-		Company company;
-		if (Integer.parseInt(request.getParameter("company")) == 0) {
-			company = new Company(null);
-		} else {
-			company = companyService.findById(Integer.parseInt(request.getParameter("company")));
-		}
-		Computer computerToModify = new Computer(id, company, name, introduced, discontinued);
+		Computer computer = new Computer(id, company, name, introduced, discontinued);
 		
-		computerService.update(computerToModify);
+		computerService.save(computer);
 		
-		request.setAttribute("displayDivEdit", true);
-		
-		response.sendRedirect("/computer_database/Dashboard");		
+		request.setAttribute("displayDivAdd", true);
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/addComputer.jsp");
+		dispatcher.forward(request,response);	
 	}
 	
-	
-
+	private Company initCompany(String companyId) {
+		Company company;
+		int companyIdInt = 0;
+		CompanyService companyService = new CompanyService();
+		try {
+			companyIdInt = Integer.parseInt(companyId);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
+		if (companyIdInt == 0) {
+			company = new Company(null);
+		} else {
+			company = companyService.findById(companyIdInt);
+		}
+		return company;
+	}
 }
