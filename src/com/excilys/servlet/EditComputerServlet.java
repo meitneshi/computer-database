@@ -29,6 +29,8 @@ import com.excilys.om.Computer;
 public class EditComputerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final static Logger logger = (Logger) LoggerFactory.getLogger(DAOFactory.class);
+	private CompanyService companyService = CompanyService.INSTANCE;
+	private ComputerService computerService = ComputerService.INSTANCE;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -44,8 +46,6 @@ public class EditComputerServlet extends HttpServlet {
 		
 		request.setAttribute("displayDivEdit", false);
 		
-		ComputerService computerService = new ComputerService();
-		CompanyService companyService = new CompanyService();
 		int id;
 		Computer finalComputer = null;
 		
@@ -68,7 +68,6 @@ public class EditComputerServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
-		ComputerService computerService = new ComputerService();
 		String name = "";
 		int id = Integer.parseInt(request.getParameter("computerId"));
 		String discontinuedStr = request.getParameter("discontinuedDate");
@@ -107,7 +106,6 @@ public class EditComputerServlet extends HttpServlet {
 	private Company initCompany(String companyId) {
 		Company company;
 		int companyIdInt = 0;
-		CompanyService companyService = new CompanyService();
 		try {
 			companyIdInt = Integer.parseInt(companyId);
 		} catch (NumberFormatException e) {

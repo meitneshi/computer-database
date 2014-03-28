@@ -23,6 +23,7 @@ import com.excilys.service.ComputerService;
 public class DeleteComputerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final static Logger logger = (Logger) LoggerFactory.getLogger(DAOFactory.class);
+	private ComputerService computerService = ComputerService.INSTANCE;
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -40,7 +41,6 @@ public class DeleteComputerServlet extends HttpServlet {
 		
 		try {
 			int idToDelete = Integer.parseInt(request.getParameter("id"));
-			ComputerService computerService = new ComputerService();
 			computerService.delete(idToDelete);
 		} catch (NumberFormatException e) {
 			logger.debug("failed to parse id to delete into int "+e.getMessage());

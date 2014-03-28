@@ -17,24 +17,16 @@ import com.excilys.om.Company;
 import com.excilys.om.Computer;
 
 
-public class ComputerDAO {
+public enum ComputerDAO {
 	
-	DAOFactory daoFactory = DAOFactory.getInstance();
+	INSTANCE;
 	
-	private final static ComputerDAO _instance = new ComputerDAO();
 	private final static Logger logger = (Logger) LoggerFactory.getLogger(DAOFactory.class);
-	
-	public static ComputerDAO getInstance() {
-		return _instance;
-	}
-	
-	public ComputerDAO() {
-		super();
-	}
+	private DAOFactory daoFactory = DAOFactory.INSTANCE;
 	
 	public void delete(int computerIdToDelete) {
 		logger.info("trying to delete a computer");
-		Connection connection = DAOFactory.getInstance().getConnection();
+		Connection connection = DAOFactory.INSTANCE.getConnection();
 		PreparedStatement preparedStatement = null;
 		String sql = "DELETE FROM computer WHERE computer.id= ?";
 		try {
@@ -45,13 +37,13 @@ public class ComputerDAO {
 		} catch (SQLException e) {
 			logger.debug("failed to delete computer "+e.getMessage());
 		} finally {
-			DAOFactory.safeClose(connection, preparedStatement, null);
+			daoFactory.safeClose(connection, preparedStatement, null);
 		}
 	}
 	
 	public Computer findById (int id) {
 		logger.info("trying to find a computer by id");
-		Connection connection = DAOFactory.getInstance().getConnection();
+		Connection connection = DAOFactory.INSTANCE.getConnection();
 		PreparedStatement preparedStatement = null;
 		ResultSet queryResult = null;
 		Computer computerResult = null;
@@ -72,7 +64,7 @@ public class ComputerDAO {
 		} catch (SQLException e) {
 			logger.debug("failed to find a computer by id "+e.getMessage());
 		}finally {
-			DAOFactory.safeClose(connection, preparedStatement, null);
+			daoFactory.safeClose(connection, preparedStatement, null);
 		}
 		return computerResult;
 	}
@@ -82,7 +74,7 @@ public class ComputerDAO {
 		//criteria = field to order by		
 		public List<Computer> findInPage (int numPage, int entitiesPerPage, String filter, String order, String criteria) {
 			logger.info("trying to find a list of computer according to several criteria");
-			Connection connection = DAOFactory.getInstance().getConnection();
+			Connection connection = DAOFactory.INSTANCE.getConnection();
 			PreparedStatement preparedStatement = null;
 			ResultSet queryResult = null;
 			List<Computer> computers = new ArrayList<Computer>();
@@ -120,7 +112,7 @@ public class ComputerDAO {
 			} catch (SQLException e) {
 				logger.debug("failed to load the list of computer "+e.getMessage());
 			} finally {
-				DAOFactory.safeClose(connection, preparedStatement, null);
+				daoFactory.safeClose(connection, preparedStatement, null);
 			}
 			return computers;
 		}
@@ -129,7 +121,7 @@ public class ComputerDAO {
 		logger.info("attempting to count the number of computer with a filter");
 		int numberFinal = 0;
 		ResultSet number = null;
-		Connection connection = null;
+		Connection connection = DAOFactory.INSTANCE.getConnection();;
 		PreparedStatement preparedStatement = null;
 		StringBuilder builder = new StringBuilder();
 		String sql = "";
@@ -141,7 +133,6 @@ public class ComputerDAO {
 					append("%';").toString();
 		}
 		try {
-			connection = daoFactory.getConnection();
 			preparedStatement = (PreparedStatement) connection.prepareStatement(sql);
 			number = preparedStatement.executeQuery();
 			number.next();
@@ -150,14 +141,14 @@ public class ComputerDAO {
 		} catch (SQLException e) {
 			logger.debug("failed to count...such a shame ..... "+e.getMessage());
 		} finally {
-			DAOFactory.safeClose(connection, preparedStatement, null);
+			daoFactory.safeClose(connection, preparedStatement, null);
 		}
 		return numberFinal;
 	}
 
 	public void save(Computer computer) {
 		logger.info("attempting to save a computer");
-		Connection connection = DAOFactory.getInstance().getConnection();
+		Connection connection = DAOFactory.INSTANCE.getConnection();
 		PreparedStatement preparedStatement = null;
 		String sql = "INSERT INTO computer (id, name, introduced, discontinued, company_id) "
 				+ "VALUES (?, ?, (FROM_UNIXTIME(?)), (FROM_UNIXTIME(?)), ?) "
@@ -194,7 +185,7 @@ public class ComputerDAO {
 		} catch (SQLException e) {
 			logger.debug("failed to save the computer "+e.getMessage());
 		} finally {
-			DAOFactory.safeClose(connection, preparedStatement, null);
+			daoFactory.safeClose(connection, preparedStatement, null);
 		}
 	}
 }

@@ -14,28 +14,21 @@ import org.slf4j.LoggerFactory;
 
 import com.excilys.om.Company;
 
-public class CompanyDAO {
+public enum CompanyDAO {
 
-	static DAOFactory daoFactory = DAOFactory.getInstance();
+	INSTANCE;
+	
 		
-	private final static CompanyDAO _instance = new CompanyDAO();
 	private final static Logger logger = (Logger) LoggerFactory.getLogger(DAOFactory.class);
-	
-	public static CompanyDAO getInstance() {
-		return _instance;
-	}
-	
-	public CompanyDAO() {
-		super();
-	}
+	private DAOFactory daoFactory = DAOFactory.INSTANCE;
 	
 	/**
 	 * 
 	 * @return ResulSet of Company
 	 */
-	public static Company findById(int id) {
+	public Company findById(int id) {
 		logger.info("attempting to find a company by id");
-		Connection connection = DAOFactory.getInstance().getConnection();
+		Connection connection = DAOFactory.INSTANCE.getConnection();
 		PreparedStatement preparedStatement = null;
 		Company company = null;
 		ResultSet queryResult = null;
@@ -50,14 +43,14 @@ public class CompanyDAO {
 		} catch (SQLException e) {
 			logger.debug("failed to found a company by id "+e.getMessage());
 		} finally {
-			DAOFactory.safeClose(connection, preparedStatement, null);
+			daoFactory.safeClose(connection, preparedStatement, null);
 		}
 		return company;
 	}
 	
 	public List<Company> findAll() {
 		logger.info("attempting to find a company by id");
-		Connection connection = DAOFactory.getInstance().getConnection();
+		Connection connection = DAOFactory.INSTANCE.getConnection();
 		PreparedStatement preparedStatement = null;
 		List<Company> companies = new ArrayList<Company>();
 		ResultSet queryResult = null;
@@ -73,7 +66,7 @@ public class CompanyDAO {
 		} catch (SQLException e) {
 			logger.debug("failed to find the list of companies "+e.getMessage());
 		} finally {
-			DAOFactory.safeClose(connection, preparedStatement, queryResult);
+			daoFactory.safeClose(connection, preparedStatement, queryResult);
 		}
 		return companies;
 		

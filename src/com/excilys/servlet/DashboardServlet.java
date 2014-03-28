@@ -26,6 +26,7 @@ import com.excilys.om.Computer;
 public class DashboardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final static Logger logger = (Logger) LoggerFactory.getLogger(DAOFactory.class);
+	private ComputerService computerService = ComputerService.INSTANCE;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -39,8 +40,6 @@ public class DashboardServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
-		
-		ComputerService computerService = new ComputerService();
 		
 		int entitiesPerPage = 0;
 		int currentPageNumber = 0;
@@ -149,7 +148,6 @@ public class DashboardServlet extends HttpServlet {
 //	generate list of computer to be show on screen with order
 	private List<Computer> findComputer(int currentPageNumber, int entitiesPerPage, String filter, String criteria, String order) {
 		List<Computer> result = new ArrayList<Computer>();
-		ComputerService computerService = new ComputerService();
 		String filterS = "";
 		if (filter != null) { //filter specified
 			filterS = filter;

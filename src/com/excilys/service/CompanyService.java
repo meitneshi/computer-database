@@ -5,16 +5,14 @@ import java.util.List;
 import com.excilys.dao.CompanyDAO;
 import com.excilys.om.Company;
 
-public class CompanyService {
+public enum CompanyService {
 
-	public CompanyService() {
-		super();
-	}
+	INSTANCE;
 	
-	private CompanyDAO companyDAO = CompanyDAO.getInstance();
+	private CompanyDAO companyDAO = CompanyDAO.INSTANCE;
 	
 	public Company findById(int id) {
-		return CompanyDAO.findById(id);
+		return companyDAO.findById(id);
 	}
 	
 	public List<Company> findAll() {

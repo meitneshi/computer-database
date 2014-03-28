@@ -5,13 +5,11 @@ import java.util.List;
 import com.excilys.om.Computer;
 import com.excilys.dao.ComputerDAO;
 
-public class ComputerService {
+public enum ComputerService {
 	
-	public ComputerService() {
-		super();
-	}
+	INSTANCE;
 	
-	private ComputerDAO computerDAO = ComputerDAO.getInstance();
+	private ComputerDAO computerDAO = ComputerDAO.INSTANCE;
 	
 	public void delete(int id) {
 		computerDAO.delete(id);

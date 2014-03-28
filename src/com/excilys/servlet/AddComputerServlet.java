@@ -32,6 +32,8 @@ public class AddComputerServlet extends HttpServlet {
     
 	
 	private final static Logger logger = (Logger) LoggerFactory.getLogger(DAOFactory.class);
+	private CompanyService companyservice = CompanyService.INSTANCE;
+	private ComputerService computerservice = ComputerService.INSTANCE;
 	
 	
     /**
@@ -48,7 +50,6 @@ public class AddComputerServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		
-		CompanyService companyservice = new CompanyService();
 		request.setAttribute("companyList", companyservice.findAll());
 		request.setAttribute("displayDivAdd", false);
 				
@@ -61,7 +62,6 @@ public class AddComputerServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
-		ComputerService computerService = new ComputerService();
 		String name = "";
 		String discontinuedStr = request.getParameter("discontinuedDate");
 		String introducedStr = request.getParameter("introducedDate");
@@ -96,7 +96,7 @@ public class AddComputerServlet extends HttpServlet {
 		
 		Computer computer = new Computer(company, name, introduced, discontinued);
 		
-		computerService.save(computer);
+		computerservice.save(computer);
 		
 		request.setAttribute("displayDivAdd", true);
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/addComputer.jsp");
@@ -107,7 +107,6 @@ public class AddComputerServlet extends HttpServlet {
 	private Company initCompany(String companyId) {
 		Company company;
 		int companyIdInt = 0;
-		CompanyService companyService = new CompanyService();
 		try {
 			companyIdInt = Integer.parseInt(companyId);
 		} catch (NumberFormatException e) {
@@ -116,7 +115,7 @@ public class AddComputerServlet extends HttpServlet {
 		if (companyIdInt == 0) {
 			company = new Company(null);
 		} else {
-			company = companyService.findById(companyIdInt);
+			company = companyservice.findById(companyIdInt);
 		}
 		return company;
 	}

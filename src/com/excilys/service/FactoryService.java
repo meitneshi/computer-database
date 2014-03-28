@@ -6,19 +6,17 @@ import com.excilys.dao.DAOFactory;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
-public class FactoryService {
+public enum FactoryService {
 
-	protected FactoryService() {
-		super();
-	}
+	INSTANCE;
 	
-	private DAOFactory daoFactory = DAOFactory.getInstance();
+	private DAOFactory daoFactory = DAOFactory.INSTANCE;
 
 	public Connection getConnection() {
 		return daoFactory.getConnection();
 	}
 	
-	public static void safeClose(Connection connection, PreparedStatement preparedStatement, ResultSet resultSet){
-		DAOFactory.safeClose(connection, preparedStatement, resultSet);
+	public void safeClose(Connection connection, PreparedStatement preparedStatement, ResultSet resultSet){
+		daoFactory.safeClose(connection, preparedStatement, resultSet);
 	}
 }

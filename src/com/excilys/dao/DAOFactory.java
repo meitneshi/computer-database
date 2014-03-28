@@ -22,9 +22,11 @@ import com.mysql.jdbc.PreparedStatement;
  * @author mbibos
  * Implement Singleton
  */
-public class DAOFactory {
+public enum DAOFactory {
 	
-	private final static Logger logger = (Logger) LoggerFactory.getLogger(DAOFactory.class);
+	INSTANCE;
+	
+	private final Logger logger = (Logger) LoggerFactory.getLogger(DAOFactory.class);
 
 	private String url;
 	private String user;
@@ -32,9 +34,7 @@ public class DAOFactory {
 	
 	private Connection connection;
 	
-	private final static DAOFactory _instance = new DAOFactory();
-	
-	private DAOFactory(){
+	{
 		logger.info("searching for Driver...");
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -46,26 +46,21 @@ public class DAOFactory {
 	}
 	
 	private void initParam() throws IOException {
-		
 		/*-----AVEC fichier de config------*/
-//		Properties properties = new Properties();
-//		FileInputStream fileStream = new FileInputStream("./WebContent/WEB-INF/config/dbConnectionConf.conf");
-//		try {
-//			properties.load(fileStream);
-//		} finally {
-//			fileStream.close();
-//		}
-//		this.url = properties.getProperty("url");
-//		this.user = properties.getProperty("user");
-//		this.password = properties.getProperty("password");
+		// Properties properties = new Properties();
+		// FileInputStream fileStream = new FileInputStream("./WebContent/WEB-INF/config/dbConnectionConf.conf");
+		// try {
+		// properties.load(fileStream);
+		// } finally {
+		// fileStream.close();
+		// }
+		// this.url = properties.getProperty("url");
+		// this.user = properties.getProperty("user");
+		// this.password = properties.getProperty("password");
 		/*-----SANS Fichier de config-----*/
 		this.url = "jdbc:mysql://localhost:3306/computer-database-db?zeroDateTimeBehavior=convertToNull";
 		this.user = "root";
 		this.password = "jmlld3fpj";
-	}
-
-	public static DAOFactory getInstance() {
-		return _instance;
 	}
 
 	public Connection getConnection() {
@@ -79,7 +74,7 @@ public class DAOFactory {
 		return connection;
 	}
 	
-	public static void safeClose(Connection connection, PreparedStatement preparedStatement, ResultSet resultSet){
+	public void safeClose(Connection connection, PreparedStatement preparedStatement, ResultSet resultSet){
 		logger.info("attempting to close safe");
 		try {
 			if (connection != null) {
