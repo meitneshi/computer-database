@@ -42,12 +42,11 @@
 					<input type="hidden" name="order" value="${order }">
 					<input type="hidden" name="criteria" value="${criteria }">
 					<select id="entitiesPerPage" name="entitiesperpage" onChange="this.form.submit();">
-<%-- 						<option value="5" <c:if test="${numberofComputer == 5 }">selected</c:if>>5</option>	 --%>
-						<option:optionGen value="10" label="10" max="${numberOfComputer}"/>
-						<option:optionGen value="30" label="30" max="${numberOfComputer}"/>
-						<option:optionGen value="50" label="50" max="${numberOfComputer}"/>
-						<option:optionGen value="100" label="100" max="${numberOfComputer}"/>
-						<option:optionGen value="${numberOfComputer}" label="Show All Computers" max="${numberOfComputer}" entities="${entitiesPerPage }"/>
+						<option value="10" <c:if test="${entitiesPerPage == 10 }">selected</c:if>>10</option>
+						<option value="30" <c:if test="${entitiesPerPage == 30 }">selected</c:if>>30</option>
+						<option value="50" <c:if test="${entitiesPerPage == 50 }">selected</c:if>>50</option>
+						<option value="100" <c:if test="${entitiesPerPage == 100 }">selected</c:if>>100</option>
+						<option value="${numberOfComputer }" <c:if test="${entitiesPerPage == numberOfComputer }">selected</c:if>>Show All Computers</option>	
 					</select>
 				</form>
 			</div>
