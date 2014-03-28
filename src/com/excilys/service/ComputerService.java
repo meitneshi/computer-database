@@ -36,4 +36,8 @@ public class ComputerService {
 	public int count(String filter) {
 		return computerDAO.count(filter);
 	}
+
+	public void save(Computer computer) {
+		computerDAO.save(computer);
+	}
 }

@@ -50,6 +50,7 @@ public class ComputerDAO {
 		} else {
 			builder.append("'").append(computerToAdd.getCompany().getId()).append("');");
 		}
+		System.out.println(builder.toString());
 		daoFactory.executeSQLQuery(builder.toString());
 	}
 	
@@ -187,5 +188,13 @@ public class ComputerDAO {
 			DAOFactory.safeClose(connection, statement, null);
 		}
 		return numberFinal;
+	}
+
+	public void save(Computer computer) {
+		if(computer.getId() == 0) {//new computer, create
+			this.create(computer);
+		} else { //existing computer , update
+			this.update(computer);
+		}
 	}
 }

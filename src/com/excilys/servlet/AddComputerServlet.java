@@ -63,9 +63,11 @@ public class AddComputerServlet extends HttpServlet {
 		List<Date> dates = this.initDate(introducedStr, discontinuedStr);
 		Company company = this.initCompany(request.getParameter("company"));
 		
-		Computer computerToAdd = new Computer(company, name, dates.get(0), dates.get(1));
+//		Computer computerToAdd = new Computer(company, name, dates.get(0), dates.get(1));
+		Computer computer = new Computer(0, company, name, dates.get(0), dates.get(1));
 		
-		computerService.create(computerToAdd);
+		computerService.save(computer);
+//		computerService.create(computerToAdd);
 		
 		request.setAttribute("displayDivAdd", true);
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/addComputer.jsp");
@@ -99,7 +101,9 @@ public class AddComputerServlet extends HttpServlet {
 		if("".equals(introducedStr)) {
 			try {
 				Date discontinued = formatter.parse(discontinuedStr);
+				dates.remove(1);
 				dates.set(1, discontinued);
+
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
@@ -107,11 +111,13 @@ public class AddComputerServlet extends HttpServlet {
 		if("".equals(discontinuedStr)) {
 			try {
 				Date introduced = formatter.parse(introducedStr);
-				dates.set(0, introduced);
+				dates.remove(0);
+				dates.add(0, introduced);
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
 		}
+		System.out.println(dates.get(0));
 		return dates;
 	}
 }
