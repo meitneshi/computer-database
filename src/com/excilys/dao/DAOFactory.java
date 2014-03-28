@@ -12,6 +12,9 @@ import java.sql.SQLException;
 
 
 
+import org.slf4j.LoggerFactory;
+import ch.qos.logback.classic.Logger;
+
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
@@ -20,6 +23,8 @@ import com.mysql.jdbc.PreparedStatement;
  * Implement Singleton
  */
 public class DAOFactory {
+	
+	private final static Logger logger = (Logger) LoggerFactory.getLogger(DAOFactory.class);
 
 	private String url;
 	private String user;
@@ -30,9 +35,12 @@ public class DAOFactory {
 	private final static DAOFactory _instance = new DAOFactory();
 	
 	private DAOFactory(){
+		logger.info("searching for Driver...");
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
+			logger.debug("Driver found");
 		} catch (Exception e) {
+			logger.debug("Driver not found");
 			e.printStackTrace();
 		}
 	}
@@ -61,28 +69,33 @@ public class DAOFactory {
 	}
 
 	public Connection getConnection() {
+		logger.info("trying to get connection...");
 		try {
 			this.initParam();
 			return (Connection) DriverManager.getConnection(url, user, password);
 		} catch (IOException | SQLException e) {
-			e.printStackTrace();
+			logger.debug("failed to get connection "+e.getMessage());
 		}
 		return connection;
 	}
 	
 	public static void safeClose(Connection connection, PreparedStatement preparedStatement, ResultSet resultSet){
+		logger.info("attempting to close safe");
 		try {
 			if (connection != null) {
 				connection.close();
+				logger.info("connection closed");
 			}
 			if (resultSet != null){
 				resultSet.close();
+				logger.info("resultSet closed");
 			}
 			if (preparedStatement != null) {
 				preparedStatement.close();
+				logger.info("presparedStatement closed");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.debug("Safe Close failed "+e.getMessage());
 		} finally {
 			
 		}
