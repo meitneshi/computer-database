@@ -2,6 +2,7 @@ package com.excilys.dao;
 
 
 import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,15 +11,13 @@ import java.util.List;
 
 import com.excilys.om.Company;
 import com.excilys.om.Computer;
-import com.mysql.jdbc.Statement;
 
 
 public class ComputerDAO {
 	
 	DAOFactory daoFactory = DAOFactory.getInstance();
 	
-	private final static ComputerDAO _instance = new ComputerDAO();
-	
+	private final static ComputerDAO _instance = new ComputerDAO();	
 	
 	public static ComputerDAO getInstance() {
 		return _instance;
@@ -28,90 +27,43 @@ public class ComputerDAO {
 		super();
 	}
 	
-	public void create(Computer computerToAdd){
-		StringBuilder builder = new StringBuilder();
-		builder.append("INSERT INTO computer (id, name, introduced, discontinued, company_id) VALUES").
-				append(" (null, '").
-				append(computerToAdd.getName()).
-				append("', ");
-		if(computerToAdd.getIntroduced()==null) {
-			builder.append("null, ");
-		} else {
-			builder.append("(FROM_UNIXTIME(").append(computerToAdd.getIntroduced().getTime()/1000).append(")), ");
-		}
-		if(computerToAdd.getDiscontinued() == null) {
-			builder.append("null, ");
-		} else {
-			builder.append("(FROM_UNIXTIME(").append(computerToAdd.getDiscontinued().getTime()/1000).append(")), ");
-		}
-		
-		if (computerToAdd.getCompany().getId() == 0) {
-			builder.append("null);");
-		} else {
-			builder.append("'").append(computerToAdd.getCompany().getId()).append("');");
-		}
-		System.out.println(builder.toString());
-		daoFactory.executeSQLQuery(builder.toString());
-	}
-	
-	public void update(Computer computerToUpdate) {
-		//initailisation
-		StringBuilder builder = new StringBuilder();
-		builder.append("UPDATE computer SET name = '").
-				append(computerToUpdate.getName()).
-				append("', introduced = '").
-				append(computerToUpdate.getIntroduced()).
-				append("', discontinued = '").
-				append(computerToUpdate.getDiscontinued()).
-				append("', company_id =");
-		if(computerToUpdate.getCompany().getId() == 0) {
-			builder.append("null");
-		} else {
-			builder.append("'").
-				append(computerToUpdate.getCompany().getId()).
-				append("'");
-		}
-			builder.append(" WHERE id= ").
-				append(computerToUpdate.getId()).
-				append(";");
-		//update the computer
-		System.out.println(builder.toString());
-		daoFactory.executeSQLQuery(builder.toString());
-	}
-	
 	public void delete(int computerIdToDelete) {
-		StringBuilder builder = new StringBuilder();
-		String sql = builder.append("DELETE FROM computer WHERE computer.id=").append(computerIdToDelete).append (";").toString();
-		daoFactory.executeSQLQuery(sql);
-	}
-	
-	public Computer findById (int id) {
-		Connection connection = null;
-		Statement statement = null;
-		Computer computerResult = new Computer();
-		ResultSet queryResult = null;
-		StringBuilder builder = new StringBuilder();
-		builder.append("SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name ").
-				append("FROM computer ").
-				append("LEFT JOIN company ON computer.company_id = company.id ").
-				append("WHERE computer.id = ").
-				append(id);
+		Connection connection = DAOFactory.getInstance().getConnection();
+		PreparedStatement preparedStatement = null;
+		String sql = "DELETE FROM computer WHERE computer.id= ?";
 		try {
-			connection = daoFactory.getConnection();
-			statement = (Statement) connection.createStatement();
-			queryResult = statement.executeQuery(builder.toString());
-			while (queryResult.next()) {
-				Company company = new Company(queryResult.getString("company.name"), queryResult.getInt("company_id"));
-				computerResult.setId(id);
-				computerResult.setName(queryResult.getString("name"));
-				computerResult.setIntroduced(queryResult.getTimestamp("introduced"));
-				computerResult.setDiscontinued(queryResult.getTimestamp("discontinued"));
-				computerResult.setCompany(company);
-			}
+			preparedStatement = (PreparedStatement) connection.prepareStatement(sql);
+			preparedStatement.setInt(1, computerIdToDelete);
+			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			DAOFactory.safeClose(connection, statement, queryResult);
+			DAOFactory.safeClose(connection, preparedStatement, null);
+		}
+	}
+	
+	public Computer findById (int id) {
+		Connection connection = DAOFactory.getInstance().getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet queryResult = null;
+		Computer computerResult = null;
+		String sql = "SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name "
+				+ "FROM computer "
+				+ "LEFT JOIN company ON computer.company_id = company.id "
+				+ "WHERE computer.id = ?";
+		try {
+			preparedStatement = (PreparedStatement) connection.prepareStatement(sql);
+			preparedStatement.setInt(1, id);
+			queryResult = preparedStatement.executeQuery();
+			queryResult.next();
+			Company company = new Company(queryResult.getString("company.name"), queryResult.getInt("company_id"));
+			computerResult = new Computer(id, company, queryResult.getString("name"), queryResult.getDate("introduced"), queryResult.getDate("discontinued"));
+			return computerResult;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			DAOFactory.safeClose(connection, preparedStatement, null);
 		}
 		return computerResult;
 	}
@@ -120,35 +72,37 @@ public class ComputerDAO {
 		//order = ASC ou DESC
 		//criteria = field to order by		
 		public List<Computer> findInPage (int numPage, int entitiesPerPage, String filter, String order, String criteria) {
-			Connection connection = null;
-			Statement statement = null;
-			List<Computer> computers = new ArrayList<Computer>();
+			Connection connection = DAOFactory.getInstance().getConnection();
+			PreparedStatement preparedStatement = null;
 			ResultSet queryResult = null;
-			int offsetSQL = ((numPage-1)*entitiesPerPage);
-			StringBuilder builder = new StringBuilder();
-			builder.append("SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name "
+			List<Computer> computers = new ArrayList<Computer>();
+			String orderSQL = "asc";
+			String criteriaSQL = "computer.name";
+			boolean orderBool = false; //false = asc, true = desc
+			
+			if ("desc".equals(order)){
+				orderBool = true;
+			}
+			if(orderBool){
+				orderSQL = "desc";
+			}
+			if("company".equals(criteria)) {
+				criteriaSQL = "company.name";
+			}
+			String sql = "SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name "
 					+ "FROM computer "
 					+ "LEFT JOIN company "
-					+ "ON computer.company_id = company.id ");
-			builder.append("WHERE computer.name LIKE '%").append(filter).append("%' ");
-			builder.append("ORDER BY ");
-			if (criteria.equals("company")) { //field = company.name
-				builder.append("company.name");
-			} else { // field like computer.field
-				builder.append("computer.").
-				append(criteria);
-			}
-			builder.append(" ").
-					append(order).
-					append(" LIMIT ").
-					append(entitiesPerPage).
-					append(" OFFSET ").
-					append(offsetSQL);
+					+ "ON computer.company_id = company.id WHERE computer.name LIKE ? "
+					+ "ORDER BY " + criteriaSQL + " " + orderSQL + " "
+					+ "LIMIT ?, ? ";
 			try {
-				connection = daoFactory.getConnection();
-				statement = (Statement) connection.createStatement();
-				queryResult = statement.executeQuery(builder.toString());
-				while (queryResult.next()) {
+				preparedStatement = (PreparedStatement) connection.prepareStatement(sql);
+				preparedStatement.setString(1, "%"+filter+"%");
+				preparedStatement.setInt(2, ((numPage-1)*entitiesPerPage));
+				preparedStatement.setInt(3, entitiesPerPage);
+				System.out.println(preparedStatement);
+				queryResult = preparedStatement.executeQuery();
+				while(queryResult.next()) {
 					Company company = new Company(queryResult.getString("company.name"), queryResult.getInt("company_id"));
 					Computer computer = new Computer(queryResult.getInt("id"), company, queryResult.getString("name"), queryResult.getTimestamp("introduced"), queryResult.getTimestamp("discontinued"));
 					computers.add(computer);
@@ -156,7 +110,7 @@ public class ComputerDAO {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
-				DAOFactory.safeClose(connection, statement, queryResult);
+				DAOFactory.safeClose(connection, preparedStatement, null);
 			}
 			return computers;
 		}
@@ -165,7 +119,7 @@ public class ComputerDAO {
 		int numberFinal = 0;
 		ResultSet number = null;
 		Connection connection = null;
-		Statement statement = null;
+		PreparedStatement preparedStatement = null;
 		StringBuilder builder = new StringBuilder();
 		String sql = "";
 		if ("".equals(filter)){ //count all computer
@@ -177,65 +131,58 @@ public class ComputerDAO {
 		}
 		try {
 			connection = daoFactory.getConnection();
-			statement = (Statement) connection.createStatement();
-			number = statement.executeQuery(sql);
+			preparedStatement = (PreparedStatement) connection.prepareStatement(sql);
+			number = preparedStatement.executeQuery();
 			while (number.next()) {
 				numberFinal = number.getInt(1);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			DAOFactory.safeClose(connection, statement, null);
+			DAOFactory.safeClose(connection, preparedStatement, null);
 		}
 		return numberFinal;
 	}
 
 	public void save(Computer computer) {
-		//initailisation
-		StringBuilder builder = new StringBuilder();
-		builder.append("INSERT INTO computer (id, name, introduced, discontinued, company_id) ").
-				append("VALUE (");
-		if(computer.getId() == 0){
-			builder.append("null, ");
-		}else{
-			builder.append(computer.getId()).append(", ");
+		Connection connection = DAOFactory.getInstance().getConnection();
+		PreparedStatement preparedStatement = null;
+		String sql = "INSERT INTO computer (id, name, introduced, discontinued, company_id) "
+				+ "VALUES (?, ?, (FROM_UNIXTIME(?)), (FROM_UNIXTIME(?)), ?) "
+				+ "ON DUPLICATE KEY UPDATE "
+				+ "id=LAST_INSERT_ID(id), name=?, introduced=(FROM_UNIXTIME(?)), discontinued=(FROM_UNIXTIME(?)), company_id=?";
+		try {
+			preparedStatement = (PreparedStatement) connection.prepareStatement(sql);
+			preparedStatement.setLong(1, computer.getId());
+			preparedStatement.setString(2, computer.getName());
+			preparedStatement.setString(6, computer.getName());
+			if(computer.getIntroduced()==null) {
+				preparedStatement.setDate(3, null);
+				preparedStatement.setDate(7, null);
+			} else {
+				preparedStatement.setLong(3, computer.getIntroduced().getTime()/1000);
+				preparedStatement.setLong(7, computer.getIntroduced().getTime()/1000);
+			}
+			if(computer.getDiscontinued() == null) {
+				preparedStatement.setDate(4, null);
+				preparedStatement.setDate(8, null);
+			} else {
+				preparedStatement.setLong(4, computer.getDiscontinued().getTime()/1000);
+				preparedStatement.setLong(8, computer.getDiscontinued().getTime()/1000);
+			}
+			if(computer.getCompany().getId() == 0) {
+				preparedStatement.setString(5, null);
+				preparedStatement.setString(9, null);
+			} else {
+				preparedStatement.setLong(5, computer.getCompany().getId());
+				preparedStatement.setLong(9, computer.getCompany().getId());
+			}
+			System.out.println(preparedStatement);
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DAOFactory.safeClose(connection, preparedStatement, null);
 		}
-		builder.append("'").append(computer.getName()).append("', ");
-		if(computer.getIntroduced()==null) {
-			builder.append("null, ");
-		} else {
-			builder.append("(FROM_UNIXTIME(").append(computer.getIntroduced().getTime()/1000).append(")), ");
-		}
-		if(computer.getDiscontinued() == null) {
-			builder.append("null, ");
-		} else {
-			builder.append("(FROM_UNIXTIME(").append(computer.getDiscontinued().getTime()/1000).append(")), ");
-		}
-		if(computer.getCompany().getId() == 0) {
-			builder.append("null) ");
-		} else {
-			builder.append("'").append(computer.getCompany().getId()).append("') ");
-		}
-		builder.append("ON DUPLICATE KEY UPDATE id=LAST_INSERT_ID(id), ").
-			append("name=").append("'").append(computer.getName()).append("', ").
-			append("introduced=");
-		if(computer.getIntroduced()==null) {
-			builder.append("null, ");
-		} else {
-			builder.append("(FROM_UNIXTIME(").append(computer.getIntroduced().getTime()/1000).append(")), ");
-		}
-		builder.append("discontinued=");
-		if(computer.getDiscontinued() == null) {
-			builder.append("null, ");
-		} else {
-			builder.append("(FROM_UNIXTIME(").append(computer.getDiscontinued().getTime()/1000).append(")), ");
-		}
-		if(computer.getCompany().getId() == 0) {
-			builder.append("company_id=null ");
-		} else {
-			builder.append("company_id='").append(computer.getCompany().getId()).append("' ");
-		}		
-		System.out.println(builder.toString());
-		daoFactory.executeSQLQuery(builder.toString());
 	}
 }

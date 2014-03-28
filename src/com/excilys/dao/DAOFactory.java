@@ -11,8 +11,9 @@ import java.sql.SQLException;
 //import java.util.Properties;			//uncomment when using config file
 
 
+
 import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.Statement;
+import com.mysql.jdbc.PreparedStatement;
 
 /**
  * @author mbibos
@@ -69,7 +70,7 @@ public class DAOFactory {
 		return connection;
 	}
 	
-	public static void safeClose(Connection connection, Statement statement, ResultSet resultSet){
+	public static void safeClose(Connection connection, PreparedStatement preparedStatement, ResultSet resultSet){
 		try {
 			if (connection != null) {
 				connection.close();
@@ -77,27 +78,13 @@ public class DAOFactory {
 			if (resultSet != null){
 				resultSet.close();
 			}
-			if (statement != null) {
-				statement.close();
+			if (preparedStatement != null) {
+				preparedStatement.close();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-	}
-	
-	public int executeSQLQuery(String sqlToExecute) {
-		Connection connection = null;
-		Statement statement = null;
-		int result = 0;
-		try {
-			connection = DAOFactory.getInstance().getConnection();
-			statement = (Statement) connection.createStatement();
-			result = statement.executeUpdate(sqlToExecute);
-		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
-			DAOFactory.safeClose(connection, statement, null);
+			
 		}
-		return result;
 	}
 }

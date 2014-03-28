@@ -1,12 +1,9 @@
 package com.excilys.servlet;
 
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -32,7 +29,6 @@ public class EditComputerServlet extends HttpServlet {
      */
     public EditComputerServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -65,6 +61,7 @@ public class EditComputerServlet extends HttpServlet {
 		int id = Integer.parseInt(request.getParameter("computerId"));
 		String discontinuedStr = request.getParameter("discontinuedDate");
 		String introducedStr = request.getParameter("introducedDate");
+		System.out.println(discontinuedStr);
 		Date discontinued = null;
 		Date introduced = null;
 		
@@ -92,8 +89,7 @@ public class EditComputerServlet extends HttpServlet {
 		computerService.save(computer);
 		
 		request.setAttribute("displayDivAdd", true);
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/addComputer.jsp");
-		dispatcher.forward(request,response);	
+		response.sendRedirect("/computer_database/Dashboard");	
 	}
 	
 	private Company initCompany(String companyId) {

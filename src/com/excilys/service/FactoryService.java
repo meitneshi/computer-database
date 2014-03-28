@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 
 import com.excilys.dao.DAOFactory;
 import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.Statement;
+import com.mysql.jdbc.PreparedStatement;
 
 public class FactoryService {
 
@@ -18,12 +18,7 @@ public class FactoryService {
 		return daoFactory.getConnection();
 	}
 	
-	public static void safeClose(Connection connection, Statement statement, ResultSet resultSet){
-		DAOFactory.safeClose(connection, statement, resultSet);
+	public static void safeClose(Connection connection, PreparedStatement preparedStatement, ResultSet resultSet){
+		DAOFactory.safeClose(connection, preparedStatement, resultSet);
 	}
-	
-	public int executeSQLQuery(String sqlToExecute) {
-		return daoFactory.executeSQLQuery(sqlToExecute);
-	}
-
 }

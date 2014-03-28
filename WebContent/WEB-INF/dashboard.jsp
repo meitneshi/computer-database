@@ -140,7 +140,7 @@
 						<a type="button" href="/computer_database/EditComputer?id=${computer.id }" class="btn btn-info">
 							<span class="glyphicon glyphicon-pencil" ></span>
 						</a>
-						<a type="button" href="/computer_database/DeleteComputer?id=${computer.id }" class="btn btn-danger"onclick="return confirm('Are you sure you want to delete this computer ?')">
+						<a type="button" href="/computer_database/DeleteComputer?id=${computer.id }" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this computer ?')">
 							<span class="glyphicon glyphicon-trash" ></span>
 						</a>
 					</td>

@@ -81,7 +81,7 @@ public class DashboardServlet extends HttpServlet {
 			request.setAttribute("computerPageList", result);
 		}
 		
-//		Evalutaion de Page max
+//		Evaluation de Page max
 		int pageMax = this.initPageMax(entitiesPerPage, numberOfComputer);
 				
 		numberTotalOfComputer = computerService.count("");

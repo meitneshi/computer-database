@@ -13,10 +13,6 @@ public class CompanyService {
 	
 	private CompanyDAO companyDAO = CompanyDAO.getInstance();
 	
-	public void create(Company companyToAdd) {
-		companyDAO.create(companyToAdd);
-	}
-	
 	public Company findById(int id) {
 		return CompanyDAO.findById(id);
 	}
@@ -24,9 +20,4 @@ public class CompanyService {
 	public List<Company> findAll() {
 		return companyDAO.findAll();
 	}
-	
-	public void update(Company companytoUpdate, String[] params) {
-		companyDAO.update(companytoUpdate, params);
-	}
-
 }

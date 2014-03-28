@@ -13,14 +13,6 @@ public class ComputerService {
 	
 	private ComputerDAO computerDAO = ComputerDAO.getInstance();
 	
-	public void create(Computer computer) {
-		computerDAO.create(computer);
-	}
-	
-	public void update(Computer computer) {
-		computerDAO.update(computer);
-	}
-	
 	public void delete(int id) {
 		computerDAO.delete(id);
 	}

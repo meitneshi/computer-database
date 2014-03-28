@@ -3,9 +3,7 @@ package com.excilys.servlet;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -58,6 +56,8 @@ public class AddComputerServlet extends HttpServlet {
 		String name = "";
 		String discontinuedStr = request.getParameter("discontinuedDate");
 		String introducedStr = request.getParameter("introducedDate");
+		System.out.println(discontinuedStr);
+		
 		Date introduced = null;
 		Date discontinued = null;
 		
@@ -69,9 +69,15 @@ public class AddComputerServlet extends HttpServlet {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-		}
-		if("".equals(discontinuedStr)) {
+		} else if("".equals(discontinuedStr)) {
 			try {
+				introduced = formatter.parse(introducedStr);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		} else{
+			try {
+				discontinued = formatter.parse(discontinuedStr);
 				introduced = formatter.parse(introducedStr);
 			} catch (ParseException e) {
 				e.printStackTrace();
@@ -82,6 +88,7 @@ public class AddComputerServlet extends HttpServlet {
 		
 		Computer computer = new Computer(company, name, introduced, discontinued);
 		
+		System.out.println(computer);
 		computerService.save(computer);
 		
 		request.setAttribute("displayDivAdd", true);
