@@ -94,6 +94,7 @@ public class DashboardServlet extends HttpServlet {
 		request.setAttribute("numberOfComputer", numberOfComputer);
 		request.setAttribute("pageMax", pageMax);
 		request.setAttribute("currentPageNumber", currentPageNumber);
+		request.setAttribute("entitiesperpage", entitiesPerPage);
 		
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/dashboard.jsp");
 		dispatcher.forward(request,response);

@@ -63,7 +63,6 @@ public enum DAOFactory {
 				e.printStackTrace();
 			}
 			return connection;
-			
 		}
 	};
 	
@@ -100,8 +99,7 @@ public enum DAOFactory {
 			logger.info("Connection closed");
 		} catch (SQLException e) {
 			logger.debug("Safe Close failed "+e.getMessage());
-		}
-		
+		}	
 	}
 	
 	public void startTransaction() throws SQLException {

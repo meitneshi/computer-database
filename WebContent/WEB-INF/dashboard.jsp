@@ -32,7 +32,6 @@
 				<button type="submit" class="btn btn-default">Filter by name</button>
 			</form>
 			
-			
 <!-- Dropdown select number of entites to show -->
 			<div class="navbar-left">
 				Number of computer to show per page:
@@ -42,11 +41,11 @@
 					<input type="hidden" name="order" value="${order }">
 					<input type="hidden" name="criteria" value="${criteria }">
 					<select class="form-control" id="entitiesPerPage" name="entitiesperpage" onChange="this.form.submit();">
-						<option value="10" <c:if test="${entitiesPerPage == 10 }">selected</c:if>>10</option>
-						<option value="30" <c:if test="${entitiesPerPage == 30 }">selected</c:if>>30</option>
-						<option value="50" <c:if test="${entitiesPerPage == 50 }">selected</c:if>>50</option>
-						<option value="100" <c:if test="${entitiesPerPage == 100 }">selected</c:if>>100</option>
-						<option value="${numberOfComputer }" <c:if test="${entitiesPerPage == numberOfComputer }">selected</c:if>>Show All Computers</option>	
+						<option value="10" <c:if test="${entitiesperpage == 10 }">selected</c:if>>10</option>
+						<option value="30" <c:if test="${entitiesperpage == 30 }">selected</c:if>>30</option>
+						<option value="50" <c:if test="${entitiesperpage == 50 }">selected</c:if>>50</option>
+						<option value="100" <c:if test="${entitiesperpage == 100 }">selected</c:if>>100</option>
+						<option value="${numberOfComputer }" <c:if test="${entitiesperpage == numberOfComputer }">selected</c:if>>Show All Computers</option>	
 					</select>
 				</form>
 			</div>
