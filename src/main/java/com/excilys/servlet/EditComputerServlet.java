@@ -100,7 +100,7 @@ public class EditComputerServlet extends HttpServlet {
 		computerService.save(computer);
 		
 		request.setAttribute("displayDivAdd", true);
-		response.sendRedirect("/computer_database/Dashboard");	
+		response.sendRedirect("Dashboard");	
 	}
 	
 	private Company initCompany(String companyId) {

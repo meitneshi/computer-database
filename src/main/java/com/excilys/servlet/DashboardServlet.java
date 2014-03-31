@@ -11,13 +11,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ch.qos.logback.classic.Logger;
-
-import com.excilys.service.ComputerService;
 import com.excilys.dao.DAOFactory;
 import com.excilys.om.Computer;
+import com.excilys.service.ComputerService;
 
 /**
  * Servlet implementation class DashboardServlet

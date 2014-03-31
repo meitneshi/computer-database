@@ -45,7 +45,7 @@ public class DeleteComputerServlet extends HttpServlet {
 		} catch (NumberFormatException e) {
 			logger.debug("failed to parse id to delete into int "+e.getMessage());
 		}
-		response.sendRedirect("/computer_database/Dashboard");
+		response.sendRedirect("Dashboard");
 	}
 
 	/**

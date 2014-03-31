@@ -51,7 +51,7 @@ $(document).ready(function(){
 	<small>Fields marked with (*) are required</small>	
 
 	<div class="container-fluid">
-		<form method="POST" action="/computer_database/EditComputer" id="editionForm" accept-charset=utf-8>
+		<form method="POST" action="EditComputer" id="editionForm" accept-charset=utf-8>
 			<input type="hidden" name="computerId" value="${computer.id }"/>
 			<div class="row" id="computerName">
 				<div class="col-md-2"><strong>Computer Name* : </strong></div>
@@ -80,7 +80,7 @@ $(document).ready(function(){
 				<div class="col-md-2"><strong>Company Name : </strong></div>
 				<div class="col-md-3">
 					<div class="dropdown">
-						<select id="companies" name="company">
+						<select id="companies" class="form-control" name="company">
 							<option value="0">--Not Known--</option>
 							<c:forEach items="${companyList}" var="company">
 								<c:choose>
@@ -106,7 +106,7 @@ $(document).ready(function(){
 					<div class="col-md-2">
 						<input type="submit" class="btn btn-success" value="Edit Computer">
 						or
-						<a href="/computer_database/Dashboard" class="btn btn-link">Cancel</a>
+						<a href="Dashboard" class="btn btn-link">Cancel</a>
 					</div>
 				</div>
 			</div>

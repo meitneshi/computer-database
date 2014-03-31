@@ -16,7 +16,7 @@
 
 
 <!-- Initialize url -->
-<c:set var="url" value="/computer_database/"/>
+<c:set var="url" value="/computer_database_maven/"/>
 
 
 <!-- Set Variable in the url -->

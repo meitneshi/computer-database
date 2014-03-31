@@ -21,7 +21,7 @@
 	</h1>
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
-			<form class="navbar-form navbar-left" method="GET" action="/computer_database/Dashboard">
+			<form class="navbar-form navbar-left" method="GET" action="Dashboard">
 				<div class="form-group">
 					<input type="hidden" name="entitiesperpage" value="${entitiesPerPage }">
 					<input type="hidden" name="page" value="1">
@@ -35,7 +35,7 @@
 <!-- Dropdown select number of entites to show -->
 			<div class="navbar-left">
 				Number of computer to show per page:
-				<form name="selectNumberOfEntitiesPerPage" method ="GET" action="/computer_database/Dashboard">
+				<form name="selectNumberOfEntitiesPerPage" method ="GET" action="Dashboard">
 					<input type="hidden" name="filter" value="${filter }">
 					<input type="hidden" name="page" value="1">
 					<input type="hidden" name="order" value="${order }">
@@ -58,7 +58,7 @@
 			
 			
 			<div class="navbar-right">
-				<a href="/computer_database/AddComputer" class="btn btn-success btn-lg active">Add Computer</a>
+				<a href="AddComputer" class="btn btn-success btn-lg active">Add Computer</a>
 			</div>
 		</div>
 	</nav>
@@ -100,7 +100,7 @@
 				<tr>
 					<td id="name">
 						
-						<a href="/computer_database/EditComputer?id=${computer.id }" onclick="">
+						<a href="EditComputer?id=${computer.id }" onclick="">
 							<c:out value="${computer.name }"/>
 						</a>
 					</td>
@@ -136,10 +136,10 @@
 					</td>
 					
 					<td id="actions">
-						<a type="button" href="/computer_database/EditComputer?id=${computer.id }" class="btn btn-info">
+						<a type="button" href="EditComputer?id=${computer.id }" class="btn btn-info">
 							<span class="glyphicon glyphicon-pencil" ></span>
 						</a>
-						<a type="button" href="/computer_database/DeleteComputer?id=${computer.id }" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this computer ?')">
+						<a type="button" href="DeleteComputer?id=${computer.id }" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this computer ?')">
 							<span class="glyphicon glyphicon-trash" ></span>
 						</a>
 					</td>

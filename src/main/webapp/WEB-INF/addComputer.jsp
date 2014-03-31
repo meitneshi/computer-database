@@ -59,7 +59,7 @@ $(document).ready(function(){
 	
 	
 	<div class="container-fluid">
-		<form method="POST" action="/computer_database/AddComputer" id="creationForm" accept-charset=utf-8>
+		<form method="POST" action="AddComputer" id="creationForm" accept-charset=utf-8>
 			
 			
 			<div class="row" id="computerName">
@@ -104,7 +104,7 @@ $(document).ready(function(){
 					<div class="col-md-2">
 						<input type="submit" class="btn btn-success" value="Add Computer">
 						or
-						<a href="/computer_database/Dashboard" class="btn btn-link">Cancel</a>
+						<a href="Dashboard" class="btn btn-link">Cancel</a>
 					</div>
 				</div>
 			</div>

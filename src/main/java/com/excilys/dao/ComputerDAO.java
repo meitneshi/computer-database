@@ -21,7 +21,6 @@ public enum ComputerDAO {
 	INSTANCE;
 	
 	private final static Logger logger = (Logger) LoggerFactory.getLogger(DAOFactory.class);
-	private LogDAO logDao = LogDAO.INSTANCE;
 	
 	public void delete(int computerIdToDelete) {
 		logger.info("trying to delete a computer");
@@ -33,11 +32,6 @@ public enum ComputerDAO {
 			preparedStatement.setInt(1, computerIdToDelete);
 			preparedStatement.executeUpdate();
 			logger.info("delete computer is successfull");
-			StringBuilder logB = new StringBuilder();
-			logB.append("computer (id=").
-				append(String.valueOf(computerIdToDelete)).
-				append(") was deleted from the database");
-			logDao.create(logB.toString());
 		} catch (SQLException e) {
 			logger.debug("failed to delete computer "+e.getMessage());
 		} finally {
@@ -185,19 +179,7 @@ public enum ComputerDAO {
 				preparedStatement.setLong(9, computer.getCompany().getId());
 			}
 			preparedStatement.executeUpdate();
-			logger.info("save is successfull");
-			
-			//log in DB
-			StringBuilder logB = new StringBuilder();
-			if (computer.getId() == 0) {
-				logB.append("new computer create in database");
-			} else {
-				logB.append("computer (id=").
-				append(String.valueOf(computer.getId())).
-				append(") was edited in database");
-			}
-			logDao.create(logB.toString());
-			
+			logger.info("save is successfull");			
 		} catch (SQLException e) {
 			logger.debug("failed to save the computer "+e.getMessage());
 		} finally {
