@@ -21,7 +21,7 @@ public enum ComputerDAO {
 	INSTANCE;
 	
 	private final static Logger logger = (Logger) LoggerFactory.getLogger(DAOFactory.class);
-	private DAOFactory daoFactory = DAOFactory.INSTANCE;
+	private LogDAO logDao = LogDAO.INSTANCE;
 	
 	public void delete(int computerIdToDelete) {
 		logger.info("trying to delete a computer");
@@ -33,10 +33,15 @@ public enum ComputerDAO {
 			preparedStatement.setInt(1, computerIdToDelete);
 			preparedStatement.executeUpdate();
 			logger.info("delete computer is successfull");
+			StringBuilder logB = new StringBuilder();
+			logB.append("computer (id=").
+				append(String.valueOf(computerIdToDelete)).
+				append(") was deleted from the database");
+			logDao.create(logB.toString());
 		} catch (SQLException e) {
 			logger.debug("failed to delete computer "+e.getMessage());
 		} finally {
-			daoFactory.safeClose(connection, preparedStatement, null);
+			DAOFactory.INSTANCE.safeClose(connection, preparedStatement, null);
 		}
 	}
 	
@@ -63,7 +68,7 @@ public enum ComputerDAO {
 		} catch (SQLException e) {
 			logger.debug("failed to find a computer by id "+e.getMessage());
 		}finally {
-			daoFactory.safeClose(connection, preparedStatement, null);
+			DAOFactory.INSTANCE.safeClose(connection, preparedStatement, null);
 		}
 		return computerResult;
 	}
@@ -111,7 +116,7 @@ public enum ComputerDAO {
 			} catch (SQLException e) {
 				logger.debug("failed to load the list of computer "+e.getMessage());
 			} finally {
-				daoFactory.safeClose(connection, preparedStatement, null);
+				DAOFactory.INSTANCE.safeClose(connection, preparedStatement, null);
 			}
 			return computers;
 		}
@@ -120,7 +125,7 @@ public enum ComputerDAO {
 		logger.info("attempting to count the number of computer with a filter");
 		int numberFinal = 0;
 		ResultSet number = null;
-		Connection connection = DAOFactory.INSTANCE.getConnection();;
+		Connection connection = DAOFactory.INSTANCE.getConnection();
 		PreparedStatement preparedStatement = null;
 		StringBuilder builder = new StringBuilder();
 		String sql = "";
@@ -140,7 +145,7 @@ public enum ComputerDAO {
 		} catch (SQLException e) {
 			logger.debug("failed to count...such a shame ..... "+e.getMessage());
 		} finally {
-			daoFactory.safeClose(connection, preparedStatement, null);
+			DAOFactory.INSTANCE.safeClose(connection, preparedStatement, null);
 		}
 		return numberFinal;
 	}
@@ -181,10 +186,22 @@ public enum ComputerDAO {
 			}
 			preparedStatement.executeUpdate();
 			logger.info("save is successfull");
+			
+			//log in DB
+			StringBuilder logB = new StringBuilder();
+			if (computer.getId() == 0) {
+				logB.append("new computer create in database");
+			} else {
+				logB.append("computer (id=").
+				append(String.valueOf(computer.getId())).
+				append(") was edited in database");
+			}
+			logDao.create(logB.toString());
+			
 		} catch (SQLException e) {
 			logger.debug("failed to save the computer "+e.getMessage());
 		} finally {
-			daoFactory.safeClose(connection, preparedStatement, null);
+			DAOFactory.INSTANCE.safeClose(null, preparedStatement, null);
 		}
 	}
 }

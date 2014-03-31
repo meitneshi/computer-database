@@ -7,13 +7,6 @@ import java.sql.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
 public enum FactoryService {
-	
-	/*--------------------*/
-	
-		
-	
-	/*---------------------*/
-
 	INSTANCE;
 	
 	private DAOFactory daoFactory = DAOFactory.INSTANCE;

@@ -1,9 +1,11 @@
 package com.excilys.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.excilys.om.Computer;
 import com.excilys.dao.ComputerDAO;
+import com.excilys.dao.DAOFactory;
 
 public enum ComputerService {
 	
@@ -28,6 +30,18 @@ public enum ComputerService {
 	}
 
 	public void save(Computer computer) {
-		computerDAO.save(computer);
+		
+		try {
+			DAOFactory.INSTANCE.startTransaction();
+			computerDAO.save(computer);
+			DAOFactory.INSTANCE.commit();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		} catch (Exception e) {
+			DAOFactory.INSTANCE.rollback();
+		} finally {
+			DAOFactory.INSTANCE.closeConnection();
+		}
+		
 	}
 }

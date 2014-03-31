@@ -17,10 +17,9 @@ import com.excilys.om.Company;
 public enum CompanyDAO {
 
 	INSTANCE;
-	
-		
+			
 	private final static Logger logger = (Logger) LoggerFactory.getLogger(DAOFactory.class);
-	private DAOFactory daoFactory = DAOFactory.INSTANCE;
+//	private DAOFactory daoFactory = DAOFactory.INSTANCE;
 	
 	/**
 	 * 
@@ -43,7 +42,7 @@ public enum CompanyDAO {
 		} catch (SQLException e) {
 			logger.debug("failed to found a company by id "+e.getMessage());
 		} finally {
-			daoFactory.safeClose(connection, preparedStatement, null);
+			DAOFactory.INSTANCE.safeClose(connection, preparedStatement, null);
 		}
 		return company;
 	}
@@ -66,7 +65,7 @@ public enum CompanyDAO {
 		} catch (SQLException e) {
 			logger.debug("failed to find the list of companies "+e.getMessage());
 		} finally {
-			daoFactory.safeClose(connection, preparedStatement, queryResult);
+			DAOFactory.INSTANCE.safeClose(connection, preparedStatement, queryResult);
 		}
 		return companies;
 		
