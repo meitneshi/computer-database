@@ -30,7 +30,6 @@ public enum ComputerService {
 	}
 
 	public void save(Computer computer) {
-		
 		try {
 			DAOFactory.INSTANCE.startTransaction();
 			computerDAO.save(computer);
