@@ -3,10 +3,16 @@ package com.excilys.service;
 import java.sql.ResultSet;
 
 import com.excilys.dao.DAOFactory;
-import com.mysql.jdbc.Connection;
+import java.sql.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
 public enum FactoryService {
+	
+	/*--------------------*/
+	
+		
+	
+	/*---------------------*/
 
 	INSTANCE;
 	

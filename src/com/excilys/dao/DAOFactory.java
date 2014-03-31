@@ -4,19 +4,23 @@
 package com.excilys.dao;
 
 //import java.io.FileInputStream;		//uncomment when using config file
-import java.io.IOException;
-import java.sql.DriverManager;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 //import java.util.Properties;			//uncomment when using config file
 
 
 
+
+
 import org.slf4j.LoggerFactory;
+
 import ch.qos.logback.classic.Logger;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
+import com.jolbox.bonecp.BoneCP;
+import com.jolbox.bonecp.BoneCPConfig;
+import java.sql.PreparedStatement;
+
 
 /**
  * @author mbibos
@@ -27,53 +31,43 @@ public enum DAOFactory {
 	INSTANCE;
 	
 	private final Logger logger = (Logger) LoggerFactory.getLogger(DAOFactory.class);
+	
+	private Connection connection = null;
+	private BoneCP connectionPool = null;
+	/*---------------------------*/
 
-	private String url;
-	private String user;
-	private String password;
-	
-	private Connection connection;
-	
 	{
 		logger.info("searching for Driver...");
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			logger.debug("Driver found");
 		} catch (Exception e) {
-			logger.debug("Driver not found");
-			e.printStackTrace();
+			logger.debug("Driver not found "+e.getMessage());
 		}
 	}
 	
-	private void initParam() throws IOException {
-		/*-----AVEC fichier de config------*/
-		// Properties properties = new Properties();
-		// FileInputStream fileStream = new FileInputStream("./WebContent/WEB-INF/config/dbConnectionConf.conf");
-		// try {
-		// properties.load(fileStream);
-		// } finally {
-		// fileStream.close();
-		// }
-		// this.url = properties.getProperty("url");
-		// this.user = properties.getProperty("user");
-		// this.password = properties.getProperty("password");
-		/*-----SANS Fichier de config-----*/
-		this.url = "jdbc:mysql://localhost:3306/computer-database-db?zeroDateTimeBehavior=convertToNull";
-		this.user = "root";
-		this.password = "jmlld3fpj";
-	}
-
 	public Connection getConnection() {
-		logger.info("trying to get connection...");
+		logger.info("attempting to get a connexion");
 		try {
-			this.initParam();
-			return (Connection) DriverManager.getConnection(url, user, password);
-		} catch (IOException | SQLException e) {
-			logger.debug("failed to get connection "+e.getMessage());
-		}
+			BoneCPConfig config = new BoneCPConfig();
+			config.setJdbcUrl("jdbc:mysql://localhost:3306/computer-database-db?zeroDateTimeBehavior=convertToNull"); 
+			config.setUsername("root"); 
+			config.setPassword("jmlld3fpj");
+			config.setMinConnectionsPerPartition(1);
+			config.setMaxConnectionsPerPartition(10);
+			config.setPartitionCount(1);
+			connectionPool = new BoneCP(config); 
+			
+			connection = connectionPool.getConnection();
+			logger.info("connexion established, trying to shutdown connexion Pool");
+			connectionPool.shutdown();
+			logger.info("connexion Pool shutdown successfully");
+		} catch (SQLException e) {
+			logger.debug("failed while getting connexion "+ e.getMessage());
+		} 
 		return connection;
 	}
-	
+
 	public void safeClose(Connection connection, PreparedStatement preparedStatement, ResultSet resultSet){
 		logger.info("attempting to close safe");
 		try {
