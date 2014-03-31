@@ -10,6 +10,7 @@
   });
 </script>
 
+
 <script>
 $(document).ready(function(){
 	$("#creationForm").validate(
@@ -27,10 +28,11 @@ $(document).ready(function(){
 			}
 		},
 		highlight: function(element) {
-			$(element).closest('.control-group').removeClass('success').addClass('error');
+			$(element).closest('.glyphicon').addClass('glyphicon-ok');
 		},
 		success: function(element) {
-			element.text('OK!').addClass('valid').closest('.control-group').removeClass('error').addClass('success');
+			element.text('OK!');
+			$("input").closest('.form-group').addClass('has-success');
 		}
 	});
 	$.validator.addMethod(
@@ -58,6 +60,8 @@ $(document).ready(function(){
 	
 	<div class="container-fluid">
 		<form method="POST" action="/computer_database/AddComputer" id="creationForm" accept-charset=utf-8>
+			
+			
 			<div class="row" id="computerName">
 				<div class="col-md-2"><strong>Computer Name* : </strong></div>
 				<div class="col-md-3">
@@ -83,7 +87,7 @@ $(document).ready(function(){
 				<div class="col-md-2"><strong>Company Name : </strong></div>
 				<div class="col-md-3">
 					<div class="dropdown">
-						<select id="companies" name="company">
+						<select class="form-control" id="companies" name="company">
 							<option value="0">--Not Known--</option>
 							<c:forEach items="${companyList}" var="company">
 								<option value="${company.id }" >

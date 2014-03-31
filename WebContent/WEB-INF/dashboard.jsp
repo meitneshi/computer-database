@@ -41,7 +41,7 @@
 					<input type="hidden" name="page" value="1">
 					<input type="hidden" name="order" value="${order }">
 					<input type="hidden" name="criteria" value="${criteria }">
-					<select id="entitiesPerPage" name="entitiesperpage" onChange="this.form.submit();">
+					<select class="form-control" id="entitiesPerPage" name="entitiesperpage" onChange="this.form.submit();">
 						<option value="10" <c:if test="${entitiesPerPage == 10 }">selected</c:if>>10</option>
 						<option value="30" <c:if test="${entitiesPerPage == 30 }">selected</c:if>>30</option>
 						<option value="50" <c:if test="${entitiesPerPage == 50 }">selected</c:if>>50</option>
