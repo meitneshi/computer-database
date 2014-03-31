@@ -14,7 +14,17 @@ public enum ComputerService {
 	private ComputerDAO computerDAO = ComputerDAO.INSTANCE;
 	
 	public void delete(int id) {
-		computerDAO.delete(id);
+		try {
+			DAOFactory.INSTANCE.startTransaction();
+			computerDAO.delete(id);
+			DAOFactory.INSTANCE.commit();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		} catch (Exception e) {
+			DAOFactory.INSTANCE.rollback();
+		} finally {
+			DAOFactory.INSTANCE.closeConnection();
+		}
 	}
 	
 	public Computer findById(int id) {
@@ -41,6 +51,5 @@ public enum ComputerService {
 		} finally {
 			DAOFactory.INSTANCE.closeConnection();
 		}
-		
 	}
 }

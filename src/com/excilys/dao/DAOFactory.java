@@ -96,6 +96,7 @@ public enum DAOFactory {
 		logger.info("attempting to close connection");
 		try {
 			DAOFactory.INSTANCE.getConnection().close();
+			connectionTL.remove();
 			logger.info("Connection closed");
 		} catch (SQLException e) {
 			logger.debug("Safe Close failed "+e.getMessage());
@@ -114,7 +115,6 @@ public enum DAOFactory {
 			logger.info("commit successfull");
 		} catch (SQLException e) {
 			logger.debug("commit failed "+e.getMessage());
-			e.printStackTrace();
 		}
 	}
 

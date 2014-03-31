@@ -41,7 +41,7 @@ public enum ComputerDAO {
 		} catch (SQLException e) {
 			logger.debug("failed to delete computer "+e.getMessage());
 		} finally {
-			DAOFactory.INSTANCE.safeClose(connection, preparedStatement, null);
+			DAOFactory.INSTANCE.safeClose(null, preparedStatement, null);
 		}
 	}
 	
