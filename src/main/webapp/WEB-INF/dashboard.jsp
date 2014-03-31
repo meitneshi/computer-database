@@ -26,7 +26,7 @@
 					<input type="hidden" name="entitiesperpage" value="${entitiesPerPage }">
 					<input type="hidden" name="page" value="1">
 					<input type="hidden" name="order" value="asc">
-					<input type="hidden" name="criteria" value="name">
+					<input type="hidden" name="criteria" value="name"> <!--  criteria change function the select of criteria name or company -->
 					<input type="text" name="filter" class="form-control" placeholder="Search by name">
 				</div>
 				<button type="submit" class="btn btn-default">Filter by name</button>
