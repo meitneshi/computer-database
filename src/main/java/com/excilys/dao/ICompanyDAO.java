@@ -19,4 +19,10 @@ public interface ICompanyDAO {
 	 */
 	public List<Company> findAll();
 
+	/**
+	 * Function to initialize a company with the id given in parameter
+	 * @param companyId
+	 * @return Company
+	 */
+	public Company initCompany(String id);
 }

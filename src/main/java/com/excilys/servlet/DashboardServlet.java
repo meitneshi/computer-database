@@ -111,7 +111,11 @@ public class DashboardServlet extends HttpServlet {
 	/*                     Functions                      */
 	/******************************************************/
 
-//	Traitement de currentPage
+	/**
+	 * initialize the variable 'currentPageNumber'
+	 * @param currentPageNumberS
+	 * @return int
+	 */
 	private int initCurrentPageNumber(String currentPageNumberS) {
 		int currentPageNumber = 1; //default
 		if(currentPageNumberS != null) {
@@ -124,7 +128,12 @@ public class DashboardServlet extends HttpServlet {
 		return currentPageNumber;
 	}
 	
-//	Initialisation de page Max
+	/**
+	 * Initialize the variable 'pageMax'
+	 * @param entitiesPerPage
+	 * @param numberOfComputer
+	 * @return int
+	 */
 	private int initPageMax(int entitiesPerPage, int numberOfComputer) {
 		double entitiesPerPageDouble = (double) entitiesPerPage;
 		double numberOfComputerDouble = (double) numberOfComputer;
@@ -132,7 +141,11 @@ public class DashboardServlet extends HttpServlet {
 		return (int) Math.ceil(pageMaxDouble);
 	}
 
-//	initialisation de entities par page
+	/**
+	 * nitialize the variable 'entitiesPerPage'
+	 * @param entitiesPerPageS
+	 * @return int
+	 */
 	private int initEntitiesPerPage(String entitiesPerPageS){
 		int entitiesperpage = 30; //default
 		if(entitiesPerPageS != null) {
@@ -145,7 +158,15 @@ public class DashboardServlet extends HttpServlet {
 		return entitiesperpage;
 	}
 
-//	generate list of computer to be show on screen with order
+	/**
+	 * Generate a list of computer according to several criteria given in parameters
+	 * @param currentPageNumber
+	 * @param entitiesPerPage
+	 * @param filter
+	 * @param criteria
+	 * @param order
+	 * @return List
+	 */
 	private List<Computer> findComputer(int currentPageNumber, int entitiesPerPage, String filter, String criteria, String order) {
 		List<Computer> result = new ArrayList<Computer>();
 		String filterS = "";

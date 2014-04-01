@@ -2,6 +2,10 @@ package com.excilys.om;
 
 public class Company {
 	
+	/**
+	 * Class to represent a company.
+	 * A company is represented by its id (unique) and its name (legally unique...)
+	 */
 	private long id;
 	private String name;
 

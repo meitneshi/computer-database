@@ -4,6 +4,11 @@ import java.util.Date;
 
 public class Computer {
 	
+	/**
+	 * Class to represent a computer.
+	 * A computer is represented by its id (unique), its name (legally unique), 
+	 * its company (represented in DB by the company's id and its introduced and discontinued Date (can be null)
+	 */
 	private long id;
 	private Company company;
 	private String name;

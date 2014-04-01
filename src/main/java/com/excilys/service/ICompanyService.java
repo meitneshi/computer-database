@@ -18,4 +18,11 @@ public interface ICompanyService {
 	 * @return List
 	 */
 	public List<Company> findAll();
+	
+	/**
+	 * Function to initialize a company with the id given in parameter
+	 * @param id
+	 * @return Company
+	 */
+	public Company initCompany(String id);
 }

@@ -73,4 +73,20 @@ public enum CompanyDAOImpl implements ICompanyDAO{
 		return companies;
 		
 	}
+
+	public Company initCompany(String id) {
+		Company company;
+		int companyIdInt = 0;
+		try {
+			companyIdInt = Integer.parseInt(id);
+		} catch (NumberFormatException e) {
+			logger.debug("failed to parseInt the company Id "+e.getMessage());
+		}
+		if (companyIdInt == 0) {
+			company = new Company(null);
+		} else {
+			company = this.findById(companyIdInt);
+		}
+		return company;
+	}
 }

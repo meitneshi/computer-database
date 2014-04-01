@@ -92,7 +92,7 @@ public class AddComputerServlet extends HttpServlet {
 			}
 		}
 		
-		Company company = this.initCompany(request.getParameter("company"));
+		Company company = companyservice.initCompany(request.getParameter("company"));
 		
 		Computer computer = new Computer(company, name, introduced, discontinued);
 		
@@ -101,22 +101,5 @@ public class AddComputerServlet extends HttpServlet {
 		request.setAttribute("displayDivAdd", true);
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/addComputer.jsp");
 		dispatcher.forward(request,response);
-		
-	}
-
-	private Company initCompany(String companyId) {
-		Company company;
-		int companyIdInt = 0;
-		try {
-			companyIdInt = Integer.parseInt(companyId);
-		} catch (NumberFormatException e) {
-			logger.debug("failed to parseInt the company Id "+e.getMessage());
-		}
-		if (companyIdInt == 0) {
-			company = new Company(null);
-		} else {
-			company = companyservice.findById(companyIdInt);
-		}
-		return company;
 	}
 }

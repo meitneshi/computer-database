@@ -4,6 +4,11 @@ import java.util.Date;
 
 public class Log {
 
+	/**
+	 * Class to represent a Log.
+	 * a log is represented by its id (unique), its date of generation (current_timestamp) and its label
+	 * which is the message given by the code (computer created, computer updated, computer deleted....)
+	 */
 	private long id;
 	private Date date;
 	private String label;

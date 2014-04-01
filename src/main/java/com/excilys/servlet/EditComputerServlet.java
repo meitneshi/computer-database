@@ -93,7 +93,7 @@ public class EditComputerServlet extends HttpServlet {
 			}
 		}
 		
-		Company company = this.initCompany(request.getParameter("company"));
+		Company company = companyService.initCompany(request.getParameter("company"));
 		
 		Computer computer = new Computer(id, company, name, introduced, discontinued);
 		
@@ -101,21 +101,5 @@ public class EditComputerServlet extends HttpServlet {
 		
 		request.setAttribute("displayDivAdd", true);
 		response.sendRedirect("Dashboard");	
-	}
-	
-	private Company initCompany(String companyId) {
-		Company company;
-		int companyIdInt = 0;
-		try {
-			companyIdInt = Integer.parseInt(companyId);
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		}
-		if (companyIdInt == 0) {
-			company = new Company(null);
-		} else {
-			company = companyService.findById(companyIdInt);
-		}
-		return company;
 	}
 }
