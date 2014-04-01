@@ -81,7 +81,7 @@ public class DashboardServlet extends HttpServlet {
 		} else { //filter null, default
 			numberOfComputer = computerService.count("");
 			request.setAttribute("filter", "");
-			List<Computer> result = this.findComputer(currentPageNumber, entitiesPerPage, "", criteria, order);
+			List<Computer> result = this.findComputer(currentPageNumber, entitiesPerPage, "", "name", order);
 			request.setAttribute("computerPageList", result);
 		}
 		

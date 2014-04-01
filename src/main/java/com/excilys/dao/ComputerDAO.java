@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.slf4j.LoggerFactory;
 
+import com.excilys.exceptions.IllegalPersonnalException;
 import com.excilys.om.Company;
 import com.excilys.om.Computer;
 
@@ -34,6 +35,7 @@ public enum ComputerDAO {
 			logger.info("delete computer is successfull");
 		} catch (SQLException e) {
 			logger.debug("failed to delete computer "+e.getMessage());
+			throw new IllegalPersonnalException();
 		} finally {
 			DAOFactory.INSTANCE.safeClose(null, preparedStatement, null);
 		}
@@ -61,10 +63,10 @@ public enum ComputerDAO {
 			
 		} catch (SQLException e) {
 			logger.debug("failed to find a computer by id "+e.getMessage());
+			throw new IllegalPersonnalException();
 		}finally {
 			DAOFactory.INSTANCE.safeClose(connection, preparedStatement, null);
 		}
-		return computerResult;
 	}
 	
 	//select X entities according to page number
@@ -92,7 +94,7 @@ public enum ComputerDAO {
 			String sql = "SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name "
 					+ "FROM computer "
 					+ "LEFT JOIN company "
-					+ "ON computer.company_id = company.id WHERE "+ criteriaSQL +" LIKE ? "
+					+ "ON computer.company_id = company.id WHERE computer.name LIKE ? "
 					+ "ORDER BY " + criteriaSQL + " " + orderSQL + " "
 					+ "LIMIT ?, ? ";
 			try {
@@ -101,7 +103,6 @@ public enum ComputerDAO {
 				preparedStatement.setInt(2, ((numPage-1)*entitiesPerPage));
 				preparedStatement.setInt(3, entitiesPerPage);
 				queryResult = preparedStatement.executeQuery();
-				System.out.println(preparedStatement);
 				while(queryResult.next()) {
 					Company company = new Company(queryResult.getString("company.name"), queryResult.getInt("company_id"));
 					Computer computer = new Computer(queryResult.getInt("id"), company, queryResult.getString("name"), queryResult.getTimestamp("introduced"), queryResult.getTimestamp("discontinued"));
@@ -110,6 +111,7 @@ public enum ComputerDAO {
 				logger.info("loading the list is complete");
 			} catch (SQLException e) {
 				logger.debug("failed to load the list of computer "+e.getMessage());
+				throw new IllegalPersonnalException();
 			} finally {
 				DAOFactory.INSTANCE.safeClose(connection, preparedStatement, null);
 			}
@@ -139,6 +141,7 @@ public enum ComputerDAO {
 			logger.info("count is successfull....");
 		} catch (SQLException e) {
 			logger.debug("failed to count...such a shame ..... "+e.getMessage());
+			throw new IllegalPersonnalException();
 		} finally {
 			DAOFactory.INSTANCE.safeClose(connection, preparedStatement, null);
 		}
@@ -183,6 +186,7 @@ public enum ComputerDAO {
 			logger.info("save is successfull");			
 		} catch (SQLException e) {
 			logger.debug("failed to save the computer "+e.getMessage());
+			throw new IllegalPersonnalException();
 		} finally {
 			DAOFactory.INSTANCE.safeClose(null, preparedStatement, null);
 		}

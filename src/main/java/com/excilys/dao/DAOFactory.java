@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import ch.qos.logback.classic.Logger;
 
+import com.excilys.exceptions.IllegalPersonnalException;
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
 
@@ -46,8 +47,10 @@ public enum DAOFactory {
 			connectionPool = new BoneCP(config);
 		} catch (ClassNotFoundException e) {
 			logger.debug("Driver not found "+e.getMessage());
+			throw new IllegalPersonnalException();
 		} catch (SQLException e) {
 			logger.debug("Connection Pool failed "+e.getMessage());
+			throw new IllegalPersonnalException();
 		}		
 	}
 	
@@ -59,8 +62,8 @@ public enum DAOFactory {
 				logger.info("Connection initialize successfully");
 				connection = connectionPool.getConnection();
 			} catch (SQLException e) {
-				logger.debug("failed to initialize connection");
-				e.printStackTrace();
+				logger.debug("failed to initialize connection "+e.getMessage());
+				throw new IllegalPersonnalException();
 			}
 			return connection;
 		}
@@ -88,6 +91,7 @@ public enum DAOFactory {
 			}
 		} catch (SQLException e) {
 			logger.debug("Safe Close failed "+e.getMessage());
+			throw new IllegalPersonnalException();
 		}
 	}
 	
@@ -99,12 +103,19 @@ public enum DAOFactory {
 			logger.info("Connection closed");
 		} catch (SQLException e) {
 			logger.debug("Safe Close failed "+e.getMessage());
+			throw new IllegalPersonnalException();
 		}	
 	}
 	
-	public void startTransaction() throws SQLException {
+	public void startTransaction() {
 		logger.info("starting transaction ....");
-		this.getConnection().setAutoCommit(false);
+		try {
+			this.getConnection().setAutoCommit(false);
+		} catch (IllegalPersonnalException | SQLException e) {
+			logger.debug("the transaction is not started " + e.getMessage());
+			throw new IllegalPersonnalException();
+		}
+		
 	}
 
 	public void commit() {
@@ -113,6 +124,7 @@ public enum DAOFactory {
 			logger.info("commit successfull");
 		} catch (SQLException e) {
 			logger.debug("commit failed "+e.getMessage());
+			throw new IllegalPersonnalException();
 		}
 	}
 
@@ -122,6 +134,7 @@ public enum DAOFactory {
 			logger.info("rollback successfull");
 		} catch (SQLException e) {
 			logger.debug("rollback failed "+e.getMessage());
+			throw new IllegalPersonnalException();
 		}		
 	}
 }

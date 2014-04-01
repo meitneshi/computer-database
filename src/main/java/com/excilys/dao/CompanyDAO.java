@@ -4,7 +4,6 @@ import ch.qos.logback.classic.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -12,6 +11,7 @@ import java.util.List;
 
 import org.slf4j.LoggerFactory;
 
+import com.excilys.exceptions.IllegalPersonnalException;
 import com.excilys.om.Company;
 
 public enum CompanyDAO {
@@ -41,6 +41,7 @@ public enum CompanyDAO {
 			logger.info("company found");
 		} catch (SQLException e) {
 			logger.debug("failed to found a company by id "+e.getMessage());
+			throw new IllegalPersonnalException();
 		} finally {
 			DAOFactory.INSTANCE.safeClose(connection, preparedStatement, null);
 		}
@@ -64,6 +65,7 @@ public enum CompanyDAO {
 			logger.info("list of companies found");
 		} catch (SQLException e) {
 			logger.debug("failed to find the list of companies "+e.getMessage());
+			throw new IllegalPersonnalException();
 		} finally {
 			DAOFactory.INSTANCE.safeClose(connection, preparedStatement, queryResult);
 		}

@@ -1,12 +1,12 @@
 package com.excilys.service;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import com.excilys.om.Computer;
 import com.excilys.dao.ComputerDAO;
 import com.excilys.dao.DAOFactory;
 import com.excilys.dao.LogDAO;
+import com.excilys.exceptions.IllegalPersonnalException;
 
 public enum ComputerService {
 	
@@ -25,10 +25,9 @@ public enum ComputerService {
 				append(") was deleted from the database");
 			logDao.create(logB.toString());
 			DAOFactory.INSTANCE.commit();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
 		} catch (Exception e) {
 			DAOFactory.INSTANCE.rollback();
+			throw new IllegalPersonnalException();
 		} finally {
 			DAOFactory.INSTANCE.closeConnection();
 		}
@@ -43,7 +42,11 @@ public enum ComputerService {
 	}
 	
 	public int count(String filter) {
-		return computerDAO.count(filter);
+		try {
+			return computerDAO.count(filter);
+		} catch (IllegalPersonnalException e) {
+			throw new IllegalPersonnalException();
+		}
 	}
 
 	public void save(Computer computer) {
@@ -60,10 +63,9 @@ public enum ComputerService {
 			}
 			logDao.create(logB.toString());
 			DAOFactory.INSTANCE.commit();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
 		} catch (Exception e) {
 			DAOFactory.INSTANCE.rollback();
+			throw new IllegalPersonnalException();
 		} finally {
 			DAOFactory.INSTANCE.closeConnection();
 		}

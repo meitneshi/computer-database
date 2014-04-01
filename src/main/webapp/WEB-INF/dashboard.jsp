@@ -74,8 +74,8 @@
 			<tr>
 				<th>
 					Computer Name
-					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-up' ></span>" servlet="Dashboard" entitiesperpage="${entitiesPerPage }" page="1" filter="${filter }" order="asc" criteria="${criteria }"/>
-					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-down' ></span>" servlet="Dashboard" entitiesperpage="${entitiesPerPage }" page="1" filter="${filter }" order="desc" criteria="${criteria }"/>
+					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-up' ></span>" servlet="Dashboard" entitiesperpage="${entitiesPerPage }" page="1" filter="${filter }" order="asc" criteria="name"/>
+					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-down' ></span>" servlet="Dashboard" entitiesperpage="${entitiesPerPage }" page="1" filter="${filter }" order="desc" criteria="name"/>
 				</th>
 				
 				<th>
@@ -88,8 +88,8 @@
 				
 				<th>
 					Company
-					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-up' ></span>" servlet="Dashboard" entitiesperpage="${entitiesPerPage }" page="1" filter="${filter }" order="asc" criteria="${criteria }"/>
-					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-down' ></span>" servlet="Dashboard" entitiesperpage="${entitiesPerPage }" page="1" filter="${filter }" order="desc" criteria="${criteria }"/>
+					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-up' ></span>" servlet="Dashboard" entitiesperpage="${entitiesPerPage }" page="1" filter="${filter }" order="asc" criteria="company"/>
+					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-down' ></span>" servlet="Dashboard" entitiesperpage="${entitiesPerPage }" page="1" filter="${filter }" order="desc" criteria="company"/>
 				</th>
 				
 				<th>Actions</th>
