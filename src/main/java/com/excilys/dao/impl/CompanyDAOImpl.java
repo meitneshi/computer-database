@@ -20,12 +20,7 @@ public enum CompanyDAOImpl implements ICompanyDAO{
 	INSTANCE;
 			
 	private final static Logger logger = (Logger) LoggerFactory.getLogger(DAOFactory.class);
-//	private DAOFactory daoFactory = DAOFactory.INSTANCE;
 	
-	/**
-	 * 
-	 * @return ResulSet of Company
-	 */
 	public Company findById(int id) {
 		logger.info("attempting to find a company by id");
 		Connection connection = DAOFactory.INSTANCE.getConnection();
@@ -71,7 +66,6 @@ public enum CompanyDAOImpl implements ICompanyDAO{
 			DAOFactory.INSTANCE.safeClose(connection, preparedStatement, queryResult);
 		}
 		return companies;
-		
 	}
 
 	public Company initCompany(String id) {

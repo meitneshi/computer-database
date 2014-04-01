@@ -85,16 +85,20 @@ public class Computer {
 		this.discontinued = discontinued;
 	}
 
-	public Computer() {
-		super();
-	}
+	/*-----------------------------------------------*/
+	/*                Constructeurs                  */
+	/*-----------------------------------------------*/
 	
-	public Computer(Company company, String name, Date introduced, Date discontinued) {
-		this.company = company;
-		this.name = name;
-		this.introduced = introduced;
-		this.discontinued = discontinued;
-	}
+//	public Computer() {
+//		super();
+//	}
+//	
+//	public Computer(Company company, String name, Date introduced, Date discontinued) {
+//		this.company = company;
+//		this.name = name;
+//		this.introduced = introduced;
+//		this.discontinued = discontinued;
+//	}
 	
 	public Computer(long id, Company company, String name, Date introduced, Date discontinued) {
 		this.id = id;

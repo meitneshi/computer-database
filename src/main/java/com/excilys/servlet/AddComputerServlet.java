@@ -94,7 +94,7 @@ public class AddComputerServlet extends HttpServlet {
 		
 		Company company = companyservice.initCompany(request.getParameter("company"));
 		
-		Computer computer = new Computer(company, name, introduced, discontinued);
+		Computer computer = new Computer(0, company, name, introduced, discontinued);
 		
 		computerservice.save(computer);
 		

@@ -68,7 +68,4 @@ public class Company {
 	public String toString() {
 		return "Company [id=" + id + ", name=" + name + "]";
 	}
-
-	
-
 }

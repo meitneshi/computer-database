@@ -10,5 +10,7 @@ public class IllegalPersonnalException extends RuntimeException {
 	public IllegalPersonnalException() {
 		super();
 	}
+	
+//	nothing to do for the moment
 
 }

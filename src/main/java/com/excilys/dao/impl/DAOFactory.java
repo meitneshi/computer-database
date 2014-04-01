@@ -27,9 +27,7 @@ public enum DAOFactory {
 	INSTANCE;
 	
 	private final Logger logger = (Logger) LoggerFactory.getLogger(DAOFactory.class);
-	
 	private BoneCP connectionPool = null;
-	/*---------------------------*/
 
 	{
 		logger.info("searching for Driver...");
@@ -73,6 +71,12 @@ public enum DAOFactory {
 		return connectionTL.get();
 	}
 
+	/**
+	 * Close safely in the right order the given parameters
+	 * @param connection
+	 * @param preparedStatement
+	 * @param resultSet
+	 */
 	public void safeClose(Connection connection, PreparedStatement preparedStatement, ResultSet resultSet){
 		logger.info("attempting to close safe");
 		try {
@@ -95,6 +99,9 @@ public enum DAOFactory {
 		}
 	}
 	
+	/**
+	 * close the connection
+	 */
 	public void closeConnection() {
 		logger.info("attempting to close connection");
 		try {
@@ -107,6 +114,9 @@ public enum DAOFactory {
 		}	
 	}
 	
+	/**
+	 * Start a new transaction
+	 */
 	public void startTransaction() {
 		logger.info("starting transaction ....");
 		try {
@@ -115,9 +125,11 @@ public enum DAOFactory {
 			logger.debug("the transaction is not started " + e.getMessage());
 			throw new IllegalPersonnalException();
 		}
-		
 	}
 
+	/**
+	 * Commit the transaction
+	 */
 	public void commit() {
 		try {
 			this.getConnection().commit();
@@ -128,6 +140,9 @@ public enum DAOFactory {
 		}
 	}
 
+	/**
+	 * Rollback the transaction
+	 */
 	public void rollback() {
 		try {
 			this.getConnection().rollback();
