@@ -26,10 +26,10 @@
 					<input type="hidden" name="entitiesperpage" value="${entitiesPerPage }">
 					<input type="hidden" name="page" value="1">
 					<input type="hidden" name="order" value="asc">
-					<input type="hidden" name="criteria" value="name"> <!--  criteria change function the select of criteria name or company -->
+					<input type="hidden" name="criteria" value="name">
 					<input type="text" name="filter" class="form-control" placeholder="Search by name">
 				</div>
-				<button type="submit" class="btn btn-default">Filter by name</button>
+				<button type="submit" class="btn btn-default">Filter</button>
 			</form>
 			
 <!-- Dropdown select number of entites to show -->
@@ -74,8 +74,8 @@
 			<tr>
 				<th>
 					Computer Name
-					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-up' ></span>" servlet="Dashboard" entitiesperpage="${entitiesPerPage }" page="1" filter="${filter }" order="asc" criteria="name"/>
-					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-down' ></span>" servlet="Dashboard" entitiesperpage="${entitiesPerPage }" page="1" filter="${filter }" order="desc" criteria="name"/>
+					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-up' ></span>" servlet="Dashboard" entitiesperpage="${entitiesPerPage }" page="1" filter="${filter }" order="asc" criteria="${criteria }"/>
+					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-down' ></span>" servlet="Dashboard" entitiesperpage="${entitiesPerPage }" page="1" filter="${filter }" order="desc" criteria="${criteria }"/>
 				</th>
 				
 				<th>
@@ -88,8 +88,8 @@
 				
 				<th>
 					Company
-					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-up' ></span>" servlet="Dashboard" entitiesperpage="${entitiesPerPage }" page="1" filter="${filter }" order="asc" criteria="company"/>
-					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-down' ></span>" servlet="Dashboard" entitiesperpage="${entitiesPerPage }" page="1" filter="${filter }" order="desc" criteria="company"/>
+					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-up' ></span>" servlet="Dashboard" entitiesperpage="${entitiesPerPage }" page="1" filter="${filter }" order="asc" criteria="${criteria }"/>
+					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-down' ></span>" servlet="Dashboard" entitiesperpage="${entitiesPerPage }" page="1" filter="${filter }" order="desc" criteria="${criteria }"/>
 				</th>
 				
 				<th>Actions</th>

@@ -92,7 +92,7 @@ public enum ComputerDAO {
 			String sql = "SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name "
 					+ "FROM computer "
 					+ "LEFT JOIN company "
-					+ "ON computer.company_id = company.id WHERE computer.name LIKE ? "
+					+ "ON computer.company_id = company.id WHERE "+ criteriaSQL +" LIKE ? "
 					+ "ORDER BY " + criteriaSQL + " " + orderSQL + " "
 					+ "LIMIT ?, ? ";
 			try {
@@ -101,6 +101,7 @@ public enum ComputerDAO {
 				preparedStatement.setInt(2, ((numPage-1)*entitiesPerPage));
 				preparedStatement.setInt(3, entitiesPerPage);
 				queryResult = preparedStatement.executeQuery();
+				System.out.println(preparedStatement);
 				while(queryResult.next()) {
 					Company company = new Company(queryResult.getString("company.name"), queryResult.getInt("company_id"));
 					Computer computer = new Computer(queryResult.getInt("id"), company, queryResult.getString("name"), queryResult.getTimestamp("introduced"), queryResult.getTimestamp("discontinued"));

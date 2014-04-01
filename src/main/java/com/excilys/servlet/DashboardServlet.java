@@ -72,16 +72,16 @@ public class DashboardServlet extends HttpServlet {
 		}
 		
 //		traitement filtre
-		if ((request.getParameter("filter")) != null) {
+		if ((request.getParameter("filter")) != null) { //filter exists
 			numberOfComputer = computerService.count(request.getParameter("filter"));
 			request.setAttribute("filter", request.getParameter("filter"));
 			String filter = request.getParameter("filter");
 			List<Computer> result = this.findComputer(currentPageNumber, entitiesPerPage, filter, criteria, order);
 			request.setAttribute("computerPageList", result);
-		} else {
+		} else { //filter null, default
 			numberOfComputer = computerService.count("");
 			request.setAttribute("filter", "");
-			List<Computer> result = this.findComputer(currentPageNumber, entitiesPerPage, "", "name", order);
+			List<Computer> result = this.findComputer(currentPageNumber, entitiesPerPage, "", criteria, order);
 			request.setAttribute("computerPageList", result);
 		}
 		
