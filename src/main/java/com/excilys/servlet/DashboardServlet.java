@@ -45,13 +45,13 @@ public class DashboardServlet extends HttpServlet {
 		int numberOfComputer = 0;
 		int numberTotalOfComputer = 0;
 		
-//		traitement entitiesPerPage
+/*---------traitement entitiesPerPage----------*/
 		entitiesPerPage = this.initEntitiesPerPage(request.getParameter("entitiesperpage"));
 		
-//		traitement page
+/*---------traitement page---------------------*/
 		currentPageNumber = this.initCurrentPageNumber(request.getParameter("page"));
 		
-//		set Criteria
+/*---------set Criteria------------------------*/
 		String criteria = null;
 		if (request.getParameter("criteria") != null) {
 			request.setAttribute("criteria", request.getParameter("criteria"));
@@ -61,7 +61,7 @@ public class DashboardServlet extends HttpServlet {
 			criteria = "name";
 		}
 		
-//		set Order
+/*---------set Order--------------------------*/
 		String order = null;
 		if(request.getParameter("order") != null) {
 			request.setAttribute("order", request.getParameter("order"));
@@ -71,7 +71,7 @@ public class DashboardServlet extends HttpServlet {
 			order = "asc";
 		}
 		
-//		traitement filtre
+/*---------traitement filtre-----------------*/
 		if ((request.getParameter("filter")) != null) { //filter exists
 			numberOfComputer = computerService.count(request.getParameter("filter"));
 			request.setAttribute("filter", request.getParameter("filter"));
@@ -85,7 +85,7 @@ public class DashboardServlet extends HttpServlet {
 			request.setAttribute("computerPageList", result);
 		}
 		
-//		Evaluation de Page max
+/*---------Evaluation de Page max-------------*/
 		int pageMax = this.initPageMax(entitiesPerPage, numberOfComputer);
 				
 		numberTotalOfComputer = computerService.count("");
@@ -107,9 +107,9 @@ public class DashboardServlet extends HttpServlet {
 	}
 	
 	
-	/******************************************************/
-	/*                     Functions                      */
-	/******************************************************/
+/******************************************************/
+/*                     Functions                      */
+/******************************************************/
 
 	/**
 	 * initialize the variable 'currentPageNumber'
@@ -181,6 +181,4 @@ public class DashboardServlet extends HttpServlet {
 		}
 		return result;
 	}
-
-
 }

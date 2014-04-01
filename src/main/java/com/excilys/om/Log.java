@@ -62,5 +62,4 @@ public class Log {
 		this.date = date;
 		this.label = label;
 	}
-
 }

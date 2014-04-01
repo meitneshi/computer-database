@@ -109,6 +109,4 @@ public class Computer {
 				+ ", introduced=" + introduced + ", discontinued="
 				+ discontinued + "]";
 	}
-
-	
 }
