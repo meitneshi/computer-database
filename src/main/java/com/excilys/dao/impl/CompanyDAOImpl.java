@@ -1,4 +1,4 @@
-package com.excilys.dao;
+package com.excilys.dao.impl;
 
 import ch.qos.logback.classic.Logger;
 
@@ -11,10 +11,11 @@ import java.util.List;
 
 import org.slf4j.LoggerFactory;
 
+import com.excilys.dao.ICompanyDAO;
 import com.excilys.exceptions.IllegalPersonnalException;
 import com.excilys.om.Company;
 
-public enum CompanyDAO {
+public enum CompanyDAOImpl implements ICompanyDAO{
 
 	INSTANCE;
 			

@@ -1,19 +1,20 @@
-package com.excilys.service;
+package com.excilys.service.impl;
 
 import java.util.List;
 
 import com.excilys.om.Computer;
-import com.excilys.dao.ComputerDAO;
-import com.excilys.dao.DAOFactory;
-import com.excilys.dao.LogDAO;
+import com.excilys.service.IComputerService;
+import com.excilys.dao.impl.ComputerDAOImpl;
+import com.excilys.dao.impl.DAOFactory;
+import com.excilys.dao.impl.LogDAOImpl;
 import com.excilys.exceptions.IllegalPersonnalException;
 
-public enum ComputerService {
+public enum ComputerServiceImpl implements IComputerService {
 	
 	INSTANCE;
 	
-	private ComputerDAO computerDAO = ComputerDAO.INSTANCE;
-	private LogDAO logDao = LogDAO.INSTANCE;
+	private ComputerDAOImpl computerDAO = ComputerDAOImpl.INSTANCE;
+	private LogDAOImpl logDao = LogDAOImpl.INSTANCE;
 	
 	public void delete(int id) {
 		try {

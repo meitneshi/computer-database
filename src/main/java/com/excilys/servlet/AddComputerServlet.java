@@ -16,11 +16,11 @@ import org.slf4j.LoggerFactory;
 
 import ch.qos.logback.classic.Logger;
 
-import com.excilys.dao.DAOFactory;
+import com.excilys.dao.impl.DAOFactory;
 import com.excilys.om.Company;
 import com.excilys.om.Computer;
-import com.excilys.service.CompanyService;
-import com.excilys.service.ComputerService;
+import com.excilys.service.impl.CompanyServiceImpl;
+import com.excilys.service.impl.ComputerServiceImpl;
 
 
 /**
@@ -32,8 +32,8 @@ public class AddComputerServlet extends HttpServlet {
     
 	
 	private final static Logger logger = (Logger) LoggerFactory.getLogger(DAOFactory.class);
-	private CompanyService companyservice = CompanyService.INSTANCE;
-	private ComputerService computerservice = ComputerService.INSTANCE;
+	private CompanyServiceImpl companyservice = CompanyServiceImpl.INSTANCE;
+	private ComputerServiceImpl computerservice = ComputerServiceImpl.INSTANCE;
 	
 	
     /**

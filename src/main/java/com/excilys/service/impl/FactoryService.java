@@ -1,9 +1,11 @@
-package com.excilys.service;
+package com.excilys.service.impl;
 
 import java.sql.ResultSet;
 
-import com.excilys.dao.DAOFactory;
+import com.excilys.dao.impl.DAOFactory;
+
 import java.sql.Connection;
+
 import com.mysql.jdbc.PreparedStatement;
 
 public enum FactoryService {

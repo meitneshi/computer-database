@@ -1,4 +1,4 @@
-package com.excilys.dao;
+package com.excilys.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,9 +6,11 @@ import java.sql.SQLException;
 
 import org.slf4j.LoggerFactory;
 
+import com.excilys.dao.ILogDAO;
+
 import ch.qos.logback.classic.Logger;
 
-public enum LogDAO {
+public enum LogDAOImpl implements ILogDAO{
 
 	INSTANCE;
 			

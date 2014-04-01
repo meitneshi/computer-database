@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.excilys.dao;
+package com.excilys.dao.impl;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

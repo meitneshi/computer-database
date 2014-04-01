@@ -16,9 +16,9 @@ import org.slf4j.LoggerFactory;
 
 import ch.qos.logback.classic.Logger;
 
-import com.excilys.service.CompanyService;
-import com.excilys.service.ComputerService;
-import com.excilys.dao.DAOFactory;
+import com.excilys.service.impl.CompanyServiceImpl;
+import com.excilys.service.impl.ComputerServiceImpl;
+import com.excilys.dao.impl.DAOFactory;
 import com.excilys.om.Company;
 import com.excilys.om.Computer;
 
@@ -29,8 +29,8 @@ import com.excilys.om.Computer;
 public class EditComputerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final static Logger logger = (Logger) LoggerFactory.getLogger(DAOFactory.class);
-	private CompanyService companyService = CompanyService.INSTANCE;
-	private ComputerService computerService = ComputerService.INSTANCE;
+	private CompanyServiceImpl companyService = CompanyServiceImpl.INSTANCE;
+	private ComputerServiceImpl computerService = ComputerServiceImpl.INSTANCE;
     /**
      * @see HttpServlet#HttpServlet()
      */

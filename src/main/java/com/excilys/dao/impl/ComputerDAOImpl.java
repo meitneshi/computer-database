@@ -1,4 +1,4 @@
-package com.excilys.dao;
+package com.excilys.dao.impl;
 
 
 import ch.qos.logback.classic.Logger;
@@ -12,12 +12,13 @@ import java.util.List;
 
 import org.slf4j.LoggerFactory;
 
+import com.excilys.dao.IComputerDAO;
 import com.excilys.exceptions.IllegalPersonnalException;
 import com.excilys.om.Company;
 import com.excilys.om.Computer;
 
 
-public enum ComputerDAO {
+public enum ComputerDAOImpl implements IComputerDAO{
 	
 	INSTANCE;
 	
@@ -68,55 +69,52 @@ public enum ComputerDAO {
 			DAOFactory.INSTANCE.safeClose(connection, preparedStatement, null);
 		}
 	}
-	
-	//select X entities according to page number
-		//order = ASC ou DESC
-		//criteria = field to order by		
-		public List<Computer> findInPage (int numPage, int entitiesPerPage, String filter, String order, String criteria) {
-			logger.info("trying to find a list of computer according to several criteria");
-			Connection connection = DAOFactory.INSTANCE.getConnection();
-			PreparedStatement preparedStatement = null;
-			ResultSet queryResult = null;
-			List<Computer> computers = new ArrayList<Computer>();
-			String orderSQL = "asc";
-			String criteriaSQL = "computer.name";
-			boolean orderBool = false; //false = asc, true = desc
-			
-			if ("desc".equals(order)){
-				orderBool = true;
-			}
-			if(orderBool){
-				orderSQL = "desc";
-			}
-			if("company".equals(criteria)) {
-				criteriaSQL = "company.name";
-			}
-			String sql = "SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name "
-					+ "FROM computer "
-					+ "LEFT JOIN company "
-					+ "ON computer.company_id = company.id WHERE computer.name LIKE ? "
-					+ "ORDER BY " + criteriaSQL + " " + orderSQL + " "
-					+ "LIMIT ?, ? ";
-			try {
-				preparedStatement = (PreparedStatement) connection.prepareStatement(sql);
-				preparedStatement.setString(1, "%"+filter+"%");
-				preparedStatement.setInt(2, ((numPage-1)*entitiesPerPage));
-				preparedStatement.setInt(3, entitiesPerPage);
-				queryResult = preparedStatement.executeQuery();
-				while(queryResult.next()) {
-					Company company = new Company(queryResult.getString("company.name"), queryResult.getInt("company_id"));
-					Computer computer = new Computer(queryResult.getInt("id"), company, queryResult.getString("name"), queryResult.getTimestamp("introduced"), queryResult.getTimestamp("discontinued"));
-					computers.add(computer);
-				}
-				logger.info("loading the list is complete");
-			} catch (SQLException e) {
-				logger.debug("failed to load the list of computer "+e.getMessage());
-				throw new IllegalPersonnalException();
-			} finally {
-				DAOFactory.INSTANCE.safeClose(connection, preparedStatement, null);
-			}
-			return computers;
+		
+	public List<Computer> findInPage (int numPage, int entitiesPerPage, String filter, String order, String criteria) {
+		logger.info("trying to find a list of computer according to several criteria");
+		Connection connection = DAOFactory.INSTANCE.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet queryResult = null;
+		List<Computer> computers = new ArrayList<Computer>();
+		String orderSQL = "asc";
+		String criteriaSQL = "computer.name";
+		boolean orderBool = false; //false = asc, true = desc
+		
+		if ("desc".equals(order)){
+			orderBool = true;
 		}
+		if(orderBool){
+			orderSQL = "desc";
+		}
+		if("company".equals(criteria)) {
+			criteriaSQL = "company.name";
+		}
+		String sql = "SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name "
+				+ "FROM computer "
+				+ "LEFT JOIN company "
+				+ "ON computer.company_id = company.id WHERE computer.name LIKE ? "
+				+ "ORDER BY " + criteriaSQL + " " + orderSQL + " "
+				+ "LIMIT ?, ? ";
+		try {
+			preparedStatement = (PreparedStatement) connection.prepareStatement(sql);
+			preparedStatement.setString(1, "%"+filter+"%");
+			preparedStatement.setInt(2, ((numPage-1)*entitiesPerPage));
+			preparedStatement.setInt(3, entitiesPerPage);
+			queryResult = preparedStatement.executeQuery();
+			while(queryResult.next()) {
+				Company company = new Company(queryResult.getString("company.name"), queryResult.getInt("company_id"));
+				Computer computer = new Computer(queryResult.getInt("id"), company, queryResult.getString("name"), queryResult.getTimestamp("introduced"), queryResult.getTimestamp("discontinued"));
+				computers.add(computer);
+			}
+			logger.info("loading the list is complete");
+		} catch (SQLException e) {
+			logger.debug("failed to load the list of computer "+e.getMessage());
+			throw new IllegalPersonnalException();
+		} finally {
+			DAOFactory.INSTANCE.safeClose(connection, preparedStatement, null);
+		}
+		return computers;
+	}
 
 	public int count(String filter) {
 		logger.info("attempting to count the number of computer with a filter");

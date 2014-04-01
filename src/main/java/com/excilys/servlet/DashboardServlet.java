@@ -14,9 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.excilys.dao.DAOFactory;
+import com.excilys.dao.impl.DAOFactory;
 import com.excilys.om.Computer;
-import com.excilys.service.ComputerService;
+import com.excilys.service.impl.ComputerServiceImpl;
 
 /**
  * Servlet implementation class DashboardServlet
@@ -25,7 +25,7 @@ import com.excilys.service.ComputerService;
 public class DashboardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final static Logger logger = (Logger) LoggerFactory.getLogger(DAOFactory.class);
-	private ComputerService computerService = ComputerService.INSTANCE;
+	private ComputerServiceImpl computerService = ComputerServiceImpl.INSTANCE;
        
     /**
      * @see HttpServlet#HttpServlet()
