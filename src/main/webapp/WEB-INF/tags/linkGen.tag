@@ -10,7 +10,7 @@
 <%@ attribute name="page" %>						<!-- current page number -->
 <%@ attribute name="filter" %>						<!-- filter of search -->
 <%@ attribute name="order" %>						<!-- order by  -->
-<%@ attribute name="criteria" %>					<!-- criteria of order -->
+<%@ attribute name="criteria" %>					<!-- criteria of searching -->
 <%@ attribute name="label" %>						<!-- href label -->
 <%@ attribute name="type" %>						<!-- href type -->
 

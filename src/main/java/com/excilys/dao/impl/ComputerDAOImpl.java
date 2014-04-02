@@ -87,6 +87,7 @@ public class ComputerDAOImpl implements IComputerDAO{
 		String criteriaSQL = "computer.name";
 		boolean orderBool = false; //false = asc, true = desc
 		
+		
 		if ("desc".equals(order)){
 			orderBool = true;
 		}
@@ -96,12 +97,14 @@ public class ComputerDAOImpl implements IComputerDAO{
 		if("company".equals(criteria)) {
 			criteriaSQL = "company.name";
 		}
+		
 		String sql = "SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name "
 				+ "FROM computer "
 				+ "LEFT JOIN company "
 				+ "ON computer.company_id = company.id WHERE computer.name LIKE ? "
 				+ "ORDER BY " + criteriaSQL + " " + orderSQL + " "
 				+ "LIMIT ?, ? ";
+		
 		try {
 			preparedStatement = (PreparedStatement) connection.prepareStatement(sql);
 			preparedStatement.setString(1, "%"+filter+"%");
