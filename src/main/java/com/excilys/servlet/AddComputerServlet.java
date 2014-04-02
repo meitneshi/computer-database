@@ -19,10 +19,12 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import ch.qos.logback.classic.Logger;
 
 import com.excilys.dao.impl.ConnectionFactory;
+import com.excilys.dto.ComputerDTO;
 import com.excilys.om.Company;
 import com.excilys.om.Computer;
 import com.excilys.service.impl.CompanyServiceImpl;
 import com.excilys.service.impl.ComputerServiceImpl;
+import com.excilys.validator.ComputerValidator;
 
 
 /**
@@ -74,44 +76,33 @@ public class AddComputerServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
-		String name = "";
+		String name = request.getParameter("computerName");
 		String discontinuedStr = request.getParameter("discontinuedDate");
 		String introducedStr = request.getParameter("introducedDate");
+		String companyId = request.getParameter("company");
 		
-		Date introduced = null;
-		Date discontinued = null;
+		ComputerDTO compdto = new ComputerDTO(name, introducedStr, discontinuedStr, companyId);
+		ComputerValidator cValidator = new ComputerValidator();
 		
-		name = request.getParameter("computerName");
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		if("".equals(introducedStr)) {
-			try {
-				discontinued = formatter.parse(discontinuedStr);
-			} catch (ParseException e) {
-				logger.debug("failed to format the discontinued date" +e.getMessage());
-			}
-		} else if("".equals(discontinuedStr)) {
-			try {
-				introduced = formatter.parse(introducedStr);
-			} catch (ParseException e) {
-				logger.debug("failed to format the introduced date" +e.getMessage());
-			}
-		} else{
-			try {
-				discontinued = formatter.parse(discontinuedStr);
-				introduced = formatter.parse(introducedStr);
-			} catch (ParseException e) {
-				logger.debug("failed to format the introduced date and the discontinued date" +e.getMessage());
-			}
+		if (cValidator.validate(compdto)) { //good computer
+			//convert the dto to a computer to add
+			Computer computer = cValidator.toComputer(compdto);
+			//add the computer
+			computerservice.save(computer);
+			//go to next page
+			request.setAttribute("displayDivAdd", true);
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/addComputer.jsp");
+			dispatcher.forward(request,response);
 		}
 		
-		Company company = companyservice.initCompany(request.getParameter("company"));
 		
-		Computer computer = new Computer(0, company, name, introduced, discontinued);
 		
-		computerservice.save(computer);
 		
-		request.setAttribute("displayDivAdd", true);
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/addComputer.jsp");
-		dispatcher.forward(request,response);
+		
+		
+		
+		
+		
+		
 	}
 }
