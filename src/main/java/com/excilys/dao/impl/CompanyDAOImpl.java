@@ -1,7 +1,5 @@
 package com.excilys.dao.impl;
 
-import ch.qos.logback.classic.Logger;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,20 +8,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import ch.qos.logback.classic.Logger;
 
 import com.excilys.dao.ICompanyDAO;
 import com.excilys.exceptions.IllegalPersonnalException;
 import com.excilys.om.Company;
 
-public enum CompanyDAOImpl implements ICompanyDAO{
+@Repository
+public class CompanyDAOImpl implements ICompanyDAO{
 
-	INSTANCE;
-			
-	private final static Logger logger = (Logger) LoggerFactory.getLogger(DAOFactory.class);
+	private final static Logger logger = (Logger) LoggerFactory.getLogger(ConnectionFactory.class);
+	
+	public CompanyDAOImpl() {
+		super();
+	}
+	
+	@Autowired
+	private ConnectionFactory daoFactory;
 	
 	public Company findById(int id) {
 		logger.info("attempting to find a company by id");
-		Connection connection = DAOFactory.INSTANCE.getConnection();
+		Connection connection = daoFactory.getConnection();
 		PreparedStatement preparedStatement = null;
 		Company company = null;
 		ResultSet queryResult = null;
@@ -39,14 +47,14 @@ public enum CompanyDAOImpl implements ICompanyDAO{
 			logger.debug("failed to found a company by id "+e.getMessage());
 			throw new IllegalPersonnalException();
 		} finally {
-			DAOFactory.INSTANCE.safeClose(connection, preparedStatement, null);
+			daoFactory.safeClose(connection, preparedStatement, null);
 		}
 		return company;
 	}
 	
 	public List<Company> findAll() {
 		logger.info("attempting to find a company by id");
-		Connection connection = DAOFactory.INSTANCE.getConnection();
+		Connection connection = daoFactory.getConnection();
 		PreparedStatement preparedStatement = null;
 		List<Company> companies = new ArrayList<Company>();
 		ResultSet queryResult = null;
@@ -63,7 +71,7 @@ public enum CompanyDAOImpl implements ICompanyDAO{
 			logger.debug("failed to find the list of companies "+e.getMessage());
 			throw new IllegalPersonnalException();
 		} finally {
-			DAOFactory.INSTANCE.safeClose(connection, preparedStatement, queryResult);
+			daoFactory.safeClose(connection, preparedStatement, queryResult);
 		}
 		return companies;
 	}

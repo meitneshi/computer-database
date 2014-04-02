@@ -2,15 +2,22 @@ package com.excilys.service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.excilys.dao.impl.CompanyDAOImpl;
 import com.excilys.om.Company;
 import com.excilys.service.ICompanyService;
 
-public enum CompanyServiceImpl implements ICompanyService{
+@Service
+public class CompanyServiceImpl implements ICompanyService{
 
-	INSTANCE;
+	public CompanyServiceImpl() {
+		super();
+	}
 	
-	private CompanyDAOImpl companyDAO = CompanyDAOImpl.INSTANCE;
+	@Autowired
+	private CompanyDAOImpl companyDAO;
 	
 	public Company findById(int id) {
 		return companyDAO.findById(id);

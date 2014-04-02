@@ -5,21 +5,24 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import org.slf4j.LoggerFactory;
-
-import com.excilys.dao.ILogDAO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import ch.qos.logback.classic.Logger;
 
-public enum LogDAOImpl implements ILogDAO{
+import com.excilys.dao.ILogDAO;
 
-	INSTANCE;
-			
-	private final static Logger logger = (Logger) LoggerFactory.getLogger(DAOFactory.class);
-	private DAOFactory daoFactory = DAOFactory.INSTANCE;
+@Repository
+public class LogDAOImpl implements ILogDAO{
+
+	private final static Logger logger = (Logger) LoggerFactory.getLogger(ConnectionFactory.class);
+	
+	@Autowired
+	private ConnectionFactory daoFactory;
 
 	public void create(String logMessage) {
 		logger.info("Attempting to log in database");
-		Connection connection = DAOFactory.INSTANCE.getConnection();
+		Connection connection = daoFactory.getConnection();
 		PreparedStatement preparedStatement = null;
 		String sql = "INSERT INTO log (id, date, label) "
 				+ "VALUES (null, null, ?)";

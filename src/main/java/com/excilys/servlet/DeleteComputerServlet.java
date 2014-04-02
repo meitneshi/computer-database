@@ -9,10 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import ch.qos.logback.classic.Logger;
 
-import com.excilys.dao.impl.DAOFactory;
+import com.excilys.dao.impl.ConnectionFactory;
 import com.excilys.service.impl.ComputerServiceImpl;
 
 
@@ -22,8 +24,10 @@ import com.excilys.service.impl.ComputerServiceImpl;
 @WebServlet("/DeleteComputer")
 public class DeleteComputerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private final static Logger logger = (Logger) LoggerFactory.getLogger(DAOFactory.class);
-	private ComputerServiceImpl computerService = ComputerServiceImpl.INSTANCE;
+	private final static Logger logger = (Logger) LoggerFactory.getLogger(ConnectionFactory.class);
+	
+	@Autowired
+	private ComputerServiceImpl computerService;
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -31,6 +35,12 @@ public class DeleteComputerServlet extends HttpServlet {
     public DeleteComputerServlet() {
         super();
         // TODO Auto-generated constructor stub
+    }
+    
+    @Override
+    public void init() throws ServletException{
+    	super.init();
+    	SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext (this);
     }
 
 	/**

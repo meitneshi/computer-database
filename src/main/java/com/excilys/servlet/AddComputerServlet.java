@@ -13,10 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import ch.qos.logback.classic.Logger;
 
-import com.excilys.dao.impl.DAOFactory;
+import com.excilys.dao.impl.ConnectionFactory;
 import com.excilys.om.Company;
 import com.excilys.om.Computer;
 import com.excilys.service.impl.CompanyServiceImpl;
@@ -31,9 +33,13 @@ public class AddComputerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	
-	private final static Logger logger = (Logger) LoggerFactory.getLogger(DAOFactory.class);
-	private CompanyServiceImpl companyservice = CompanyServiceImpl.INSTANCE;
-	private ComputerServiceImpl computerservice = ComputerServiceImpl.INSTANCE;
+	private final static Logger logger = (Logger) LoggerFactory.getLogger(ConnectionFactory.class);
+	
+	@Autowired
+	private CompanyServiceImpl companyservice;
+	
+	@Autowired
+	private ComputerServiceImpl computerservice;
 	
 	
     /**
@@ -42,6 +48,12 @@ public class AddComputerServlet extends HttpServlet {
     public AddComputerServlet() {
         super();
         // TODO Auto-generated constructor stub
+    }
+    
+    @Override
+    public void init() throws ServletException{
+    	super.init();
+    	SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext (this);
     }
 
 	/**

@@ -4,10 +4,12 @@
 package com.excilys.dao.impl;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import ch.qos.logback.classic.Logger;
 
@@ -15,18 +17,19 @@ import com.excilys.exceptions.IllegalPersonnalException;
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
 
-import java.sql.PreparedStatement;
-
 
 /**
  * @author mbibos
  * Implement Singleton
  */
-public enum DAOFactory {
+@Repository
+public class ConnectionFactory {
 	
-	INSTANCE;
-	
-	private final Logger logger = (Logger) LoggerFactory.getLogger(DAOFactory.class);
+	public ConnectionFactory() {
+		super();
+	}
+
+	private final Logger logger = (Logger) LoggerFactory.getLogger(ConnectionFactory.class);
 	private BoneCP connectionPool = null;
 
 	{
@@ -43,6 +46,8 @@ public enum DAOFactory {
 			config.setMaxConnectionsPerPartition(10);
 			config.setPartitionCount(1);
 			connectionPool = new BoneCP(config);
+			
+			logger.info("connection pool done");
 		} catch (ClassNotFoundException e) {
 			logger.debug("Driver not found "+e.getMessage());
 			throw new IllegalPersonnalException();
@@ -105,7 +110,7 @@ public enum DAOFactory {
 	public void closeConnection() {
 		logger.info("attempting to close connection");
 		try {
-			DAOFactory.INSTANCE.getConnection().close();
+			this.getConnection().close();
 			connectionTL.remove();
 			logger.info("Connection closed");
 		} catch (SQLException e) {

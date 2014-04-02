@@ -13,8 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
-import com.excilys.dao.impl.DAOFactory;
+import com.excilys.dao.impl.ConnectionFactory;
 import com.excilys.om.Computer;
 import com.excilys.service.impl.ComputerServiceImpl;
 
@@ -24,8 +26,10 @@ import com.excilys.service.impl.ComputerServiceImpl;
 @WebServlet("/Dashboard")
 public class DashboardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private final static Logger logger = (Logger) LoggerFactory.getLogger(DAOFactory.class);
-	private ComputerServiceImpl computerService = ComputerServiceImpl.INSTANCE;
+	private final static Logger logger = (Logger) LoggerFactory.getLogger(ConnectionFactory.class);
+	
+	@Autowired
+	private ComputerServiceImpl computerService;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -33,7 +37,12 @@ public class DashboardServlet extends HttpServlet {
     public DashboardServlet() {
         super();
     }
-
+    
+    @Override
+    public void init() throws ServletException{
+    	super.init();
+    	SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext (this);
+    }
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */

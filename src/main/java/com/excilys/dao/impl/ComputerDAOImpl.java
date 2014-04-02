@@ -1,8 +1,6 @@
 package com.excilys.dao.impl;
 
 
-import ch.qos.logback.classic.Logger;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,22 +9,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import ch.qos.logback.classic.Logger;
 
 import com.excilys.dao.IComputerDAO;
 import com.excilys.exceptions.IllegalPersonnalException;
 import com.excilys.om.Company;
 import com.excilys.om.Computer;
 
-
-public enum ComputerDAOImpl implements IComputerDAO{
+@Repository
+public class ComputerDAOImpl implements IComputerDAO{
 	
-	INSTANCE;
+	public ComputerDAOImpl() {
+		super();
+	}
 	
-	private final static Logger logger = (Logger) LoggerFactory.getLogger(DAOFactory.class);
+	@Autowired
+	private ConnectionFactory daoFactory;
+	
+	private final static Logger logger = (Logger) LoggerFactory.getLogger(ConnectionFactory.class);
 	
 	public void delete(int computerIdToDelete) {
 		logger.info("trying to delete a computer");
-		Connection connection = DAOFactory.INSTANCE.getConnection();
+		Connection connection = daoFactory.getConnection();
 		PreparedStatement preparedStatement = null;
 		String sql = "DELETE FROM computer WHERE computer.id= ?";
 		try {
@@ -38,13 +45,13 @@ public enum ComputerDAOImpl implements IComputerDAO{
 			logger.debug("failed to delete computer "+e.getMessage());
 			throw new IllegalPersonnalException();
 		} finally {
-			DAOFactory.INSTANCE.safeClose(null, preparedStatement, null);
+			daoFactory.safeClose(null, preparedStatement, null);
 		}
 	}
 	
 	public Computer findById (int id) {
 		logger.info("trying to find a computer by id");
-		Connection connection = DAOFactory.INSTANCE.getConnection();
+		Connection connection = daoFactory.getConnection();
 		PreparedStatement preparedStatement = null;
 		ResultSet queryResult = null;
 		Computer computerResult = null;
@@ -66,13 +73,13 @@ public enum ComputerDAOImpl implements IComputerDAO{
 			logger.debug("failed to find a computer by id "+e.getMessage());
 			throw new IllegalPersonnalException();
 		}finally {
-			DAOFactory.INSTANCE.safeClose(connection, preparedStatement, null);
+			daoFactory.safeClose(connection, preparedStatement, null);
 		}
 	}
 		
 	public List<Computer> findInPage (int numPage, int entitiesPerPage, String filter, String order, String criteria) {
 		logger.info("trying to find a list of computer according to several criteria");
-		Connection connection = DAOFactory.INSTANCE.getConnection();
+		Connection connection = daoFactory.getConnection();
 		PreparedStatement preparedStatement = null;
 		ResultSet queryResult = null;
 		List<Computer> computers = new ArrayList<Computer>();
@@ -111,7 +118,7 @@ public enum ComputerDAOImpl implements IComputerDAO{
 			logger.debug("failed to load the list of computer "+e.getMessage());
 			throw new IllegalPersonnalException();
 		} finally {
-			DAOFactory.INSTANCE.safeClose(connection, preparedStatement, null);
+			daoFactory.safeClose(connection, preparedStatement, null);
 		}
 		return computers;
 	}
@@ -120,7 +127,7 @@ public enum ComputerDAOImpl implements IComputerDAO{
 		logger.info("attempting to count the number of computer with a filter");
 		int numberFinal = 0;
 		ResultSet number = null;
-		Connection connection = DAOFactory.INSTANCE.getConnection();
+		Connection connection = daoFactory.getConnection();
 		PreparedStatement preparedStatement = null;
 		StringBuilder builder = new StringBuilder();
 		String sql = "";
@@ -141,14 +148,14 @@ public enum ComputerDAOImpl implements IComputerDAO{
 			logger.debug("failed to count...such a shame ..... "+e.getMessage());
 			throw new IllegalPersonnalException();
 		} finally {
-			DAOFactory.INSTANCE.safeClose(connection, preparedStatement, null);
+			daoFactory.safeClose(connection, preparedStatement, null);
 		}
 		return numberFinal;
 	}
 
 	public void save(Computer computer) {
 		logger.info("attempting to save a computer");
-		Connection connection = DAOFactory.INSTANCE.getConnection();
+		Connection connection = daoFactory.getConnection();
 		PreparedStatement preparedStatement = null;
 		String sql = "INSERT INTO computer (id, name, introduced, discontinued, company_id) "
 				+ "VALUES (?, ?, (FROM_UNIXTIME(?)), (FROM_UNIXTIME(?)), ?) "
@@ -186,7 +193,7 @@ public enum ComputerDAOImpl implements IComputerDAO{
 			logger.debug("failed to save the computer "+e.getMessage());
 			throw new IllegalPersonnalException();
 		} finally {
-			DAOFactory.INSTANCE.safeClose(null, preparedStatement, null);
+			daoFactory.safeClose(null, preparedStatement, null);
 		}
 	}
 }

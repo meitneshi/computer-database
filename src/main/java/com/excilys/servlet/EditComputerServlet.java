@@ -13,12 +13,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import ch.qos.logback.classic.Logger;
 
 import com.excilys.service.impl.CompanyServiceImpl;
 import com.excilys.service.impl.ComputerServiceImpl;
-import com.excilys.dao.impl.DAOFactory;
+import com.excilys.dao.impl.ConnectionFactory;
 import com.excilys.om.Company;
 import com.excilys.om.Computer;
 
@@ -28,14 +30,24 @@ import com.excilys.om.Computer;
 @WebServlet("/EditComputer")
 public class EditComputerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private final static Logger logger = (Logger) LoggerFactory.getLogger(DAOFactory.class);
-	private CompanyServiceImpl companyService = CompanyServiceImpl.INSTANCE;
-	private ComputerServiceImpl computerService = ComputerServiceImpl.INSTANCE;
+	private final static Logger logger = (Logger) LoggerFactory.getLogger(ConnectionFactory.class);
+	
+	@Autowired
+	private CompanyServiceImpl companyService;
+	
+	@Autowired
+	private ComputerServiceImpl computerService;
     /**
      * @see HttpServlet#HttpServlet()
      */
     public EditComputerServlet() {
         super();
+    }
+    
+    @Override
+    public void init() throws ServletException{
+    	super.init();
+    	SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext (this);
     }
 
 	/**
@@ -78,20 +90,37 @@ public class EditComputerServlet extends HttpServlet {
 		
 		name = request.getParameter("computerName");
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		if("".equals(introducedStr)) {
-			try {
-				discontinued = formatter.parse(discontinuedStr);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
-		if("".equals(discontinuedStr)) {
+		if(!"".equals(introducedStr)) {
 			try {
 				introduced = formatter.parse(introducedStr);
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
 		}
+		if(!"".equals(discontinuedStr)) {
+			try {
+				discontinued = formatter.parse(discontinuedStr);
+				
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+//		if("".equals(introducedStr)) {
+//			try {
+//				discontinued = formatter.parse(discontinuedStr);
+//			} catch (ParseException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		if("".equals(discontinuedStr)) {
+//			try {
+//				introduced = formatter.parse(introducedStr);
+//			} catch (ParseException e) {
+//				e.printStackTrace();
+//			}
+//		}
 		
 		Company company = companyService.initCompany(request.getParameter("company"));
 		
