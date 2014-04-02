@@ -38,9 +38,9 @@ public class ComputerServiceImpl implements IComputerService {
 				append(") was deleted from the database");
 			logDao.create(logB.toString());
 			daoFactory.commit();
-		} catch (Exception e) {
+		} catch (IllegalPersonnalException e) {
 			daoFactory.rollback();
-			throw new IllegalPersonnalException();
+			throw e;
 		} finally {
 			daoFactory.closeConnection();
 		}
@@ -58,7 +58,7 @@ public class ComputerServiceImpl implements IComputerService {
 		try {
 			return computerDAO.count(filter);
 		} catch (IllegalPersonnalException e) {
-			throw new IllegalPersonnalException();
+			throw e;
 		}
 	}
 
@@ -76,9 +76,9 @@ public class ComputerServiceImpl implements IComputerService {
 			}
 			logDao.create(logB.toString());
 			daoFactory.commit();
-		} catch (Exception e) {
+		} catch (IllegalPersonnalException e) {
 			daoFactory.rollback();
-			throw new IllegalPersonnalException();
+			throw e;
 		} finally {
 			daoFactory.closeConnection();
 		}
