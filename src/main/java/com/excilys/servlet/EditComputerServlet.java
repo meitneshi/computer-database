@@ -106,22 +106,6 @@ public class EditComputerServlet extends HttpServlet {
 			}
 		}
 		
-		
-//		if("".equals(introducedStr)) {
-//			try {
-//				discontinued = formatter.parse(discontinuedStr);
-//			} catch (ParseException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		if("".equals(discontinuedStr)) {
-//			try {
-//				introduced = formatter.parse(introducedStr);
-//			} catch (ParseException e) {
-//				e.printStackTrace();
-//			}
-//		}
-		
 		Company company = companyService.initCompany(request.getParameter("company"));
 		
 		Computer computer = new Computer(id, company, name, introduced, discontinued);
