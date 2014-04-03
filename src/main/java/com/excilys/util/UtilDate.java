@@ -23,6 +23,7 @@ public class UtilDate {
 	public static Date toDate(String dateStr) {
 		Date date = null;
 		try {
+			formatter.setLenient(false);
 			date = formatter.parse(dateStr);
 		} catch (ParseException e) {
 			logger.debug("failed to format the date" +e.getMessage());

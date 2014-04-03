@@ -38,14 +38,23 @@ public class ComputerValidator {
 	public boolean validate(ComputerDTO computerDTO) {
 		boolean ret = true;
 		
-		//check the id
-				try {
-					Integer.parseInt(computerDTO.getId());
-					logger.info("id check and good");
-				} catch (NumberFormatException e) {
-					logger.debug("invalid id, not an integer or long");
-					return false;
-				}
+		//check the ids
+		logger.info("checking computer id");
+		if (!(computerDTO.getId().matches("\\d+"))) { //invalid number
+			logger.debug("invalid id, not an integer or long");
+			return false;
+		} else {
+			logger.info("computer id checked");
+		}
+		
+		logger.info("checking company id");
+		if (!(computerDTO.getId().matches("\\d+"))) { //invalid number
+			logger.debug("invalid id, not an integer or long");
+			return false;
+		} else {
+			logger.info("company id checked");
+		}
+
 		//check the name -> not null and at least 2 character
 		
 		if (computerDTO.getName() == null && computerDTO.getName().length() < 2) {
@@ -58,14 +67,15 @@ public class ComputerValidator {
 		//check the dates
 		Date introduced = null;
 		Date discontinued = null;
-		if(!"".equals(computerDTO.getIntroduced())) {
+		if(!"".equals(computerDTO.getIntroduced()) && computerDTO.getIntroduced().matches("^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$")) {
+			System.out.println(computerDTO.getIntroduced());
 			logger.info("attempting to convert introduced Date to type Date");
 			introduced = UtilDate.toDate(computerDTO.getIntroduced());
 			if (introduced == null) {
 				return false;
 			}
 		}
-		if(!"".equals(computerDTO.getDiscontinued())) {
+		if(!"".equals(computerDTO.getDiscontinued()) && computerDTO.getDiscontinued().matches("^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$")) {
 			logger.info("attempting to convert discontinued Date to type Date");
 			discontinued = UtilDate.toDate(computerDTO.getDiscontinued());
 			if (discontinued == null) {
