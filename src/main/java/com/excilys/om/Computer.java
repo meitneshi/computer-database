@@ -2,9 +2,6 @@ package com.excilys.om;
 
 import java.util.Date;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class Computer {
 	
 	/**
@@ -86,6 +83,10 @@ public class Computer {
 	 */
 	public void setDiscontinued(Date discontinued) {
 		this.discontinued = discontinued;
+	}
+	
+	public Computer() {
+		super();
 	}
 	
 	public Computer(long id, Company company, String name, Date introduced, Date discontinued) {

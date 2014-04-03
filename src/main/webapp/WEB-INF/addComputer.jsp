@@ -57,6 +57,10 @@ $(document).ready(function(){
 		<div class="alert alert-success">Your computer have been added</div>
 	</c:if>
 	
+	<c:if test="${displayDivAddError}">
+		<div class="alert alert-danger">A problem occured during hte creation of computer</div>
+	</c:if>
+	
 	
 	<div class="container-fluid">
 		<form method="POST" action="AddComputer" id="creationForm" accept-charset=utf-8>

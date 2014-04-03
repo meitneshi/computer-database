@@ -1,8 +1,5 @@
 package com.excilys.om;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class Company {
 	
 	/**

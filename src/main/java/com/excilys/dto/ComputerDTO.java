@@ -1,6 +1,5 @@
 package com.excilys.dto;
 
-import com.excilys.om.Computer;
 
 /**
  * this class represent the DTO of a computer

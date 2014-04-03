@@ -12,12 +12,12 @@ import com.excilys.service.ICompanyService;
 @Service
 public class CompanyServiceImpl implements ICompanyService{
 
+	@Autowired
+	private CompanyDAOImpl companyDAO;
+	
 	public CompanyServiceImpl() {
 		super();
 	}
-	
-	@Autowired
-	private CompanyDAOImpl companyDAO;
 	
 	public Company findById(int id) {
 		return companyDAO.findById(id);

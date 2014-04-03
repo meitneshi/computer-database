@@ -43,7 +43,8 @@ public class AddComputerServlet extends HttpServlet {
 	@Autowired
 	private ComputerServiceImpl computerservice;
 	
-	
+	@Autowired
+	private ComputerValidator compValidator;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -82,15 +83,18 @@ public class AddComputerServlet extends HttpServlet {
 		String companyId = request.getParameter("company");
 		
 		ComputerDTO compdto = new ComputerDTO(name, introducedStr, discontinuedStr, companyId);
-		ComputerValidator cValidator = new ComputerValidator();
 		
-		if (cValidator.validate(compdto)) { //good computer
+		if (compValidator.validate(compdto)) { //good computer
 			//convert the dto to a computer to add
-			Computer computer = cValidator.toComputer(compdto);
+			Computer computer = compValidator.toComputer(compdto);
 			//add the computer
 			computerservice.save(computer);
 			//go to next page
 			request.setAttribute("displayDivAdd", true);
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/addComputer.jsp");
+			dispatcher.forward(request,response);
+		} else {
+			request.setAttribute("displayDivAddError", true);
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/addComputer.jsp");
 			dispatcher.forward(request,response);
 		}
