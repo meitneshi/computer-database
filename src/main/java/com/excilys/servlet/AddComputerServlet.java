@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
-
 import com.excilys.dto.ComputerDTO;
+import com.excilys.mapper.ComputerMapper;
 import com.excilys.om.Computer;
 import com.excilys.service.impl.CompanyServiceImpl;
 import com.excilys.service.impl.ComputerServiceImpl;
@@ -30,13 +30,13 @@ public class AddComputerServlet extends HttpServlet {
 	
 	@Autowired
 	private CompanyServiceImpl companyservice;
-	
 	@Autowired
 	private ComputerServiceImpl computerservice;
-	
 	@Autowired
 	private ComputerValidator compValidator;
-    
+	@Autowired
+	private ComputerMapper compMapper;
+	
 	/**
      * @see HttpServlet#HttpServlet()
      */
@@ -78,7 +78,7 @@ public class AddComputerServlet extends HttpServlet {
 		
 		if (compValidator.validate(compdto)) { //good computer
 			//convert the dto to a computer to add
-			Computer computer = compValidator.toComputer(compdto);
+			Computer computer = compMapper.toComputer(compdto);
 			//add the computer
 			computerservice.save(computer);
 			//go to next page

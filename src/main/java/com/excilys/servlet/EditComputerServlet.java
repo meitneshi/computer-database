@@ -20,6 +20,7 @@ import com.excilys.service.impl.ComputerServiceImpl;
 import com.excilys.validator.ComputerValidator;
 import com.excilys.dao.impl.ConnectionFactory;
 import com.excilys.dto.ComputerDTO;
+import com.excilys.mapper.ComputerMapper;
 import com.excilys.om.Computer;
 
 /**
@@ -32,12 +33,12 @@ public class EditComputerServlet extends HttpServlet {
 	
 	@Autowired
 	private CompanyServiceImpl companyService;
-	
 	@Autowired
 	private ComputerServiceImpl computerService;
-	
 	@Autowired
 	private ComputerValidator compValidator;
+	@Autowired
+	private ComputerMapper compMapper;
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -91,7 +92,7 @@ public class EditComputerServlet extends HttpServlet {
 		
 		if(compValidator.validate(compdto)) { //valide information
 			//convert the DTO to a computer to edit
-			Computer computer = compValidator.toComputer(compdto);
+			Computer computer = compMapper.toComputer(compdto);
 			//edit the computer
 			computerService.save(computer);
 			//go to next page
