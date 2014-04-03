@@ -63,7 +63,7 @@
 		</div>
 	</nav>
 	
-	<c:if test="${displayDivEdit}">
+	<c:if test="${edit }">
 		<div class="alert alert-success">Your computer have been successfully edited</div>
 	</c:if>
 	

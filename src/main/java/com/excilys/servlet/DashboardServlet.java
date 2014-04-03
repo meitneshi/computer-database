@@ -52,6 +52,7 @@ public class DashboardServlet extends HttpServlet {
 				request.getParameter("page"));
 		
 		request.setAttribute("page", page);
+		request.setAttribute("edit", request.getParameter("edit"));
 		
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/dashboard.jsp");
 		dispatcher.forward(request,response);

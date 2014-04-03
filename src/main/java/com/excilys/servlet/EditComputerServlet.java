@@ -73,6 +73,9 @@ public class EditComputerServlet extends HttpServlet {
 		request.setAttribute("computer", finalComputer);
 		request.setAttribute("companyList", companyService.findAll());
 		
+		if("true".equals(request.getParameter("error"))) {
+			request.setAttribute("displayDivEditError", true);
+		}
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/editComputer.jsp");
 		dispatcher.forward(request,response);
 	}
@@ -96,10 +99,9 @@ public class EditComputerServlet extends HttpServlet {
 			//edit the computer
 			computerService.save(computer);
 			//go to next page
-			request.setAttribute("displayDivAdd", true);
-			response.sendRedirect("Dashboard");
+			response.sendRedirect("Dashboard?edit=true");
 		} else { //invalid information
-			response.sendRedirect("Dashboard");
+			response.sendRedirect("EditComputer?id="+id+"&error=true");
 		}
 	}
 }

@@ -50,6 +50,12 @@ $(document).ready(function(){
 
 	<small>Fields marked with (*) are required</small>	
 
+	<c:if test="${displayDivEditError}">
+		<div class="alert alert-danger">
+			A problem occured during the update of this computer
+		</div>
+	</c:if>
+
 	<div class="container-fluid">
 		<form method="POST" action="EditComputer" id="editionForm" accept-charset=utf-8>
 			<input type="hidden" name="computerId" value="${computer.id }"/>
