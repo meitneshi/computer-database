@@ -21,6 +21,7 @@ import com.excilys.util.UtilDate;
 public class ComputerValidator {
 
 	private final static Logger logger = (Logger) LoggerFactory.getLogger(ConnectionFactory.class);
+	
 	/*
 	 * errorCode : an int representing the code of the error based on a byte increments (1,2,4,8,...)
 	 * 1 -> error on name					=> error 3

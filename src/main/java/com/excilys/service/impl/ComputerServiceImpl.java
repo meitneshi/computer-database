@@ -22,10 +22,8 @@ public class ComputerServiceImpl implements IComputerService {
 	
 	@Autowired
 	private ComputerDAOImpl computerDAO;
-	
 	@Autowired
 	private ConnectionFactory daoFactory;
-	
 	@Autowired
 	private LogDAOImpl logDao;
 	
