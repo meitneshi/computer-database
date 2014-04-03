@@ -28,11 +28,12 @@ $(document).ready(function(){
 			}
 		},
 		highlight: function(element) {
-			$(element).closest('.glyphicon').addClass('glyphicon-ok');
+			$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+			$(element).next('.glyphicon').removeClass('glyphicon-ok').addClass('glyphicon-remove');
 		},
-		success: function(element) {
-			element.text('OK!');
-			$("input").closest('.form-group').addClass('has-success');
+		unhighlight: function(element) {
+			$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+			$(element).next('.glyphicon').removeClass('glyphicon-remove').addClass('glyphicon-ok');
 		}
 	});
 	$.validator.addMethod(
@@ -80,32 +81,34 @@ $(document).ready(function(){
 	
 	
 	<div class="container-fluid">
-		<form method="POST" action="AddComputer" id="creationForm" accept-charset=utf-8>
+		<form class="form-horizontal" method="POST" action="AddComputer" id="creationForm" accept-charset=utf-8>
 			
-			
-			<div class="row" id="computerName">
-				<div class="col-md-2"><strong>Computer Name* : </strong></div>
+			<div class="form-group has-feedback" id="computerName">
+				<label class="col-sm-2 control-label">Computer Name* : </label>
 				<div class="col-md-3">
 					<input type="text" name="computerName" id="computerName" class="form-control" placeholder="Computer Name">
+					<span class="glyphicon form-control-feedback"></span>
 				</div>
 			</div>
 			
-			<div class="row" id="introducedDate">
-				<div class="col-md-2"><strong>Introduced Date : </strong></div>
+			<div class="form-group has-feedback" id="introducedDate">
+				<label class="col-sm-2 control-label">Introduced Date : </label>
 				<div class="col-md-3">
 					<input type="text" name="introducedDate" class="datepicker form-control" placeholder="Introduced Date">
+					<span class="glyphicon form-control-feedback"></span>
 				</div>
 			</div>
 			
-			<div class="row" id="discontinuedDate">
-				<div class="col-md-2"><strong>Discontinued Date : </strong></div>
+			<div class="form-group has-feedback" id="discontinuedDate">
+				<label class="col-sm-2 control-label">Discontinued Date : </label>
 				<div class="col-md-3">
 					<input type="text" name="discontinuedDate" class="datepicker form-control" placeholder="Discontinued Date">
+					<span class="glyphicon form-control-feedback"></span>
 				</div>
 			</div>
 			
-			<div class="row" id="company">
-				<div class="col-md-2"><strong>Company Name : </strong></div>
+			<div class="form-group" id="company">
+				<label class="col-sm-2 control-label">Company Name : </label>
 				<div class="col-md-3">
 					<div class="dropdown">
 						<select class="form-control" id="companies" name="company">

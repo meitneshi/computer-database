@@ -27,10 +27,10 @@ $(document).ready(function(){
 			}
 		},
 		highlight: function(element) {
-			$(element).closest('.control-group').removeClass('success').addClass('error');
+			element.closest('.form-group').removeClass('has-success').addClass('has-error');
 		},
 		success: function(element) {
-			element.text('OK!').addClass('valid').closest('.control-group').removeClass('error').addClass('success');
+			$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
 		}
 	});
 	$.validator.addMethod(
@@ -50,7 +50,7 @@ $(document).ready(function(){
 
 	<small>Fields marked with (*) are required</small>	
 
-	<c:if test="${displayDivEditError}">
+	<c:if test="${displayDivEditError }">
 		<div class="alert alert-danger">
 			A problem occured during the update of this computer
 		</div>
@@ -59,30 +59,56 @@ $(document).ready(function(){
 	<div class="container-fluid">
 		<form method="POST" action="EditComputer" id="editionForm" accept-charset=utf-8>
 			<input type="hidden" name="computerId" value="${computer.id }"/>
-			<div class="row" id="computerName">
-				<div class="col-md-2"><strong>Computer Name* : </strong></div>
+			
+			<div class="row form-group" id="computerName">
+				<label class="col-sm-2 control-label">Computer Name* : </label>
 				<div class="col-md-3">
 					<input type="text" name="computerName" id="computerName" class="form-control" placeholder="Computer Name" value= "${computer.name }">
 				</div>
 			</div>
 			
-			<div class="row" id="introducedDate">
-				<div class="col-md-2"><strong>Introduced Date : </strong></div>
+			<div class="row form-group" id="introducedDate">
+				<label class="col-sm-2 control-label">Introduced Date : </label>
 				<div class="col-md-3">
 					<fmt:formatDate pattern="yyyy-MM-dd" var="introducedFormat" value="${computer.introduced }"/>
 					<input type="text" name="introducedDate" class="datepicker form-control" placeholder="Introduced Date" value="${introducedFormat }">
 				</div>
 			</div>
 			
-			<div class="row" id="discontinuedDate">
-				<div class="col-md-2"><strong>Discontinued Date : </strong></div>
+			<div class="row form-group" id="discontinuedDate">
+				<label class="col-sm-2 control-label">Discontinued Date : </label>
 				<div class="col-md-3">
-				<fmt:formatDate pattern="yyyy-MM-dd" var="discontinuedFormat" value="${computer.discontinued }"/>
+					<fmt:formatDate pattern="yyyy-MM-dd" var="discontinuedFormat" value="${computer.discontinued }"/>
 					<input type="text" name="discontinuedDate" class="datepicker form-control" placeholder="Discontinued Date" value="${discontinuedFormat }">
 				</div>
 			</div>
 			
-			<div class="row" id="company">
+			
+			
+<!-- 			<div class="row form-group" id="computerName"> -->
+<!-- 				<div class="col-md-2"><strong>Computer Name* : </strong></div> -->
+<!-- 				<div class="col-md-3"> -->
+<%-- 					<input type="text" name="computerName" id="computerName" class="form-control" placeholder="Computer Name" value= "${computer.name }"> --%>
+<!-- 				</div> -->
+<!-- 			</div> -->
+			
+<!-- 			<div class="row form-group" id="introducedDate"> -->
+<!-- 				<div class="col-md-2"><strong>Introduced Date : </strong></div> -->
+<!-- 				<div class="col-md-3"> -->
+<%-- 					<fmt:formatDate pattern="yyyy-MM-dd" var="introducedFormat" value="${computer.introduced }"/> --%>
+<%-- 					<input type="text" name="introducedDate" class="datepicker form-control" placeholder="Introduced Date" value="${introducedFormat }"> --%>
+<!-- 				</div> -->
+<!-- 			</div> -->
+			
+<!-- 			<div class="row form-group" id="discontinuedDate"> -->
+<!-- 				<div class="col-md-2"><strong>Discontinued Date : </strong></div> -->
+<!-- 				<div class="col-md-3"> -->
+<%-- 				<fmt:formatDate pattern="yyyy-MM-dd" var="discontinuedFormat" value="${computer.discontinued }"/> --%>
+<%-- 					<input type="text" name="discontinuedDate" class="datepicker form-control" placeholder="Discontinued Date" value="${discontinuedFormat }"> --%>
+<!-- 				</div> -->
+<!-- 			</div> -->
+			
+			<div class="row form-group" id="company">
 				<div class="col-md-2"><strong>Company Name : </strong></div>
 				<div class="col-md-3">
 					<div class="dropdown">
