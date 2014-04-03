@@ -22,18 +22,12 @@ public class ComputerValidator {
 
 	private final static Logger logger = (Logger) LoggerFactory.getLogger(ConnectionFactory.class);
 	
-	
-	
 	/**
 	 * Constructor
 	 */
 	public ComputerValidator() {
 		super();
 	}
-	
-	/*va dnas le mapper de computer*/
-	
-	/*--------------------------*/
 	
 	public boolean validate(ComputerDTO computerDTO) {
 		boolean ret = true;

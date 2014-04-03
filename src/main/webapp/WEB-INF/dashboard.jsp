@@ -11,11 +11,11 @@
 <section id="main">
 	<h1 id="homeTitle">
 		<c:choose>
-			<c:when test="${numberOfComputer == 1}">
-				<c:out value="${numberOfComputer}"/> Computer found (over <c:out value= "${nbTotal}"/> computers)
+			<c:when test="${page.numberOfComputer == 1}">
+				<c:out value="${page.numberOfComputer}"/> Computer found (over <c:out value= "${page.numberTotalOfComputer}"/> computers)
 			</c:when>
 			<c:otherwise>
-				<c:out value= "${numberOfComputer}"/> Computers found (over <c:out value= "${nbTotal}"/> computers)
+				<c:out value= "${page.numberOfComputer}"/> Computers found (over <c:out value= "${page.numberTotalOfComputer}"/> computers)
 			</c:otherwise>
 		</c:choose>
 	</h1>
@@ -23,7 +23,7 @@
 		<div class="container-fluid">
 			<form class="navbar-form navbar-left" method="GET" action="Dashboard">
 				<div class="form-group">
-					<input type="hidden" name="entitiesperpage" value="${entitiesPerPage }">
+					<input type="hidden" name="entitiesperpage" value="${page.entitiesPerPage }">
 					<input type="hidden" name="page" value="1">
 					<input type="hidden" name="order" value="asc">
 					<input type="hidden" name="criteria" value="name">
@@ -36,23 +36,23 @@
 			<div class="navbar-left">
 				Number of computer to show per page:
 				<form name="selectNumberOfEntitiesPerPage" method ="GET" action="Dashboard">
-					<input type="hidden" name="filter" value="${filter }">
+					<input type="hidden" name="filter" value="${page.filter }">
 					<input type="hidden" name="page" value="1">
-					<input type="hidden" name="order" value="${order }">
-					<input type="hidden" name="criteria" value="${criteria }">
+					<input type="hidden" name="order" value="${page.order }">
+					<input type="hidden" name="criteria" value="${page.criteria }">
 					<select class="form-control" id="entitiesPerPage" name="entitiesperpage" onChange="this.form.submit();">
-						<option value="10" <c:if test="${entitiesperpage == 10 }">selected</c:if>>10</option>
-						<option value="30" <c:if test="${entitiesperpage == 30 }">selected</c:if>>30</option>
-						<option value="50" <c:if test="${entitiesperpage == 50 }">selected</c:if>>50</option>
-						<option value="100" <c:if test="${entitiesperpage == 100 }">selected</c:if>>100</option>
-						<option value="${numberOfComputer }" <c:if test="${entitiesperpage == numberOfComputer }">selected</c:if>>Show All Computers</option>	
+						<option value="10" <c:if test="${page.entitiesPerPage == 10 }">selected</c:if>>10</option>
+						<option value="30" <c:if test="${page.entitiesPerPage == 30 }">selected</c:if>>30</option>
+						<option value="50" <c:if test="${page.entitiesPerPage == 50 }">selected</c:if>>50</option>
+						<option value="100" <c:if test="${page.entitiesPerPage == 100 }">selected</c:if>>100</option>
+						<option value="${page.numberOfComputer }" <c:if test="${page.entitiesPerPage == page.numberOfComputer }">selected</c:if>>Show All Computers</option>	
 					</select>
 				</form>
 			</div>
 			<div class="navbar-left">
-				Total number of page found : <c:out value="${pageMax }"/><br>
-				<c:if test="${!empty filter}">
-					Search Criteria : "<c:out value="${filter }"/>"
+				Total number of page found : <c:out value="${page.pageMax }"/><br>
+				<c:if test="${!empty page.filter}">
+					Search Criteria : "<c:out value="${page.filter }"/>"
 				</c:if>
 			</div>
 			
@@ -67,15 +67,15 @@
 		<div class="alert alert-success">Your computer have been successfully edited</div>
 	</c:if>
 	
-	<page:pagination pageMax="${pageMax }" currentPageNumber="${currentPageNumber }" filter="${filter }" order="${order }" criteria="${criteria }"></page:pagination>	
+	<page:pagination pageMax="${page.pageMax }" currentPageNumber="${page.currentPagenumber }" filter="${page.filter }" order="${page.order }" criteria="${page.criteria }"></page:pagination>	
 	
 	<table class="table table-striped table-hover">
 		<thead>
 			<tr>
 				<th>
 					Computer Name
-					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-up' ></span>" servlet="Dashboard" entitiesperpage="${entitiesPerPage }" page="1" filter="${filter }" order="asc" criteria="name"/>
-					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-down' ></span>" servlet="Dashboard" entitiesperpage="${entitiesPerPage }" page="1" filter="${filter }" order="desc" criteria="name"/>
+					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-up' ></span>" servlet="Dashboard" entitiesperpage="${page.entitiesPerPage }" page="1" filter="${page.filter }" order="asc" criteria="name"/>
+					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-down' ></span>" servlet="Dashboard" entitiesperpage="${page.entitiesPerPage }" page="1" filter="${page.filter }" order="desc" criteria="name"/>
 				</th>
 				
 				<th>
@@ -88,15 +88,15 @@
 				
 				<th>
 					Company
-					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-up' ></span>" servlet="Dashboard" entitiesperpage="${entitiesPerPage }" page="1" filter="${filter }" order="asc" criteria="company"/>
-					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-down' ></span>" servlet="Dashboard" entitiesperpage="${entitiesPerPage }" page="1" filter="${filter }" order="desc" criteria="company"/>
+					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-up' ></span>" servlet="Dashboard" entitiesperpage="${page.entitiesPerPage }" page="1" filter="${page.filter }" order="asc" criteria="company"/>
+					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-down' ></span>" servlet="Dashboard" entitiesperpage="${page.entitiesPerPage }" page="1" filter="${page.filter }" order="desc" criteria="company"/>
 				</th>
 				
 				<th>Actions</th>
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${computerPageList}" var="computer">
+			<c:forEach items="${page.computerPageList}" var="computer">
 				<tr>
 					<td id="name">
 						
