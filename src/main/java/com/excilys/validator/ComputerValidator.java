@@ -51,7 +51,7 @@ public class ComputerValidator {
 
 		//check the name -> not null and at least 2 character
 		
-		if (computerDTO.getName() == null && computerDTO.getName().length() < 2) {
+		if ("".equals(computerDTO.getName()) && computerDTO.getName().length() < 2) {
 			logger.debug("Invalid name");
 			return false;
 		}else {
