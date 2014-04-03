@@ -1,9 +1,6 @@
 package com.excilys.servlet;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,15 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
-import ch.qos.logback.classic.Logger;
 
-import com.excilys.dao.impl.ConnectionFactory;
 import com.excilys.dto.ComputerDTO;
-import com.excilys.om.Company;
 import com.excilys.om.Computer;
 import com.excilys.service.impl.CompanyServiceImpl;
 import com.excilys.service.impl.ComputerServiceImpl;
@@ -35,8 +28,6 @@ public class AddComputerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	
-	private final static Logger logger = (Logger) LoggerFactory.getLogger(ConnectionFactory.class);
-	
 	@Autowired
 	private CompanyServiceImpl companyservice;
 	
@@ -45,7 +36,8 @@ public class AddComputerServlet extends HttpServlet {
 	
 	@Autowired
 	private ComputerValidator compValidator;
-    /**
+    
+	/**
      * @see HttpServlet#HttpServlet()
      */
     public AddComputerServlet() {
@@ -82,7 +74,7 @@ public class AddComputerServlet extends HttpServlet {
 		String introducedStr = request.getParameter("introducedDate");
 		String companyId = request.getParameter("company");
 		
-		ComputerDTO compdto = new ComputerDTO(name, introducedStr, discontinuedStr, companyId);
+		ComputerDTO compdto = new ComputerDTO("0", name, introducedStr, discontinuedStr, companyId);
 		
 		if (compValidator.validate(compdto)) { //good computer
 			//convert the dto to a computer to add

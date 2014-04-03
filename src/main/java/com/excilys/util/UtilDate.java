@@ -33,7 +33,10 @@ public class UtilDate {
 	
 	//convert Date to String
 	public static String toString(Date dateD) {
-		
-		return null;
+		String date = null;
+		if (dateD != null) {
+			return formatter.format(dateD);
+		}
+		return date;
 	}
 }

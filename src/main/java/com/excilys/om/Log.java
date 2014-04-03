@@ -2,8 +2,6 @@ package com.excilys.om;
 
 import java.util.Date;
 
-import org.springframework.stereotype.Component;
-
 public class Log {
 
 	/**

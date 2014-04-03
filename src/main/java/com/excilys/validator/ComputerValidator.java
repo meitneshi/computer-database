@@ -45,11 +45,17 @@ public class ComputerValidator {
 	public Computer toComputer(ComputerDTO computerDto) {
 		Date introduced = UtilDate.toDate(computerDto.getIntroduced());
 		Date discontinued = UtilDate.toDate(computerDto.getDiscontinued());
+		int id = 0;
 		if (companyservice == null) {
 			System.out.println("coucou");
 		}
+		try {
+			id = Integer.parseInt(computerDto.getId());
+		} catch (NumberFormatException e){
+			logger.info("failed to parse the id into integer "+e.getMessage());
+		}
 		Company company = companyservice.initCompany(computerDto.getCompanyId());
-		Computer computer = new Computer(0, company, computerDto.getName(), introduced, discontinued);
+		Computer computer = new Computer(id, company, computerDto.getName(), introduced, discontinued);
 		return computer;
 	}
 	

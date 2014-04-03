@@ -10,23 +10,24 @@ package com.excilys.dto;
  *
  */
 public class ComputerDTO {
+	private String id;
 	private String name;
 	private String introduced;
 	private String discontinued;
 	private String companyId;
 	
 	/**
-	 * @return the company
+	 * @return the id
 	 */
-	public String getCompanyId() {
-		return companyId;
+	public String getId() {
+		return id;
 	}
 
 	/**
-	 * @param company the company to set
+	 * @param id the id to set
 	 */
-	public void setCompanyId(String companyId) {
-		this.companyId = companyId;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	/**
@@ -71,8 +72,22 @@ public class ComputerDTO {
 		this.discontinued = discontinued;
 	}
 	
+	/**
+	 * @return the company
+	 */
+	public String getCompanyId() {
+		return companyId;
+	}
+	
+	/**
+	 * @param company the company to set
+	 */
+	public void setCompanyId(String companyId) {
+		this.companyId = companyId;
+	}
 
-	public ComputerDTO(String name, String introduced, String discontinued, String companyId) {
+	public ComputerDTO(String id, String name, String introduced, String discontinued, String companyId) {
+		this.id = id;
 		this.companyId = companyId;
 		this.name = name;
 		this.introduced = introduced;

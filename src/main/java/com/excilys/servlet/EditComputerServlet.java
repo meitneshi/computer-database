@@ -1,9 +1,6 @@
 package com.excilys.servlet;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,8 +17,9 @@ import ch.qos.logback.classic.Logger;
 
 import com.excilys.service.impl.CompanyServiceImpl;
 import com.excilys.service.impl.ComputerServiceImpl;
+import com.excilys.validator.ComputerValidator;
 import com.excilys.dao.impl.ConnectionFactory;
-import com.excilys.om.Company;
+import com.excilys.dto.ComputerDTO;
 import com.excilys.om.Computer;
 
 /**
@@ -37,6 +35,10 @@ public class EditComputerServlet extends HttpServlet {
 	
 	@Autowired
 	private ComputerServiceImpl computerService;
+	
+	@Autowired
+	private ComputerValidator compValidator;
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -55,9 +57,7 @@ public class EditComputerServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
-		
-		request.setAttribute("displayDivEdit", false);
-		
+
 		int id;
 		Computer finalComputer = null;
 		
@@ -68,6 +68,7 @@ public class EditComputerServlet extends HttpServlet {
 			logger.debug("failed to parse id into int "+e.getMessage());
 		}
 		
+		request.setAttribute("displayDivEdit", false);
 		request.setAttribute("computer", finalComputer);
 		request.setAttribute("companyList", companyService.findAll());
 		
@@ -80,39 +81,24 @@ public class EditComputerServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
-		String name = "";
-		int id = Integer.parseInt(request.getParameter("computerId"));
+		String name = request.getParameter("computerName");
+		String id = request.getParameter("computerId");
 		String discontinuedStr = request.getParameter("discontinuedDate");
 		String introducedStr = request.getParameter("introducedDate");
-		System.out.println(discontinuedStr);
-		Date discontinued = null;
-		Date introduced = null;
+		String companyId = request.getParameter("company");
 		
-		name = request.getParameter("computerName");
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		if(!"".equals(introducedStr)) {
-			try {
-				introduced = formatter.parse(introducedStr);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
+		ComputerDTO compdto = new ComputerDTO(id, name, introducedStr, discontinuedStr, companyId);
+		
+		if(compValidator.validate(compdto)) { //valide information
+			//convert the DTO to a computer to edit
+			Computer computer = compValidator.toComputer(compdto);
+			//edit the computer
+			computerService.save(computer);
+			//go to next page
+			request.setAttribute("displayDivAdd", true);
+			response.sendRedirect("Dashboard");
+		} else { //invalid information
+			response.sendRedirect("Dashboard");
 		}
-		if(!"".equals(discontinuedStr)) {
-			try {
-				discontinued = formatter.parse(discontinuedStr);
-				
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		Company company = companyService.initCompany(request.getParameter("company"));
-		
-		Computer computer = new Computer(id, company, name, introduced, discontinued);
-		
-		computerService.save(computer);
-		
-		request.setAttribute("displayDivAdd", true);
-		response.sendRedirect("Dashboard");	
 	}
 }
