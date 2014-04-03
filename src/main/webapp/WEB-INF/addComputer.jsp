@@ -34,7 +34,7 @@ $(document).ready(function(){
 		unhighlight: function(element) {
 			$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
 			$(element).next('.glyphicon').removeClass('glyphicon-remove').addClass('glyphicon-ok');
-		}
+		},
 	});
 	$.validator.addMethod(
     	"dateController",

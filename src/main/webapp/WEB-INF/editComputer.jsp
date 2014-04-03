@@ -27,10 +27,12 @@ $(document).ready(function(){
 			}
 		},
 		highlight: function(element) {
-			element.closest('.form-group').removeClass('has-success').addClass('has-error');
+			$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+			$(element).next('.glyphicon').removeClass('glyphicon-ok').addClass('glyphicon-remove');
 		},
-		success: function(element) {
+		unhighlight: function(element) {
 			$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+			$(element).next('.glyphicon').removeClass('glyphicon-remove').addClass('glyphicon-ok');
 		}
 	});
 	$.validator.addMethod(
@@ -57,57 +59,35 @@ $(document).ready(function(){
 	</c:if>
 
 	<div class="container-fluid">
-		<form method="POST" action="EditComputer" id="editionForm" accept-charset=utf-8>
+		<form class="form-horizontal" method="POST" action="EditComputer" id="editionForm" accept-charset=utf-8>
 			<input type="hidden" name="computerId" value="${computer.id }"/>
 			
-			<div class="row form-group" id="computerName">
+			<div class="form-group has-feedback" id="computerName">
 				<label class="col-sm-2 control-label">Computer Name* : </label>
 				<div class="col-md-3">
 					<input type="text" name="computerName" id="computerName" class="form-control" placeholder="Computer Name" value= "${computer.name }">
+					<span class="glyphicon form-control-feedback"></span>
 				</div>
 			</div>
 			
-			<div class="row form-group" id="introducedDate">
+			<div class="form-group has-feedback" id="introducedDate">
 				<label class="col-sm-2 control-label">Introduced Date : </label>
 				<div class="col-md-3">
 					<fmt:formatDate pattern="yyyy-MM-dd" var="introducedFormat" value="${computer.introduced }"/>
 					<input type="text" name="introducedDate" class="datepicker form-control" placeholder="Introduced Date" value="${introducedFormat }">
+					<span class="glyphicon form-control-feedback"></span>
 				</div>
 			</div>
 			
-			<div class="row form-group" id="discontinuedDate">
+			<div class="form-group has-feedback" id="discontinuedDate">
 				<label class="col-sm-2 control-label">Discontinued Date : </label>
 				<div class="col-md-3">
 					<fmt:formatDate pattern="yyyy-MM-dd" var="discontinuedFormat" value="${computer.discontinued }"/>
 					<input type="text" name="discontinuedDate" class="datepicker form-control" placeholder="Discontinued Date" value="${discontinuedFormat }">
+					<span class="glyphicon form-control-feedback"></span>
 				</div>
 			</div>
-			
-			
-			
-<!-- 			<div class="row form-group" id="computerName"> -->
-<!-- 				<div class="col-md-2"><strong>Computer Name* : </strong></div> -->
-<!-- 				<div class="col-md-3"> -->
-<%-- 					<input type="text" name="computerName" id="computerName" class="form-control" placeholder="Computer Name" value= "${computer.name }"> --%>
-<!-- 				</div> -->
-<!-- 			</div> -->
-			
-<!-- 			<div class="row form-group" id="introducedDate"> -->
-<!-- 				<div class="col-md-2"><strong>Introduced Date : </strong></div> -->
-<!-- 				<div class="col-md-3"> -->
-<%-- 					<fmt:formatDate pattern="yyyy-MM-dd" var="introducedFormat" value="${computer.introduced }"/> --%>
-<%-- 					<input type="text" name="introducedDate" class="datepicker form-control" placeholder="Introduced Date" value="${introducedFormat }"> --%>
-<!-- 				</div> -->
-<!-- 			</div> -->
-			
-<!-- 			<div class="row form-group" id="discontinuedDate"> -->
-<!-- 				<div class="col-md-2"><strong>Discontinued Date : </strong></div> -->
-<!-- 				<div class="col-md-3"> -->
-<%-- 				<fmt:formatDate pattern="yyyy-MM-dd" var="discontinuedFormat" value="${computer.discontinued }"/> --%>
-<%-- 					<input type="text" name="discontinuedDate" class="datepicker form-control" placeholder="Discontinued Date" value="${discontinuedFormat }"> --%>
-<!-- 				</div> -->
-<!-- 			</div> -->
-			
+						
 			<div class="row form-group" id="company">
 				<div class="col-md-2"><strong>Company Name : </strong></div>
 				<div class="col-md-3">
