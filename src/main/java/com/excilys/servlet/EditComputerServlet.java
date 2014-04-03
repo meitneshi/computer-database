@@ -90,7 +90,7 @@ public class EditComputerServlet extends HttpServlet {
 		
 		ComputerDTO compdto = new ComputerDTO(id, name, introducedStr, discontinuedStr, companyId);
 		
-		if(compValidator.validate(compdto)) { //valide information
+		if(compValidator.validate(compdto) == 0) { //valid information
 			//convert the DTO to a computer to edit
 			Computer computer = compMapper.toComputer(compdto);
 			//edit the computer

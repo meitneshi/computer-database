@@ -76,7 +76,7 @@ public class AddComputerServlet extends HttpServlet {
 		
 		ComputerDTO compdto = new ComputerDTO("0", name, introducedStr, discontinuedStr, companyId);
 		
-		if (compValidator.validate(compdto)) { //good computer
+		if (compValidator.validate(compdto) == 0) { //good computer
 			//convert the dto to a computer to add
 			Computer computer = compMapper.toComputer(compdto);
 			//add the computer
@@ -87,6 +87,17 @@ public class AddComputerServlet extends HttpServlet {
 			dispatcher.forward(request,response);
 		} else {
 			request.setAttribute("displayDivAddError", true);
+			
+			//Error gestion
+			String errorCode = Integer.toBinaryString(compValidator.validate(compdto));
+			boolean errorName = ("1".equals(errorCode) | "11".equals(errorCode) | "101".equals(errorCode) | "111".equals(errorCode));
+			boolean errorIntroduced = ("10".equals(errorCode) | "11".equals(errorCode) | "110".equals(errorCode) | "111".equals(errorCode));;
+			boolean errorDiscontinued = ("100".equals(errorCode) | "110".equals(errorCode) | "101".equals(errorCode) | "111".equals(errorCode));;
+			
+			request.setAttribute("errorName", errorName);
+			request.setAttribute("errorIntroduced", errorIntroduced);
+			request.setAttribute("errorDiscontinued", errorDiscontinued);
+			
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/addComputer.jsp");
 			dispatcher.forward(request,response);
 		}

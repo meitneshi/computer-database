@@ -58,7 +58,24 @@ $(document).ready(function(){
 	</c:if>
 	
 	<c:if test="${displayDivAddError}">
-		<div class="alert alert-danger">A problem occured during hte creation of computer</div>
+		<div class="alert alert-danger">
+			A problem occured during the creation of computer due to the following reason(s) : 
+			<div>
+				<c:if test="${errorName }">
+					*invalid name
+				</c:if>
+			</div>
+			<div>
+				<c:if test="${errorIntroduced }">
+					*invalid introduced date
+				</c:if>
+			</div>
+			<div>
+				<c:if test="${errorDiscontinued }">
+					*invalid discontinued date
+				</c:if>
+			</div>
+		</div>
 	</c:if>
 	
 	
