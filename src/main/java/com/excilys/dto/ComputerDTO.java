@@ -10,10 +10,16 @@ package com.excilys.dto;
  *
  */
 public class ComputerDTO {
+	
+	
 	private String id;
+	
 	private String name;
+	
 	private String introduced;
+	
 	private String discontinued;
+	
 	private String companyId;
 	
 	/**

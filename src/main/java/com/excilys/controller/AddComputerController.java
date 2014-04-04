@@ -36,7 +36,6 @@ public class AddComputerController {
 	
     public AddComputerController() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     @RequestMapping(method=RequestMethod.GET)

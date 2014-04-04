@@ -50,17 +50,17 @@ public class EditComputerController {
 
 		int id;
 		Computer finalComputer = null;
+		ComputerDTO computerdto = null;
 		
 		try {
 			id = Integer.parseInt(request.getParameter("id"));
 			finalComputer = computerService.findById(id);
+			computerdto = compMapper.toDto(finalComputer);
 		} catch (NumberFormatException e){
 			logger.debug("failed to parse id into int "+e.getMessage());
 		}
 		
-		ComputerDTO computerdto = compMapper.toDto(finalComputer);		
 		model.addAttribute("computerdto", computerdto);
-		
 		model.addAttribute("displayDivEdit", false);	
 		model.addAttribute("companyList", companyService.findAll());
 		
