@@ -1,16 +1,13 @@
-package com.excilys.servlet;
+package com.excilys.controller;
 
-import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.context.support.SpringBeanAutowiringSupport;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.excilys.dto.ComputerDTO;
 import com.excilys.mapper.ComputerMapper;
@@ -21,12 +18,11 @@ import com.excilys.validator.ComputerValidator;
 
 
 /**
- * Servlet implementation class AddComputerServlet
+ * Controller implementation class AddComputerController
  */
-@WebServlet("/AddComputer")
-public class AddComputerServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-    
+@Controller
+@RequestMapping("/AddComputer")
+public class AddComputerController {
 	
 	@Autowired
 	private CompanyServiceImpl companyservice;
@@ -37,37 +33,21 @@ public class AddComputerServlet extends HttpServlet {
 	@Autowired
 	private ComputerMapper compMapper;
 	
-	/**
-     * @see HttpServlet#HttpServlet()
-     */
-    public AddComputerServlet() {
+    public AddComputerController() {
         super();
         // TODO Auto-generated constructor stub
     }
-    
-    @Override
-    public void init() throws ServletException{
-    	super.init();
-    	SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext (this);
-    }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @RequestMapping(method=RequestMethod.GET)
+	protected String doGet(HttpServletRequest request, HttpServletResponse response, Model model) {
 		response.setContentType("text/html");
-		
-		request.setAttribute("companyList", companyservice.findAll());
-		request.setAttribute("displayDivAdd", false);
-				
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/addComputer.jsp");
-		dispatcher.forward(request,response);
+		model.addAttribute("companyList", companyservice.findAll());
+		model.addAttribute("displayDivAdd", false);
+		return "addComputer";
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @RequestMapping(method=RequestMethod.POST)
+	protected String doPost(HttpServletRequest request, HttpServletResponse response, Model model) {
 		response.setContentType("text/html");
 		String name = request.getParameter("computerName");
 		String discontinuedStr = request.getParameter("discontinuedDate");
@@ -82,9 +62,9 @@ public class AddComputerServlet extends HttpServlet {
 			//add the computer
 			computerservice.save(computer);
 			//go to next page
-			request.setAttribute("displayDivAdd", true);
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/addComputer.jsp");
-			dispatcher.forward(request,response);
+			
+			model.addAttribute("displayDivAdd", true);
+			return "addComputer";
 		} else {
 			request.setAttribute("displayDivAddError", true);
 			
@@ -94,12 +74,10 @@ public class AddComputerServlet extends HttpServlet {
 			boolean errorIntroduced = ("10".equals(errorCode) | "11".equals(errorCode) | "110".equals(errorCode) | "111".equals(errorCode));;
 			boolean errorDiscontinued = ("100".equals(errorCode) | "110".equals(errorCode) | "101".equals(errorCode) | "111".equals(errorCode));;
 			
-			request.setAttribute("errorName", errorName);
-			request.setAttribute("errorIntroduced", errorIntroduced);
-			request.setAttribute("errorDiscontinued", errorDiscontinued);
-			
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/addComputer.jsp");
-			dispatcher.forward(request,response);
+			model.addAttribute("errorName", errorName);
+			model.addAttribute("errorIntroduced", errorIntroduced);
+			model.addAttribute("errorDiscontinued", errorDiscontinued);
+			return "addComputer";
 		}
 		
 		

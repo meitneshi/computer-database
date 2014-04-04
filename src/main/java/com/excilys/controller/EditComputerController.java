@@ -1,17 +1,16 @@
-package com.excilys.servlet;
+package com.excilys.controller;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.context.support.SpringBeanAutowiringSupport;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import ch.qos.logback.classic.Logger;
 
@@ -24,11 +23,11 @@ import com.excilys.mapper.ComputerMapper;
 import com.excilys.om.Computer;
 
 /**
- * Servlet implementation class EditComputerServlet
+ * Controller implementation class EditComputerController
  */
-@WebServlet("/EditComputer")
-public class EditComputerServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+@Controller
+@RequestMapping("/EditComputer")
+public class EditComputerController {
 	private final static Logger logger = (Logger) LoggerFactory.getLogger(ConnectionFactory.class);
 	
 	@Autowired
@@ -40,23 +39,12 @@ public class EditComputerServlet extends HttpServlet {
 	@Autowired
 	private ComputerMapper compMapper;
 	
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public EditComputerServlet() {
+    public EditComputerController() {
         super();
     }
     
-    @Override
-    public void init() throws ServletException{
-    	super.init();
-    	SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext (this);
-    }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @RequestMapping(method=RequestMethod.GET)
+    protected String doGet(HttpServletRequest request, HttpServletResponse response, Model model) {
 		response.setContentType("text/html");
 
 		int id;
@@ -69,21 +57,18 @@ public class EditComputerServlet extends HttpServlet {
 			logger.debug("failed to parse id into int "+e.getMessage());
 		}
 		
-		request.setAttribute("displayDivEdit", false);
-		request.setAttribute("computer", finalComputer);
-		request.setAttribute("companyList", companyService.findAll());
+		model.addAttribute("displayDivEdit", false);
+		model.addAttribute("computer", finalComputer);
+		model.addAttribute("companyList", companyService.findAll());
 		
 		if("true".equals(request.getParameter("error"))) {
 			request.setAttribute("displayDivEditError", true);
 		}
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/editComputer.jsp");
-		dispatcher.forward(request,response);
+		return "editComputer";
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @RequestMapping(method=RequestMethod.POST)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		response.setContentType("text/html");
 		String name = request.getParameter("computerName");
 		String id = request.getParameter("computerId");
