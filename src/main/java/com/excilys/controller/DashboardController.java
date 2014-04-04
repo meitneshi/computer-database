@@ -1,16 +1,12 @@
 package com.excilys.controller;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.excilys.service.impl.ComputerServiceImpl;
 import com.excilys.wrapper.PageWrapper;
@@ -30,26 +26,26 @@ public class DashboardController {
     }
     
     @RequestMapping(method=RequestMethod.GET)
-	protected String doGet(HttpServletRequest request, HttpServletResponse response, Model model) {
-		response.setContentType("text/html");
+	protected String doGet(
+			@RequestParam(value="page", required = false) String page,
+			@RequestParam(value="entitiesperpage", required = false) String entitiesPerPage,
+			@RequestParam(value="filter", required = false) String filter,
+			@RequestParam(value="order", required = false) String order,
+			@RequestParam(value="criteria", required = false) String criteria,
+			Model model) {
 		
-		PageWrapper page = new PageWrapper();
-		page = computerService.generatePage(
-				request.getParameter("page"), 
-				request.getParameter("entitiesperpage"), 
-				request.getParameter("filter"), 
-				request.getParameter("order"), 
-				request.getParameter("page"));
+		PageWrapper pageW = new PageWrapper();
+		pageW = computerService.generatePage(page, entitiesPerPage, filter, order, criteria);
 		
-		model.addAttribute("page", page);
-		model.addAttribute("edit", request.getParameter("edit"));
+		model.addAttribute("page", pageW);
+//		model.addAttribute("edit", request.getParameter("edit"));
 		
 		return "dashboard";
 		
 		
 	}
     @RequestMapping(method=RequestMethod.POST)
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost() {
 		//nothing to do for the moment
 	}
 }

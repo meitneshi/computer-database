@@ -56,41 +56,24 @@ $(document).ready(function(){
 
 	<small>Fields marked with (*) are required</small>
 	
-	<c:if test="${displayDivAdd}">
+	<c:if test="${displayDivAdd }">
 		<div class="alert alert-success">Your computer have been added</div>
 	</c:if>
 	
 	<c:if test="${displayDivAddError}">
 		<div class="alert alert-danger">
-			A problem occured during the creation of computer due to the following reason(s) : 
-			<div>
-				<c:if test="${errorName }">
-					*invalid name
-				</c:if>
-			</div>
-			<div>
-				<c:if test="${errorIntroduced }">
-					*invalid introduced date
-				</c:if>
-			</div>
-			<div>
-				<c:if test="${errorDiscontinued }">
-					*invalid discontinued date
-				</c:if>
-			</div>
+			A problem occured during the creation of computer 
 		</div>
 	</c:if>
 	
-	
 	<div class="container-fluid">
-	
 		<form:form class="form-horizontal" method="POST" action="AddComputer" modelAttribute="computerdto">
 			<form:hidden path="id" value="0"/>
 			<div class="form-group has-feedback" id="computerName">
 				<label class="col-sm-2 control-label">Computer Name* : </label>
 				<div class="col-md-3">
 					<form:input type="text" path="name" class="form-control" placeholder="Computer Name"/>
-					<span class="glyphicon form-control-feedback"></span>
+					<form:errors path="name" cssClass="has-error" />
 				</div>
 			</div>
 			
@@ -98,7 +81,7 @@ $(document).ready(function(){
 				<label class="col-sm-2 control-label">Introduced Date : </label>
 				<div class="col-md-3">
 					<form:input type="text" path="introduced" class="datepicker form-control" placeholder="Introduced Date"/>
-					<span class="glyphicon form-control-feedback"></span>
+					<form:errors path="introduced" />
 				</div>
 			</div>
 			
@@ -106,7 +89,7 @@ $(document).ready(function(){
 				<label class="col-sm-2 control-label">Discontinued Date : </label>
 				<div class="col-md-3">
 					<form:input type="text" path="discontinued" class="datepicker form-control" placeholder="Discontinued Date"/>
-					<span class="glyphicon form-control-feedback"></span>
+					<form:errors path="discontinued" />
 				</div>
 			</div>
 			
