@@ -85,6 +85,10 @@ public class ComputerDTO {
 	public void setCompanyId(String companyId) {
 		this.companyId = companyId;
 	}
+	
+	public ComputerDTO() {
+		super();
+	}
 
 	public ComputerDTO(String id, String name, String introduced, String discontinued, String companyId) {
 		this.id = id;
@@ -92,5 +96,15 @@ public class ComputerDTO {
 		this.name = name;
 		this.introduced = introduced;
 		this.discontinued = discontinued;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "ComputerDTO [id=" + id + ", name=" + name + ", introduced="
+				+ introduced + ", discontinued=" + discontinued
+				+ ", companyId=" + companyId + "]";
 	}
 }

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -43,22 +44,19 @@ public class AddComputerController {
 		response.setContentType("text/html");
 		model.addAttribute("companyList", companyservice.findAll());
 		model.addAttribute("displayDivAdd", false);
+		model.addAttribute("computerdto", new ComputerDTO());
 		return "addComputer";
 	}
 
     @RequestMapping(method=RequestMethod.POST)
-	protected String doPost(HttpServletRequest request, HttpServletResponse response, Model model) {
+	protected String doPost(@ModelAttribute("computerdto") ComputerDTO computerdto, HttpServletRequest request, HttpServletResponse response, Model model) {
 		response.setContentType("text/html");
-		String name = request.getParameter("computerName");
-		String discontinuedStr = request.getParameter("discontinuedDate");
-		String introducedStr = request.getParameter("introducedDate");
-		String companyId = request.getParameter("company");
+		System.out.println(computerdto);
 		
-		ComputerDTO compdto = new ComputerDTO("0", name, introducedStr, discontinuedStr, companyId);
-		
-		if (compValidator.validate(compdto) == 0) { //good computer
+		if (compValidator.validate(computerdto) == 0) { //good computer
 			//convert the dto to a computer to add
-			Computer computer = compMapper.toComputer(compdto);
+			Computer computer = compMapper.toComputer(computerdto);
+			System.out.println(computer);
 			//add the computer
 			computerservice.save(computer);
 			//go to next page
@@ -69,7 +67,7 @@ public class AddComputerController {
 			request.setAttribute("displayDivAddError", true);
 			
 			//Error gestion
-			String errorCode = Integer.toBinaryString(compValidator.validate(compdto));
+			String errorCode = Integer.toBinaryString(compValidator.validate(computerdto));
 			boolean errorName = ("1".equals(errorCode) | "11".equals(errorCode) | "101".equals(errorCode) | "111".equals(errorCode));
 			boolean errorIntroduced = ("10".equals(errorCode) | "11".equals(errorCode) | "110".equals(errorCode) | "111".equals(errorCode));;
 			boolean errorDiscontinued = ("100".equals(errorCode) | "110".equals(errorCode) | "101".equals(errorCode) | "111".equals(errorCode));;
@@ -79,15 +77,5 @@ public class AddComputerController {
 			model.addAttribute("errorDiscontinued", errorDiscontinued);
 			return "addComputer";
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	}
 }

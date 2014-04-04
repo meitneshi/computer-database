@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -57,30 +58,26 @@ public class EditComputerController {
 			logger.debug("failed to parse id into int "+e.getMessage());
 		}
 		
-		model.addAttribute("displayDivEdit", false);
-		model.addAttribute("computer", finalComputer);
+		ComputerDTO computerdto = compMapper.toDto(finalComputer);		
+		model.addAttribute("computerdto", computerdto);
+		
+		model.addAttribute("displayDivEdit", false);	
 		model.addAttribute("companyList", companyService.findAll());
 		
 		if("true".equals(request.getParameter("error"))) {
-			request.setAttribute("displayDivEditError", true);
+			model.addAttribute("displayDivEditError", true);
 		}
 		return "editComputer";
 	}
 
     @RequestMapping(method=RequestMethod.POST)
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	protected void doPost(@ModelAttribute("computerdto") ComputerDTO computerdto, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		response.setContentType("text/html");
-		String name = request.getParameter("computerName");
 		String id = request.getParameter("computerId");
-		String discontinuedStr = request.getParameter("discontinuedDate");
-		String introducedStr = request.getParameter("introducedDate");
-		String companyId = request.getParameter("company");
 		
-		ComputerDTO compdto = new ComputerDTO(id, name, introducedStr, discontinuedStr, companyId);
-		
-		if(compValidator.validate(compdto) == 0) { //valid information
+		if(compValidator.validate(computerdto) == 0) { //valid information
 			//convert the DTO to a computer to edit
-			Computer computer = compMapper.toComputer(compdto);
+			Computer computer = compMapper.toComputer(computerdto);
 			//edit the computer
 			computerService.save(computer);
 			//go to next page

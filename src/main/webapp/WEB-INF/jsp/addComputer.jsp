@@ -2,6 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+
 
 <jsp:include page="include/header.jsp" />
 <script>
@@ -81,12 +83,13 @@ $(document).ready(function(){
 	
 	
 	<div class="container-fluid">
-		<form class="form-horizontal" method="POST" action="AddComputer" id="creationForm" accept-charset=utf-8>
-			
+	
+		<form:form class="form-horizontal" method="POST" action="AddComputer" modelAttribute="computerdto">
+			<form:hidden path="id" value="0"/>
 			<div class="form-group has-feedback" id="computerName">
 				<label class="col-sm-2 control-label">Computer Name* : </label>
 				<div class="col-md-3">
-					<input type="text" name="computerName" id="computerName" class="form-control" placeholder="Computer Name">
+					<form:input type="text" path="name" class="form-control" placeholder="Computer Name"/>
 					<span class="glyphicon form-control-feedback"></span>
 				</div>
 			</div>
@@ -94,7 +97,7 @@ $(document).ready(function(){
 			<div class="form-group has-feedback" id="introducedDate">
 				<label class="col-sm-2 control-label">Introduced Date : </label>
 				<div class="col-md-3">
-					<input type="text" name="introducedDate" class="datepicker form-control" placeholder="Introduced Date">
+					<form:input type="text" path="introduced" class="datepicker form-control" placeholder="Introduced Date"/>
 					<span class="glyphicon form-control-feedback"></span>
 				</div>
 			</div>
@@ -102,7 +105,7 @@ $(document).ready(function(){
 			<div class="form-group has-feedback" id="discontinuedDate">
 				<label class="col-sm-2 control-label">Discontinued Date : </label>
 				<div class="col-md-3">
-					<input type="text" name="discontinuedDate" class="datepicker form-control" placeholder="Discontinued Date">
+					<form:input type="text" path="discontinued" class="datepicker form-control" placeholder="Discontinued Date"/>
 					<span class="glyphicon form-control-feedback"></span>
 				</div>
 			</div>
@@ -111,18 +114,14 @@ $(document).ready(function(){
 				<label class="col-sm-2 control-label">Company Name : </label>
 				<div class="col-md-3">
 					<div class="dropdown">
-						<select class="form-control" id="companies" name="company">
-							<option value="0">--Not Known--</option>
-							<c:forEach items="${companyList}" var="company">
-								<option value="${company.id }" >
-									<c:out value="${company.name }"/>
-								</option>
-							</c:forEach>
-						</select>
+						<form:select path="companyId">
+							<form:option value="0" label="--Not Known--"/>
+	      					<form:options items="${companyList}" itemValue="id" itemLabel="name"/>
+						</form:select>
 					</div>
 				</div>
 			</div>
-
+			
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-md-2">
@@ -131,8 +130,8 @@ $(document).ready(function(){
 						<a href="Dashboard" class="btn btn-link">Cancel</a>
 					</div>
 				</div>
-			</div>
-		</form>
+			</div>			
+		</form:form>
 	</div>
 </section>
 
