@@ -68,6 +68,7 @@ $(document).ready(function(){
 				<div class="col-md-3">
 					<form:input type="text" path="name" class="form-control" placeholder="Computer Name"/>
 					<span class="glyphicon form-control-feedback"></span>
+					<form:errors path="name" />
 				</div>
 			</div>
 			
@@ -76,6 +77,7 @@ $(document).ready(function(){
 				<div class="col-md-3">
 					<form:input type="text" path="introduced" class="datepicker form-control" placeholder="Introduced Date"/>
 					<span class="glyphicon form-control-feedback"></span>
+					<form:errors path="introduced" />
 				</div>
 			</div>
 			
@@ -84,6 +86,7 @@ $(document).ready(function(){
 				<div class="col-md-3">
 					<form:input type="text" path="discontinued" class="datepicker form-control" placeholder="Discontinued Date"/>
 					<span class="glyphicon form-control-feedback"></span>
+					<form:errors path="discontinued" />
 				</div>
 			</div>
 			
@@ -109,73 +112,6 @@ $(document).ready(function(){
 				</div>
 			</div>			
 		</form:form>
-	
-	
-	
-<%-- 		<form class="form-horizontal" method="POST" action="EditComputer" id="editionForm" accept-charset=utf-8> --%>
-<%-- 			<input type="hidden" name="computerId" value="${computer.id }"/> --%>
-			
-<!-- 			<div class="form-group has-feedback" id="computerName"> -->
-<!-- 				<label class="col-sm-2 control-label">Computer Name* : </label> -->
-<!-- 				<div class="col-md-3"> -->
-<%-- 					<input type="text" name="computerName" id="computerName" class="form-control" placeholder="Computer Name" value= "${computer.name }"> --%>
-<!-- 					<span class="glyphicon form-control-feedback"></span> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-			
-<!-- 			<div class="form-group has-feedback" id="introducedDate"> -->
-<!-- 				<label class="col-sm-2 control-label">Introduced Date : </label> -->
-<!-- 				<div class="col-md-3"> -->
-<%-- 					<fmt:formatDate pattern="yyyy-MM-dd" var="introducedFormat" value="${computer.introduced }"/> --%>
-<%-- 					<input type="text" name="introducedDate" class="datepicker form-control" placeholder="Introduced Date" value="${introducedFormat }"> --%>
-<!-- 					<span class="glyphicon form-control-feedback"></span> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-			
-<!-- 			<div class="form-group has-feedback" id="discontinuedDate"> -->
-<!-- 				<label class="col-sm-2 control-label">Discontinued Date : </label> -->
-<!-- 				<div class="col-md-3"> -->
-<%-- 					<fmt:formatDate pattern="yyyy-MM-dd" var="discontinuedFormat" value="${computer.discontinued }"/> --%>
-<%-- 					<input type="text" name="discontinuedDate" class="datepicker form-control" placeholder="Discontinued Date" value="${discontinuedFormat }"> --%>
-<!-- 					<span class="glyphicon form-control-feedback"></span> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-						
-<!-- 			<div class="row form-group" id="company"> -->
-<!-- 				<div class="col-md-2"><strong>Company Name : </strong></div> -->
-<!-- 				<div class="col-md-3"> -->
-<!-- 					<div class="dropdown"> -->
-<!-- 						<select id="companies" class="form-control" name="company"> -->
-<!-- 							<option value="0">--Not Known--</option> -->
-<%-- 							<c:forEach items="${companyList}" var="company"> --%>
-<%-- 								<c:choose> --%>
-<%-- 									<c:when test="${company.id == computer.company.id }"> --%>
-<%-- 										<option value="${company.id }" selected > --%>
-<%-- 											<c:out value="${company.name }"/> --%>
-<!-- 										</option> -->
-<%-- 									</c:when> --%>
-<%-- 									<c:otherwise> --%>
-<%-- 										<option value="${company.id }" > --%>
-<%-- 											<c:out value="${company.name }"/> --%>
-<!-- 										</option> -->
-<%-- 									</c:otherwise> --%>
-<%-- 								</c:choose>	 --%>
-<%-- 							</c:forEach> --%>
-<!-- 						</select> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-
-<!-- 			<div class="container-fluid"> -->
-<!-- 				<div class="row"> -->
-<!-- 					<div class="col-md-2"> -->
-<!-- 						<input type="submit" class="btn btn-success" value="Edit Computer"> -->
-<!-- 						or -->
-<!-- 						<a href="Dashboard" class="btn btn-link">Cancel</a> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<%-- 		</form> --%>
 	</div>
 
 </section>
