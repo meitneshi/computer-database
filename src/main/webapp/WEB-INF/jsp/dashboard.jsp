@@ -9,6 +9,9 @@
 
 <jsp:include page="include/header.jsp" />
 
+
+<spring:message code="format.datePattern" var="datePattern"/>
+
 <section id="main">
 	<h1 id="homeTitle">
 		<c:choose>
@@ -109,7 +112,7 @@
 								<c:out value="N/A"/>
 							</c:when>
 							<c:otherwise>
-								<c:out value="${computer.introduced }"/>
+								<fmt:formatDate pattern="${datePattern }" value="${computer.introduced}" />
 							</c:otherwise>
 						</c:choose>
 					</td>
@@ -119,7 +122,7 @@
 								<c:out value="N/A"/>
 							</c:when>
 							<c:otherwise>
-								<c:out value="${computer.discontinued }"/>
+								<fmt:formatDate pattern="${datePattern }" value="${computer.introduced}" />
 							</c:otherwise>
 						</c:choose>
 					</td>

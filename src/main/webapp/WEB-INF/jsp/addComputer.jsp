@@ -7,9 +7,11 @@
 
 <jsp:include page="include/header.jsp" />
 <script>
-  $(function() {
-    $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' }).val();
-  });
+$(function() {
+    $(".datepicker").datepicker({ 
+    	dateFormat: "<spring:message code="format.show.datePattern" />" 
+    	});
+  	});
 </script>
 
 <spring:message code="label.name" var="name"/>
