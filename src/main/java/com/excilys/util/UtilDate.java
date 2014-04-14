@@ -22,11 +22,12 @@ public class UtilDate {
 	//convert string to Date
 	public static Date toDate(String dateStr) {
 		Date date = null;
+		formatter.setLenient(false);
 		try {
 			formatter.setLenient(false);
 			date = formatter.parse(dateStr);
 		} catch (ParseException e) {
-			logger.debug("failed to format the date" +e.getMessage());
+			logger.debug("failed to format the date " +e.getMessage());
 			return date;
 		}
 		return date;
@@ -35,6 +36,7 @@ public class UtilDate {
 	//convert Date to String
 	public static String toString(Date dateD) {
 		String date = null;
+		formatter.setLenient(false);
 		if (dateD != null) {
 			return formatter.format(dateD);
 		}

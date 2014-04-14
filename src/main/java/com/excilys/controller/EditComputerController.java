@@ -1,14 +1,13 @@
 package com.excilys.controller;
 
-import java.io.IOException;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,8 +44,7 @@ public class EditComputerController {
     }
     
     @RequestMapping(method=RequestMethod.GET)
-    protected String doGet(HttpServletRequest request, HttpServletResponse response, Model model) {
-		response.setContentType("text/html");
+    protected String doGet(HttpServletRequest request, Model model) {
 
 		int id;
 		Computer finalComputer = null;
@@ -71,19 +69,16 @@ public class EditComputerController {
 	}
 
     @RequestMapping(method=RequestMethod.POST)
-	protected void doPost(@ModelAttribute("computerdto") ComputerDTO computerdto, HttpServletRequest request, HttpServletResponse response) throws IOException {
-		response.setContentType("text/html");
-		String id = request.getParameter("computerId");
+	protected String doPost(@ModelAttribute("computerdto") @Valid ComputerDTO computerdto, BindingResult result, Model model) {
 		
-		if(compValidator.validate(computerdto) == 0) { //valid information
-			//convert the DTO to a computer to edit
+		if (result.hasErrors()) {//invalid informations
+			model.addAttribute("displayDivEditError", true);
+			return "editComputer";
+		} else { //valid information
 			Computer computer = compMapper.toComputer(computerdto);
-			//edit the computer
 			computerService.save(computer);
-			//go to next page
-			response.sendRedirect("Dashboard?edit=true");
-		} else { //invalid information
-			response.sendRedirect("EditComputer?id="+id+"&error=true");
+			model.addAttribute("edit", true);
+			return "redirect:/Dashboard";
 		}
 	}
 }

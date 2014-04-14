@@ -52,7 +52,7 @@ public class AddComputerController {
     	if (result.hasErrors()) { //invalid information
     		model.addAttribute("displayDivAddError", true);
     		return "addComputer";
-    	} else { //valid informtation
+    	} else { //valid information
     		Computer computer = compMapper.toComputer(computerdto);
     		computerservice.save(computer);
     		model.addAttribute("displayDivAdd", true);
