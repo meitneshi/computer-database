@@ -38,7 +38,6 @@ public class DashboardController {
 		pageW = computerService.generatePage(page, entitiesPerPage, filter, order, criteria);
 		
 		model.addAttribute("page", pageW);
-//		model.addAttribute("edit", request.getParameter("edit"));
 		
 		return "dashboard";
 		

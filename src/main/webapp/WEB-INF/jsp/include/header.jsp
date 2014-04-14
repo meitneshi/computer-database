@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,6 +23,11 @@
 <body>
 	<header class="navbar">
 		<h1 class="navbar-link">
-			<a href="dashboard.jsp"> Application - Computer Database </a>
+			<a href="dashboard.jsp"> <spring:message code="header.title"/> </a>
 		</h1>
+		<c:out value="locale = ${pageContext.response.locale }"/> 
+		<span style="float: right">
+    		<a href="?lang=en">en</a> |  
+    		<a href="?lang=fr">fr</a>
+		</span>
 	</header>

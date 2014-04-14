@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="page" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="link" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="option" %>
@@ -12,10 +13,10 @@
 	<h1 id="homeTitle">
 		<c:choose>
 			<c:when test="${page.numberOfComputer == 1}">
-				<c:out value="${page.numberOfComputer}"/> Computer found (over <c:out value= "${page.numberTotalOfComputer}"/> computers)
+				<c:out value="${page.numberOfComputer}"/> <spring:message code="dashboard.computerFound"/> (<spring:message code="dashboard.over"/> <c:out value= "${page.numberTotalOfComputer}"/> <spring:message code="dashboard.computers"/>)
 			</c:when>
 			<c:otherwise>
-				<c:out value= "${page.numberOfComputer}"/> Computers found (over <c:out value= "${page.numberTotalOfComputer}"/> computers)
+				<c:out value= "${page.numberOfComputer}"/> <spring:message code="dashboard.computersFound"/> (<spring:message code="dashboard.over"/> <c:out value= "${page.numberTotalOfComputer}"/> <spring:message code="dashboard.computers"/>)
 			</c:otherwise>
 		</c:choose>
 	</h1>
@@ -27,14 +28,14 @@
 					<input type="hidden" name="page" value="1">
 					<input type="hidden" name="order" value="asc">
 					<input type="hidden" name="criteria" value="name">
-					<input type="text" name="filter" class="form-control" placeholder="Search by name">
+					<input type="text" name="filter" class="form-control" placeholder="<spring:message code="search.placeholder"/>">
 				</div>
-				<button type="submit" class="btn btn-default">Filter</button>
+				<button type="submit" class="btn btn-default"><spring:message code="search.button"/></button>
 			</form>
 			
 <!-- Dropdown select number of entites to show -->
 			<div class="navbar-left">
-				Number of computer to show per page:
+				<spring:message code="entities.label"/> : 
 				<form name="selectNumberOfEntitiesPerPage" method ="GET" action="Dashboard">
 					<input type="hidden" name="filter" value="${page.filter }">
 					<input type="hidden" name="page" value="1">
@@ -45,27 +46,23 @@
 						<option value="30" <c:if test="${page.entitiesPerPage == 30 }">selected</c:if>>30</option>
 						<option value="50" <c:if test="${page.entitiesPerPage == 50 }">selected</c:if>>50</option>
 						<option value="100" <c:if test="${page.entitiesPerPage == 100 }">selected</c:if>>100</option>
-						<option value="${page.numberOfComputer }" <c:if test="${page.entitiesPerPage == page.numberOfComputer }">selected</c:if>>Show All Computers</option>	
+						<option value="${page.numberOfComputer }" <c:if test="${page.entitiesPerPage == page.numberOfComputer }">selected</c:if>><spring:message code="select.showAll"/></option>	
 					</select>
 				</form>
 			</div>
 			<div class="navbar-left">
-				Total number of page found : <c:out value="${page.pageMax }"/><br>
+				<spring:message code="search.numberOfResult"/> : <c:out value="${page.pageMax }"/><br>
 				<c:if test="${!empty page.filter}">
-					Search Criteria : "<c:out value="${page.filter }"/>"
+					<spring:message code="search.criteria"/> : "<c:out value="${page.filter }"/>"
 				</c:if>
 			</div>
 			
 			
 			<div class="navbar-right">
-				<a href="AddComputer" class="btn btn-success btn-lg active">Add Computer</a>
+				<a href="AddComputer" class="btn btn-success btn-lg active"><spring:message code="dashboard.add"/></a>
 			</div>
 		</div>
 	</nav>
-	
-	<c:if test="${edit }">
-		<div class="alert alert-success">Your computer have been successfully edited</div>
-	</c:if>
 	
 	<page:pagination pageMax="${page.pageMax }" currentPageNumber="${page.currentPagenumber }" filter="${page.filter }" order="${page.order }" criteria="${page.criteria }"></page:pagination>	
 	
@@ -73,26 +70,28 @@
 		<thead>
 			<tr>
 				<th>
-					Computer Name
+					<spring:message code="label.name"/>
 					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-up' ></span>" servlet="Dashboard" entitiesperpage="${page.entitiesPerPage }" page="1" filter="${page.filter }" order="asc" criteria="name"/>
 					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-down' ></span>" servlet="Dashboard" entitiesperpage="${page.entitiesPerPage }" page="1" filter="${page.filter }" order="desc" criteria="name"/>
 				</th>
 				
 				<th>
-					Introduced Date
+					<spring:message code="label.introduced"/>
 				</th>
 				
 				<th>
-					Discontinued Date
+					<spring:message code="label.discontinued"/>
 				</th>
 				
 				<th>
-					Company
+					<spring:message code="label.company"/>
 					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-up' ></span>" servlet="Dashboard" entitiesperpage="${page.entitiesPerPage }" page="1" filter="${page.filter }" order="asc" criteria="company"/>
 					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-down' ></span>" servlet="Dashboard" entitiesperpage="${page.entitiesPerPage }" page="1" filter="${page.filter }" order="desc" criteria="company"/>
 				</th>
 				
-				<th>Actions</th>
+				<th>
+					<spring:message code="label.actions"/>
+				</th>
 			</tr>
 		</thead>
 		<tbody>
