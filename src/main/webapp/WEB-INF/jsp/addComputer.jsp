@@ -12,46 +12,13 @@
   });
 </script>
 
-
-<script>
-$(document).ready(function(){
-	$("#creationForm").validate(
-	{
-		rules: {
-			computerName: {
-				minlength: 2,
-				required: true
-			},
-			introducedDate: {
-				dateController : true
-			},
-			discontinuedDate: {
-				dateController : true
-			}
-		},
-		highlight: function(element) {
-			$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
-			$(element).next('.glyphicon').removeClass('glyphicon-ok').addClass('glyphicon-remove');
-		},
-		unhighlight: function(element) {
-			$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
-			$(element).next('.glyphicon').removeClass('glyphicon-remove').addClass('glyphicon-ok');
-		},
-	});
-	$.validator.addMethod(
-    	"dateController",
-    	function(value, element) {
-        	return value.match(/^$/) || value.match(/^(\d{4})([\/-])(0[1-9]|1[012])\2(0[1-9]|[12][0-9]|3[01])$/);
-        }, "Invalid Date Format. Must be like \"yyyy-MM-dd\"");
-
-});
-</script>
-
 <spring:message code="label.name" var="name"/>
 <spring:message code="label.introduced" var="introduced"/>
 <spring:message code="label.discontinued" var="discontinued"/>
 <spring:message code="add.select.nkcompany" var="nkcompany"/>
-
+<spring:message code="format.datePattern" var="datePattern"/>
+<spring:message code="DateValid.computerdto.introduced" var="patternError"/>
+<spring:message code="Size.computerdto.name" var="sizeError"/>
 
 
 <section id="main">
@@ -73,28 +40,34 @@ $(document).ready(function(){
 	</c:if>
 	
 	<div class="container-fluid">
-		<form:form class="form-horizontal" method="POST" action="AddComputer" modelAttribute="computerdto">
+		<form:form class="form-horizontal" method="POST" action="AddComputer" modelAttribute="computerdto" id="creationForm">
 			<form:hidden path="id" value="0"/>
-			<div class="form-group has-feedback" id="computerName">
+			<div class="form-group has-feedback">
 				<label class="col-sm-2 control-label"><spring:message code="label.name"/>* : </label>
 				<div class="col-md-3">
-					<form:input type="text" path="name" class="form-control" placeholder="${name }"/>
+					<form:input type="text" 
+					data-validation="length" data-validation-length="2-255" data-validation-error-msg="${sizeError }"  
+					name="computerName" id="computerName" path="name" class="form-control" placeholder="${name }"/>
 					<form:errors path="name"/>
 				</div>
 			</div>
 			
-			<div class="form-group has-feedback" id="introducedDate">
+			<div class="form-group has-feedback">
 				<label class="col-sm-2 control-label"><spring:message code="label.introduced"/> : </label>
 				<div class="col-md-3">
-					<form:input type="text" path="introduced" class="datepicker form-control" placeholder="${introduced }"/>
+					<form:input type="text" 
+					data-validation="date" data-validation-format="${datePattern }" data-validation-error-msg="${patternError } : ${datePattern }" 
+					id="introducedDate" path="introduced" class="datepicker form-control" placeholder="${introduced }"/>
 					<form:errors path="introduced" />
 				</div>
 			</div>
 			
-			<div class="form-group has-feedback" id="discontinuedDate">
+			<div class="form-group has-feedback">
 				<label class="col-sm-2 control-label"><spring:message code="label.discontinued"/> : </label>
 				<div class="col-md-3">
-					<form:input type="text" path="discontinued" class="datepicker form-control" placeholder="${discontinued }"/>
+					<form:input type="text" 
+					data-validation="date" data-validation-format="${datePattern }" data-validation-error-msg="${patternError } : ${datePattern }" 
+					id="discontinuedDate" path="discontinued" class="datepicker form-control" placeholder="${discontinued }"/>
 					<form:errors path="discontinued" />
 				</div>
 			</div>
@@ -123,5 +96,7 @@ $(document).ready(function(){
 		</form:form>
 	</div>
 </section>
+
+<script> $.validate(); </script>
 
 <jsp:include page="include/footer.jsp" />

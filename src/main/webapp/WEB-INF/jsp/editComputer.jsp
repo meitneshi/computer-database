@@ -6,51 +6,23 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <jsp:include page="include/header.jsp" />
+<%-- <jsp:include page="include/datepicker.jsp" /> --%>
+
 <script>
   $(function() {
-    $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' }).val();
-  });
-</script>
-
-<script>
-$(document).ready(function(){
-	$("#editionForm").validate(
-	{
-		rules: {
-			computerName: {
-				minlength: 2,
-				required: true
-			},
-			introducedDate: {
-				dateController : true
-			},
-			discontinuedDate: {
-				dateController : true
-			}
-		},
-		highlight: function(element) {
-			$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
-			$(element).next('.glyphicon').removeClass('glyphicon-ok').addClass('glyphicon-remove');
-		},
-		unhighlight: function(element) {
-			$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
-			$(element).next('.glyphicon').removeClass('glyphicon-remove').addClass('glyphicon-ok');
-		}
-	});
-	$.validator.addMethod(
-    	"dateController",
-    	function(value, element) {
-        	return value.match(/^$/) || 
-        	value.match(/^(\d{4})([\/-])(0[1-9]|1[012])\2(0[1-9]|[12][0-9]|3[01])$/);
-        }, "Invalid Date Format. Must be like \"yyyy-MM-dd\"");
-
-});
+    $(".datepicker").datepicker({ 
+    	dateFormat: "<spring:message code="format.show.datePattern" />" 
+    	});
+  	});
 </script>
 
 <spring:message code="label.name" var="name"/>
 <spring:message code="label.introduced" var="introduced"/>
 <spring:message code="label.discontinued" var="discontinued"/>
 <spring:message code="add.select.nkcompany" var="nkcompany"/>
+<spring:message code="format.datePattern" var="datePattern"/>
+<spring:message code="DateValid.computerdto.introduced" var="patternError"/>
+<spring:message code="Size.computerdto.name" var="sizeError"/>
 
 <section>
 	<h1><spring:message code="edit.title"/> : <c:out value="${computerdto.name }"/></h1>
@@ -67,12 +39,14 @@ $(document).ready(function(){
 
 	<div class="container-fluid">
 	
-		<form:form class="form-horizontal" method="POST" action="EditComputer" modelAttribute="computerdto">
+		<form:form class="form-horizontal" method="POST" action="EditComputer" modelAttribute="computerdto" id="editionForm">
 			<form:hidden path="id" value="${computer.id }"/>
 			<div class="form-group has-feedback" id="computerName">
 				<label class="col-sm-2 control-label">${name }* : </label>
 				<div class="col-md-3">
-					<form:input type="text" path="name" class="form-control" placeholder="${name }"/>
+					<form:input type="text" 
+					data-validation="length" data-validation-length="2-255" data-validation-error-msg="${sizeError }"
+					path="name" class="form-control" placeholder="${name }"/>
 					<span class="glyphicon form-control-feedback"></span>
 					<form:errors path="name" />
 				</div>
@@ -81,7 +55,9 @@ $(document).ready(function(){
 			<div class="form-group has-feedback" id="introducedDate">
 				<label class="col-sm-2 control-label">${introduced } : </label>
 				<div class="col-md-3">
-					<form:input type="text" path="introduced" class="datepicker form-control" placeholder="${introduced }"/>
+					<form:input type="text" 
+					data-validation="date" data-validation-format="${datePattern }" data-validation-error-msg="${patternError } : ${datePattern }"
+					path="introduced" class="datepicker form-control" placeholder="${introduced }"/>
 					<span class="glyphicon form-control-feedback"></span>
 					<form:errors path="introduced" />
 				</div>
@@ -90,7 +66,9 @@ $(document).ready(function(){
 			<div class="form-group has-feedback" id="discontinuedDate">
 				<label class="col-sm-2 control-label">${discontinued } : </label>
 				<div class="col-md-3">
-					<form:input type="text" path="discontinued" class="datepicker form-control" placeholder="${discontinued }"/>
+					<form:input type="text" 
+					data-validation="date" data-validation-format="${datePattern }" data-validation-error-msg="${patternError } : ${datePattern }"
+					path="discontinued" class="datepicker form-control" placeholder="${discontinued }"/>
 					<span class="glyphicon form-control-feedback"></span>
 					<form:errors path="discontinued" />
 				</div>
@@ -121,5 +99,7 @@ $(document).ready(function(){
 	</div>
 
 </section>
+
+<script> $.validate(); </script>
 
 <jsp:include page="include/footer.jsp" />

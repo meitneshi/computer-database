@@ -17,7 +17,8 @@
 <script src="resources/js/jQuery-2.1.0.min.js"></script>
 <script src="resources/js/bootstrap.min.js"></script>
 <script src="resources/js/jquery-ui-1.10.4.custom.min.js"></script>
-<script src="resources/js/jquery.validate.min.js"></script>
+<!-- <script src="resources/js/jquery.validate.min.js"></script> -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.1.47/jquery.form-validator.min.js"></script>
 
 </head>
 <body>
