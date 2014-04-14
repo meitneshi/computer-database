@@ -47,22 +47,28 @@ $(document).ready(function(){
 });
 </script>
 
+<spring:message code="label.name" var="name"/>
+<spring:message code="label.introduced" var="introduced"/>
+<spring:message code="label.discontinued" var="discontinued"/>
+<spring:message code="add.select.nkcompany" var="nkcompany"/>
+
+
 
 <section id="main">
 
-	<h1>Add Computer</h1>
+	<h1><spring:message code="dashboard.add"/></h1>
 	
 	<hr>
 
-	<small>Fields marked with (*) are required</small>
+	<small><spring:message code="add.requirement"/></small>
 	
 	<c:if test="${displayDivAdd }">
-		<div class="alert alert-success">Your computer have been added</div>
+		<div class="alert alert-success"><spring:message code="add.success"/></div>
 	</c:if>
 	
 	<c:if test="${displayDivAddError}">
 		<div class="alert alert-danger">
-			A problem occured during the creation of computer 
+			<spring:message code="add.problem"/> 
 		</div>
 	</c:if>
 	
@@ -70,35 +76,35 @@ $(document).ready(function(){
 		<form:form class="form-horizontal" method="POST" action="AddComputer" modelAttribute="computerdto">
 			<form:hidden path="id" value="0"/>
 			<div class="form-group has-feedback" id="computerName">
-				<label class="col-sm-2 control-label">Computer Name* : </label>
+				<label class="col-sm-2 control-label"><spring:message code="label.name"/>* : </label>
 				<div class="col-md-3">
-					<form:input type="text" path="name" class="form-control" placeholder="Computer Name"/>
-					<form:errors path="name" cssClass="has-error" />
+					<form:input type="text" path="name" class="form-control" placeholder="${name }"/>
+					<form:errors path="name"/>
 				</div>
 			</div>
 			
 			<div class="form-group has-feedback" id="introducedDate">
-				<label class="col-sm-2 control-label">Introduced Date : </label>
+				<label class="col-sm-2 control-label"><spring:message code="label.introduced"/> : </label>
 				<div class="col-md-3">
-					<form:input type="text" path="introduced" class="datepicker form-control" placeholder="Introduced Date"/>
+					<form:input type="text" path="introduced" class="datepicker form-control" placeholder="${introduced }"/>
 					<form:errors path="introduced" />
 				</div>
 			</div>
 			
 			<div class="form-group has-feedback" id="discontinuedDate">
-				<label class="col-sm-2 control-label">Discontinued Date : </label>
+				<label class="col-sm-2 control-label"><spring:message code="label.discontinued"/> : </label>
 				<div class="col-md-3">
-					<form:input type="text" path="discontinued" class="datepicker form-control" placeholder="Discontinued Date"/>
+					<form:input type="text" path="discontinued" class="datepicker form-control" placeholder="${discontinued }"/>
 					<form:errors path="discontinued" />
 				</div>
 			</div>
 			
 			<div class="form-group" id="company">
-				<label class="col-sm-2 control-label">Company Name : </label>
+				<label class="col-sm-2 control-label"><spring:message code="label.company"/> : </label>
 				<div class="col-md-3">
 					<div class="dropdown">
 						<form:select path="companyId">
-							<form:option value="0" label="--Not Known--"/>
+							<form:option value="0" label="${nkcompany }"/>
 	      					<form:options items="${companyList}" itemValue="id" itemLabel="name"/>
 						</form:select>
 					</div>
@@ -108,9 +114,9 @@ $(document).ready(function(){
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-md-2">
-						<input type="submit" class="btn btn-success" value="Add Computer">
-						or
-						<a href="Dashboard" class="btn btn-link">Cancel</a>
+						<input type="submit" class="btn btn-success" value=<spring:message code="dashboard.add"/>>
+						<spring:message code="dashboard.or"/>
+						<a href="Dashboard" class="btn btn-link"><spring:message code="dashboard.cancel"/></a>
 					</div>
 				</div>
 			</div>			

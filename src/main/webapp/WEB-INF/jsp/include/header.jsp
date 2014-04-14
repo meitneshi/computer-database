@@ -25,9 +25,8 @@
 		<h1 class="navbar-link">
 			<a href="dashboard.jsp"> <spring:message code="header.title"/> </a>
 		</h1>
-		<c:out value="locale = ${pageContext.response.locale }"/> 
 		<span style="float: right">
-    		<a href="?lang=en">en</a> |  
-    		<a href="?lang=fr">fr</a>
+    		<a href="Dashboard?lang=en">en</a> |  
+    		<a href="Dashboard?lang=fr">fr</a>
 		</span>
 	</header>

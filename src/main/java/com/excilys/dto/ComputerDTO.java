@@ -21,13 +21,12 @@ public class ComputerDTO {
 	@NotNull
 	private String id;
 	
-	@NotEmpty(message="NotEmpty.computerdto.name")
-	@Size(min = 2, max = 255, message = "Size.computerdto.name")
+	@NotEmpty
+	@Size(min = 2, max = 255)
 	private String name;
 	
 	@DateValid
 	private String introduced;
-	
 	
 	@DateValid
 	private String discontinued;

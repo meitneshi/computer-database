@@ -14,8 +14,7 @@ import javax.validation.Payload;
 @Target( { ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface DateValid {
-
-	String message() default "Please Respect the pattern (YYYY-MM-DD)";
+	String message() default "error.pattern.computerdto.date";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
