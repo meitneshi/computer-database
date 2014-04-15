@@ -5,14 +5,9 @@ import java.text.SimpleDateFormat;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
-
-import ch.qos.logback.classic.Logger;
-
-import com.excilys.dao.impl.ConnectionFactory;
 
 public class UtilDate {
 	
@@ -23,11 +18,6 @@ public class UtilDate {
 	    return bean;
 	}
 	
-	
-//	static String pattern = messageSource().getMessage("format.datePattern", null, LocaleContextHolder.getLocale());
-//	static SimpleDateFormat formatter = new SimpleDateFormat(pattern);
-	
-	private final static Logger logger = (Logger) LoggerFactory.getLogger(ConnectionFactory.class);
 
 	public UtilDate() {
 		super();

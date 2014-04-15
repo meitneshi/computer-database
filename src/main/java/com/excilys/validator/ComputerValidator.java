@@ -1,7 +1,5 @@
 package com.excilys.validator;
 
-import java.util.Date;
-
 import org.joda.time.DateTime;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
