@@ -69,7 +69,7 @@
 			<div class="form-group has-feedback">
 				<label class="col-sm-2 control-label">${discontinued } : </label>
 				<div class="col-md-3">
-					<form:input type="text" 
+					<form:input type="text"
 					data-validation="date" data-validation-format="${datePattern }" data-validation-error-msg="${patternError } : ${datePattern }" 
 					id="discontinuedDate" path="discontinued" class="datepicker form-control" placeholder="${discontinued }"/>
 					<form:errors path="discontinued" />

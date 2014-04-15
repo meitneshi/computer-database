@@ -50,6 +50,7 @@ public class UtilDate {
 	public static String toString(Date dateD) {
 		String date = null;
 		System.out.println("coucou");
+		System.out.println(LocaleContextHolder.getLocale());
 		System.out.println(pattern);
 		formatter.setLenient(false);
 		if (dateD != null) {
