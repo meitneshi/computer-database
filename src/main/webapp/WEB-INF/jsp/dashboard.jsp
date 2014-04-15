@@ -103,7 +103,7 @@
 				<tr>
 					<td id="name">
 						
-						<a href="EditComputer?id=${computer.id }" onclick="">
+						<a href="EditComputer?id=${computer.id }&lang=${lang}" onclick="">
 							<c:out value="${computer.name }"/>
 						</a>
 					</td>

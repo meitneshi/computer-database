@@ -22,6 +22,7 @@ public class UtilDate {
 	    return bean;
 	}
 	
+	
 	static String pattern = messageSource().getMessage("format.datePattern", null, LocaleContextHolder.getLocale());
 	static SimpleDateFormat formatter = new SimpleDateFormat(pattern);
 	
@@ -48,6 +49,8 @@ public class UtilDate {
 	//convert Date to String
 	public static String toString(Date dateD) {
 		String date = null;
+		System.out.println("coucou");
+		System.out.println(pattern);
 		formatter.setLenient(false);
 		if (dateD != null) {
 			return formatter.format(dateD);

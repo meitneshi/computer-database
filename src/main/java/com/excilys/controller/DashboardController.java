@@ -2,6 +2,7 @@ package com.excilys.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +38,7 @@ public class DashboardController {
 		PageWrapper pageW = new PageWrapper();
 		pageW = computerService.generatePage(page, entitiesPerPage, filter, order, criteria);
 		
+		model.addAttribute("lang", LocaleContextHolder.getLocale());
 		model.addAttribute("page", pageW);
 		
 		return "dashboard";
