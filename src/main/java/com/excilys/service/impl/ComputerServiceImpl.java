@@ -58,8 +58,15 @@ public class ComputerServiceImpl implements IComputerService {
 			String entitiesPerPageS, 
 			String filter, 
 			String order, 
-			String criteria) {
+			String criteria,
+			String add,
+			String edit,
+			String delete) {
 		PageWrapper page = new PageWrapper();
+		
+		page.setAdd(add);
+		page.setEdit(edit);
+		page.setDelete(delete);
 		
 		int entitiesPerPage = 30;
 		if (entitiesPerPageS != null) {

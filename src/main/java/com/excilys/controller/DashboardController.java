@@ -1,8 +1,6 @@
 package com.excilys.controller;
 
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
@@ -35,19 +33,17 @@ public class DashboardController {
 			@RequestParam(value="filter", required = false) String filter,
 			@RequestParam(value="order", required = false) String order,
 			@RequestParam(value="criteria", required = false) String criteria,
-			Model model, HttpServletRequest request) {
+			@RequestParam(value="add", required = false) String add,
+			@RequestParam(value="edit", required = false) String edit,
+			@RequestParam(value="delete", required = false) String delete,
+			Model model) {
 		
     	//Generate Page
 		PageWrapper pageW = new PageWrapper();
-		pageW = computerService.generatePage(page, entitiesPerPage, filter, order, criteria);
+		pageW = computerService.generatePage(page, entitiesPerPage, filter, order, criteria, add, edit, delete);
 		
 		//Add lang parameter
 		model.addAttribute("lang", LocaleContextHolder.getLocale());
-		
-		//Add parameter of edition creation or suppression
-		model.addAttribute("add", request.getParameter("add"));
-		model.addAttribute("edit", request.getParameter("edit"));
-		model.addAttribute("delete", request.getParameter("delete"));
 		
 		model.addAttribute("page", pageW);
 		

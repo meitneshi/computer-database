@@ -16,6 +16,10 @@ public class PageWrapper {
 	private String order;
 	private String filter;
 	
+	private String add;
+	private String edit;
+	private String delete;
+	
 	private List<Computer> computerPageList;
 
 	/**
@@ -138,6 +142,48 @@ public class PageWrapper {
 	}
 
 	/**
+	 * @return the add
+	 */
+	public String getAdd() {
+		return add;
+	}
+
+	/**
+	 * @param add the add to set
+	 */
+	public void setAdd(String add) {
+		this.add = add;
+	}
+
+	/**
+	 * @return the edit
+	 */
+	public String getEdit() {
+		return edit;
+	}
+
+	/**
+	 * @param edit the edit to set
+	 */
+	public void setEdit(String edit) {
+		this.edit = edit;
+	}
+
+	/**
+	 * @return the delete
+	 */
+	public String getDelete() {
+		return delete;
+	}
+
+	/**
+	 * @param delete the delete to set
+	 */
+	public void setDelete(String delete) {
+		this.delete = delete;
+	}
+	
+	/**
 	 * @param computerPageList the computerPageList to set
 	 */
 	public void setComputerPageList(List<Computer> computerPageList) {
@@ -151,6 +197,7 @@ public class PageWrapper {
 	public PageWrapper(int entitiesPerPage, int currentPagenumber,
 			int numberOfComputer, int numberTotalOfComputer, int pageMax,
 			String criteria, String order, String filter,
+			String add, String edit, String delete,
 			List<Computer> computerPageList) {
 		super();
 		this.entitiesPerPage = entitiesPerPage;
@@ -158,13 +205,12 @@ public class PageWrapper {
 		this.numberOfComputer = numberOfComputer;
 		this.numberTotalOfComputer = numberTotalOfComputer;
 		this.pageMax = pageMax;
+		this.add = add;
+		this.edit = edit;
+		this.delete = delete;
 		this.criteria = criteria;
 		this.order = order;
 		this.filter = filter;
 		this.computerPageList = computerPageList;
-	}
-	
-	
-	
-	
+	}	
 }
