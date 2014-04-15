@@ -1,7 +1,5 @@
 package com.excilys.util;
 
-import java.text.SimpleDateFormat;
-
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -26,10 +24,8 @@ public class UtilDate {
 	//convert string to Date
 	public static DateTime toDate(String dateStr) {
 		String pattern = messageSource().getMessage("format.datePattern", null, LocaleContextHolder.getLocale());
-		SimpleDateFormat formatter = new SimpleDateFormat(pattern);
 		DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(pattern);
 		DateTime date = null;
-		formatter.setLenient(false);
 		if (!"".equals(dateStr)) {
 			date = dateTimeFormatter.parseDateTime(dateStr);
 		}
@@ -39,10 +35,8 @@ public class UtilDate {
 	//convert Date to String
 	public static String toString(DateTime dateTime) {
 		String pattern = messageSource().getMessage("format.datePattern", null, LocaleContextHolder.getLocale());
-		SimpleDateFormat formatter = new SimpleDateFormat(pattern);
 		DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(pattern);
 		String date = null;
-		formatter.setLenient(false);
 		if (dateTime != null) {
 			return dateTimeFormatter.print(dateTime);
 		}

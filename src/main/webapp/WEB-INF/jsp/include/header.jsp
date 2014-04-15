@@ -18,6 +18,7 @@
 <script src="resources/js/bootstrap.min.js"></script>
 <script src="resources/js/jquery-ui-1.10.4.custom.min.js"></script>
 <script src="resources/js/jquery-ui-datepicker-fr.js"></script>
+<script src="resources/js/jquery-ui-datepicker-sp.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.1.47/jquery.form-validator.min.js"></script>
 
 </head>
@@ -27,7 +28,8 @@
 			<a href="dashboard.jsp"> <spring:message code="header.title"/> </a>
 		</h1>
 		<span style="float: right">
-    		<a href="Langage?lang=en"><img src="resources/img/unionjack.jpg" alt="Translate into english" /></a> 
-    		<a href="Langage?lang=fr"><img src="resources/img/francais.jpg" alt="Traduire en français" /></a>
+    		<a href="Langage?lang=en"><img src="resources/img/unionjack.jpg" height="38px" width="38px" alt="Translate into english" /></a> 
+    		<a href="Langage?lang=fr"><img src="resources/img/francais.jpg" height="40px" width="40px" alt="Traduire en français" /></a>
+    		<a href="Langage?lang=sp"><img src="resources/img/spain.jpg" height="48px" width="48px" alt="Traducir al español" /></a>
 		</span>
 	</header>

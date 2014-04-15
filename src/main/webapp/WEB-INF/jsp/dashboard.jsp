@@ -72,8 +72,17 @@
 	
 	<page:pagination pageMax="${page.pageMax }" currentPageNumber="${page.currentPagenumber }" filter="${page.filter }" order="${page.order }" criteria="${page.criteria }"></page:pagination>	
 	
-	<c:if test="${displayDivAdd }">
+	
+	<c:if test="${add }">
 		<div class="alert alert-success"><spring:message code="add.success" /></div>
+	</c:if>
+	
+	<c:if test="${edit }">
+		<div class="alert alert-success"><spring:message code="edit.success" /></div>
+	</c:if>
+	
+	<c:if test="${delete }">
+		<div class="alert alert-success"><spring:message code="delete.success" /></div>
 	</c:if>
 	
 	<table class="table table-striped table-hover">

@@ -41,7 +41,7 @@ public class AddComputerController {
     @RequestMapping(method=RequestMethod.GET)
 	protected String doGet(Model model) {
 		model.addAttribute("companyList", companyservice.findAll());
-		model.addAttribute("displayDivAdd", false);
+		model.addAttribute("add", false);
 		model.addAttribute("computerdto", new ComputerDTO());
 		return "addComputer";
 	}
@@ -54,9 +54,9 @@ public class AddComputerController {
     		return "addComputer";
     	} else { //valid information
     		Computer computer = compMapper.toComputer(computerdto);
-    		System.out.println(computer);
     		computerservice.save(computer);
-    		model.addAttribute("displayDivAdd", true);
+    		
+    		model.addAttribute("add", true);
     		
     		return "redirect:/Dashboard";
     	}

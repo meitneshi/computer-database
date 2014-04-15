@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -34,16 +35,15 @@ public class DeleteComputerController {
     }
 
     @RequestMapping(method=RequestMethod.GET)
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html");
-		
+	protected String doGet(Model model, HttpServletRequest request) {
 		try {
 			int idToDelete = Integer.parseInt(request.getParameter("id"));
 			computerService.delete(idToDelete);
 		} catch (NumberFormatException e) {
 			logger.debug("failed to parse id to delete into int "+e.getMessage());
 		}
-		response.sendRedirect("Dashboard");
+		model.addAttribute("delete", true);
+		return "redirect:/Dashboard";
 	}
 
     @RequestMapping(method=RequestMethod.POST)
