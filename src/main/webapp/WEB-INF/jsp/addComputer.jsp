@@ -8,7 +8,9 @@
 <jsp:include page="include/header.jsp" />
 <script>
  $(function() {
-	 $.datepicker.setDefaults($.datepicker.regional["<spring:message code="dashboard.lang"/>"]);
+	 $.datepicker.setDefaults(
+			 $.datepicker.regional["<spring:message code="dashboard.lang"/>"]
+		);
 	  $('.datepicker').datepicker({
 	      dateFormat:"<spring:message code="format.show.datePattern" />"
 	    }
