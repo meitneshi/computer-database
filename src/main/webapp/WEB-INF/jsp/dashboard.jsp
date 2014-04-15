@@ -70,6 +70,10 @@
 	
 	<page:pagination pageMax="${page.pageMax }" currentPageNumber="${page.currentPagenumber }" filter="${page.filter }" order="${page.order }" criteria="${page.criteria }"></page:pagination>	
 	
+	<c:if test="${displayDivAdd }">
+		<div class="alert alert-success"><spring:message code="add.success" /></div>
+	</c:if>
+	
 	<table class="table table-striped table-hover">
 		<thead>
 			<tr>

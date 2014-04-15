@@ -57,7 +57,8 @@ public class AddComputerController {
     		System.out.println(computer);
     		computerservice.save(computer);
     		model.addAttribute("displayDivAdd", true);
-    		return "addComputer";
+    		
+    		return "redirect:/Dashboard";
     	}
 	}
 }

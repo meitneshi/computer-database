@@ -49,9 +49,6 @@ public class UtilDate {
 	//convert Date to String
 	public static String toString(Date dateD) {
 		String date = null;
-		System.out.println("coucou");
-		System.out.println(LocaleContextHolder.getLocale());
-		System.out.println(pattern);
 		formatter.setLenient(false);
 		if (dateD != null) {
 			return formatter.format(dateD);

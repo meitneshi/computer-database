@@ -33,10 +33,6 @@
 
 	<small><spring:message code="add.requirement"/></small>
 	
-	<c:if test="${displayDivAdd }">
-		<div class="alert alert-success"><spring:message code="add.success" /></div>
-	</c:if>
-	
 	<c:if test="${displayDivAddError}">
 		<div class="alert alert-danger">
 			<spring:message code="add.problem"/> 
@@ -60,7 +56,7 @@
 				<label class="col-sm-2 control-label">${introduced } : </label>
 				<div class="col-md-3">
 					<form:input type="text" 
-					data-validation="date" data-validation-format="${datePattern }" data-validation-error-msg="${patternError } : ${datePattern }" 
+					data-validation="date" data-validation-optional="true" data-validation-format="${datePattern }" data-validation-error-msg="${patternError } : ${datePattern }" 
 					id="introducedDate" path="introduced" class="datepicker form-control" placeholder="${introduced }"/>
 					<form:errors path="introduced" />
 				</div>
@@ -70,7 +66,7 @@
 				<label class="col-sm-2 control-label">${discontinued } : </label>
 				<div class="col-md-3">
 					<form:input type="text"
-					data-validation="date" data-validation-format="${datePattern }" data-validation-error-msg="${patternError } : ${datePattern }" 
+					data-validation="date" data-validation-optional="true" data-validation-format="${datePattern }" data-validation-error-msg="${patternError } : ${datePattern }" 
 					id="discontinuedDate" path="discontinued" class="datepicker form-control" placeholder="${discontinued }"/>
 					<form:errors path="discontinued" />
 				</div>
