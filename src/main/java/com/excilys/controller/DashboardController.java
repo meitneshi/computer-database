@@ -38,6 +38,7 @@ public class DashboardController {
 			@RequestParam(value="delete", required = false) String delete,
 			Model model) {
 		
+//    	return "test";
     	//Generate Page
 		PageWrapper pageW = new PageWrapper();
 		pageW = computerService.generatePage(page, entitiesPerPage, filter, order, criteria, add, edit, delete);
