@@ -1,6 +1,6 @@
 package com.excilys.om;
 
-import java.util.Date;
+import org.joda.time.DateTime;
 
 public class Computer {
 	
@@ -12,8 +12,8 @@ public class Computer {
 	private long id;
 	private Company company;
 	private String name;
-	private Date introduced;
-	private Date discontinued;
+	private DateTime introduced;
+	private DateTime discontinued;
 	
 	/**
 	 * @param id the id to set
@@ -60,28 +60,28 @@ public class Computer {
 	/**
 	 * @return the introduced
 	 */
-	public Date getIntroduced() {
+	public DateTime getIntroduced() {
 		return introduced;
 	}
 
 	/**
 	 * @param introduced the introduced to set
 	 */
-	public void setIntroduced(Date introduced) {
+	public void setIntroduced(DateTime introduced) {
 		this.introduced = introduced;
 	}
 
 	/**
 	 * @return the discontinued
 	 */
-	public Date getDiscontinued() {
+	public DateTime getDiscontinued() {
 		return discontinued;
 	}
 
 	/**
 	 * @param discontinued the discontinued to set
 	 */
-	public void setDiscontinued(Date discontinued) {
+	public void setDiscontinued(DateTime discontinued) {
 		this.discontinued = discontinued;
 	}
 	
@@ -89,7 +89,7 @@ public class Computer {
 		super();
 	}
 	
-	public Computer(long id, Company company, String name, Date introduced, Date discontinued) {
+	public Computer(long id, Company company, String name, DateTime introduced, DateTime discontinued) {
 		this.id = id;
 		this.company = company;
 		this.name = name;

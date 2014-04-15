@@ -65,7 +65,6 @@ public class EditComputerController {
 		if("true".equals(request.getParameter("error"))) {
 			model.addAttribute("displayDivEditError", true);
 		}
-		System.out.println(computerdto);
 		return "editComputer";
 	}
 

@@ -1,7 +1,6 @@
 package com.excilys.mapper;
 
-import java.util.Date;
-
+import org.joda.time.DateTime;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -29,12 +28,9 @@ public class ComputerMapper {
 	 * @return
 	 */
 	public Computer toComputer(ComputerDTO computerDto) {
-		Date introduced = UtilDate.toDate(computerDto.getIntroduced());
-		Date discontinued = UtilDate.toDate(computerDto.getDiscontinued());
+		DateTime introduced = UtilDate.toDate(computerDto.getIntroduced());
+		DateTime discontinued = UtilDate.toDate(computerDto.getDiscontinued());
 		int id = 0;
-		if (companyservice == null) {
-			System.out.println("coucou");
-		}
 		try {
 			id = Integer.parseInt(computerDto.getId());
 		} catch (NumberFormatException e){

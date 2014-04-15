@@ -1,9 +1,10 @@
 package com.excilys.util;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -23,8 +24,8 @@ public class UtilDate {
 	}
 	
 	
-	static String pattern = messageSource().getMessage("format.datePattern", null, LocaleContextHolder.getLocale());
-	static SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+//	static String pattern = messageSource().getMessage("format.datePattern", null, LocaleContextHolder.getLocale());
+//	static SimpleDateFormat formatter = new SimpleDateFormat(pattern);
 	
 	private final static Logger logger = (Logger) LoggerFactory.getLogger(ConnectionFactory.class);
 
@@ -33,25 +34,27 @@ public class UtilDate {
 	}
 
 	//convert string to Date
-	public static Date toDate(String dateStr) {
-		Date date = null;
+	public static DateTime toDate(String dateStr) {
+		String pattern = messageSource().getMessage("format.datePattern", null, LocaleContextHolder.getLocale());
+		SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+		DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(pattern);
+		DateTime date = null;
 		formatter.setLenient(false);
-		try {
-			formatter.setLenient(false);
-			date = formatter.parse(dateStr);
-		} catch (ParseException e) {
-			logger.debug("failed to format the date " +e.getMessage());
-			return date;
+		if (!"".equals(dateStr)) {
+			date = dateTimeFormatter.parseDateTime(dateStr);
 		}
 		return date;
 	}
 	
 	//convert Date to String
-	public static String toString(Date dateD) {
+	public static String toString(DateTime dateTime) {
+		String pattern = messageSource().getMessage("format.datePattern", null, LocaleContextHolder.getLocale());
+		SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+		DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(pattern);
 		String date = null;
 		formatter.setLenient(false);
-		if (dateD != null) {
-			return formatter.format(dateD);
+		if (dateTime != null) {
+			return dateTimeFormatter.print(dateTime);
 		}
 		return date;
 	}

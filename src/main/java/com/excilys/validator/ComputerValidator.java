@@ -2,6 +2,7 @@ package com.excilys.validator;
 
 import java.util.Date;
 
+import org.joda.time.DateTime;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
@@ -66,8 +67,8 @@ public class ComputerValidator {
 		}
 		
 		//check the dates
-		Date introduced = null;
-		Date discontinued = null;
+		DateTime introduced = null;
+		DateTime discontinued = null;
 		if(!"".equals(computerDTO.getIntroduced()) || computerDTO.getIntroduced().matches("^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$")) {
 			logger.info("attempting to convert introduced Date to type Date");
 			introduced = UtilDate.toDate(computerDTO.getIntroduced());

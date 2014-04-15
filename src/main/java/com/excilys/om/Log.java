@@ -1,6 +1,6 @@
 package com.excilys.om;
 
-import java.util.Date;
+import org.joda.time.DateTime;
 
 public class Log {
 
@@ -10,7 +10,7 @@ public class Log {
 	 * which is the message given by the code (computer created, computer updated, computer deleted....)
 	 */
 	private long id;
-	private Date date;
+	private DateTime date;
 	private String label;
 	/**
 	 * @return the id
@@ -29,14 +29,14 @@ public class Log {
 	/**
 	 * @return the date
 	 */
-	public Date getDate() {
+	public DateTime getDate() {
 		return date;
 	}
 
 	/**
 	 * @param date the date to set
 	 */
-	public void setDate(Date date) {
+	public void setDate(DateTime date) {
 		this.date = date;
 	}
 
@@ -58,7 +58,7 @@ public class Log {
 		super();
 	}
 	
-	public Log(Date date, String label){
+	public Log(DateTime date, String label){
 		this.date = date;
 		this.label = label;
 	}

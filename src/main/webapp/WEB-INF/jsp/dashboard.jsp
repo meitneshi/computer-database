@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
+
 <%@ taglib tagdir="/WEB-INF/tags" prefix="page" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="link" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="option" %>
@@ -106,7 +108,6 @@
 			<c:forEach items="${page.computerPageList}" var="computer">
 				<tr>
 					<td id="name">
-						
 						<a href="EditComputer?id=${computer.id }" onclick="">
 							<c:out value="${computer.name }"/>
 						</a>
@@ -117,7 +118,7 @@
 								<c:out value="N/A"/>
 							</c:when>
 							<c:otherwise>
-								<fmt:formatDate pattern="${datePattern }" value="${computer.introduced}" />
+								<joda:format value="${computer.introduced}" pattern="${datePattern }"/>
 							</c:otherwise>
 						</c:choose>
 					</td>
@@ -127,7 +128,7 @@
 								<c:out value="N/A"/>
 							</c:when>
 							<c:otherwise>
-								<fmt:formatDate pattern="${datePattern }" value="${computer.discontinued}" />
+								<joda:format value="${computer.discontinued}" pattern="${datePattern }"/>
 							</c:otherwise>
 						</c:choose>
 					</td>

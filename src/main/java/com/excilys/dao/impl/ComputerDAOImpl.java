@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joda.time.DateTime;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -64,8 +65,16 @@ public class ComputerDAOImpl implements IComputerDAO{
 			preparedStatement.setInt(1, id);
 			queryResult = preparedStatement.executeQuery();
 			queryResult.next();
+			DateTime introduced = null;
+			DateTime discontinued = null;
+			if (queryResult.getTimestamp("introduced") != null) {
+				introduced = new DateTime(queryResult.getTimestamp("introduced"));
+			}
+			if (queryResult.getTimestamp("discontinued") != null) {
+				discontinued = new DateTime(queryResult.getTimestamp("discontinued"));
+			}
 			Company company = new Company(queryResult.getString("company.name"), queryResult.getInt("company_id"));
-			computerResult = new Computer(id, company, queryResult.getString("name"), queryResult.getDate("introduced"), queryResult.getDate("discontinued"));
+			computerResult = new Computer(id, company, queryResult.getString("name"), introduced , discontinued);
 			logger.info("computer was found");
 			return computerResult;
 			
@@ -112,8 +121,16 @@ public class ComputerDAOImpl implements IComputerDAO{
 			preparedStatement.setInt(3, entitiesPerPage);
 			queryResult = preparedStatement.executeQuery();
 			while(queryResult.next()) {
+				DateTime introduced = null;
+				DateTime discontinued = null;
+				if (queryResult.getTimestamp("introduced") != null) {
+					introduced = new DateTime(queryResult.getTimestamp("introduced"));
+				}
+				if(queryResult.getTimestamp("discontinued") != null) {
+					discontinued = new DateTime(queryResult.getTimestamp("discontinued"));
+				}
 				Company company = new Company(queryResult.getString("company.name"), queryResult.getInt("company_id"));
-				Computer computer = new Computer(queryResult.getInt("id"), company, queryResult.getString("name"), queryResult.getTimestamp("introduced"), queryResult.getTimestamp("discontinued"));
+				Computer computer = new Computer(queryResult.getInt("id"), company, queryResult.getString("name"), introduced, discontinued);
 				computers.add(computer);
 			}
 			logger.info("loading the list is complete");
@@ -173,15 +190,15 @@ public class ComputerDAOImpl implements IComputerDAO{
 				preparedStatement.setDate(3, null);
 				preparedStatement.setDate(7, null);
 			} else {
-				preparedStatement.setLong(3, computer.getIntroduced().getTime()/1000);
-				preparedStatement.setLong(7, computer.getIntroduced().getTime()/1000);
+				preparedStatement.setLong(3, computer.getIntroduced().getMillis()/1000);
+				preparedStatement.setLong(7, computer.getIntroduced().getMillis()/1000);
 			}
 			if(computer.getDiscontinued() == null) {
 				preparedStatement.setDate(4, null);
 				preparedStatement.setDate(8, null);
 			} else {
-				preparedStatement.setLong(4, computer.getDiscontinued().getTime()/1000);
-				preparedStatement.setLong(8, computer.getDiscontinued().getTime()/1000);
+				preparedStatement.setLong(4, computer.getDiscontinued().getMillis()/1000);
+				preparedStatement.setLong(8, computer.getDiscontinued().getMillis()/1000);
 			}
 			if(computer.getCompany().getId() == 0) {
 				preparedStatement.setString(5, null);
