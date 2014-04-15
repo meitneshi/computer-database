@@ -11,6 +11,7 @@
 
 
 <spring:message code="format.datePattern" var="datePattern"/>
+<spring:message code="delete.confirm" var="deleteConfirm" />
 
 <section id="main">
 	<h1 id="homeTitle">
@@ -122,7 +123,7 @@
 								<c:out value="N/A"/>
 							</c:when>
 							<c:otherwise>
-								<fmt:formatDate pattern="${datePattern }" value="${computer.introduced}" />
+								<fmt:formatDate pattern="${datePattern }" value="${computer.discontinued}" />
 							</c:otherwise>
 						</c:choose>
 					</td>
@@ -141,7 +142,7 @@
 						<a type="button" href="EditComputer?id=${computer.id }" class="btn btn-info">
 							<span class="glyphicon glyphicon-pencil" ></span>
 						</a>
-						<a type="button" href="DeleteComputer?id=${computer.id }" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this computer ?')">
+						<a type="button" href="DeleteComputer?id=${computer.id }" class="btn btn-danger" onclick="return confirm('${deleteConfirm}')">
 							<span class="glyphicon glyphicon-trash" ></span>
 						</a>
 					</td>

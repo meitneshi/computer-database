@@ -7,21 +7,21 @@
 
 <jsp:include page="include/header.jsp" />
 <script>
-$(function() {
-    $(".datepicker").datepicker({ 
-    	dateFormat: "<spring:message code="format.show.datePattern" />" 
-    	});
-  	});
+ $(function() {
+     $(".datepicker").datepicker({ 
+     	dateFormat: "<spring:message code="format.show.datePattern" />" 
+     	});
+   	});
 </script>
 
 <spring:message code="label.name" var="name"/>
 <spring:message code="label.introduced" var="introduced"/>
 <spring:message code="label.discontinued" var="discontinued"/>
+<spring:message code="label.company" var="company"/>
 <spring:message code="add.select.nkcompany" var="nkcompany"/>
 <spring:message code="format.datePattern" var="datePattern"/>
 <spring:message code="DateValid.computerdto.introduced" var="patternError"/>
 <spring:message code="Size.computerdto.name" var="sizeError"/>
-
 
 <section id="main">
 
@@ -32,7 +32,7 @@ $(function() {
 	<small><spring:message code="add.requirement"/></small>
 	
 	<c:if test="${displayDivAdd }">
-		<div class="alert alert-success"><spring:message code="add.success"/></div>
+		<div class="alert alert-success"><spring:message code="add.success" /></div>
 	</c:if>
 	
 	<c:if test="${displayDivAddError}">
@@ -45,7 +45,7 @@ $(function() {
 		<form:form class="form-horizontal" method="POST" action="AddComputer" modelAttribute="computerdto" id="creationForm">
 			<form:hidden path="id" value="0"/>
 			<div class="form-group has-feedback">
-				<label class="col-sm-2 control-label"><spring:message code="label.name"/>* : </label>
+				<label class="col-sm-2 control-label">${name }* : </label>
 				<div class="col-md-3">
 					<form:input type="text" 
 					data-validation="length" data-validation-length="2-255" data-validation-error-msg="${sizeError }"  
@@ -55,7 +55,7 @@ $(function() {
 			</div>
 			
 			<div class="form-group has-feedback">
-				<label class="col-sm-2 control-label"><spring:message code="label.introduced"/> : </label>
+				<label class="col-sm-2 control-label">${introduced } : </label>
 				<div class="col-md-3">
 					<form:input type="text" 
 					data-validation="date" data-validation-format="${datePattern }" data-validation-error-msg="${patternError } : ${datePattern }" 
@@ -65,7 +65,7 @@ $(function() {
 			</div>
 			
 			<div class="form-group has-feedback">
-				<label class="col-sm-2 control-label"><spring:message code="label.discontinued"/> : </label>
+				<label class="col-sm-2 control-label">${discontinued } : </label>
 				<div class="col-md-3">
 					<form:input type="text" 
 					data-validation="date" data-validation-format="${datePattern }" data-validation-error-msg="${patternError } : ${datePattern }" 
@@ -75,7 +75,7 @@ $(function() {
 			</div>
 			
 			<div class="form-group" id="company">
-				<label class="col-sm-2 control-label"><spring:message code="label.company"/> : </label>
+				<label class="col-sm-2 control-label">${company } : </label>
 				<div class="col-md-3">
 					<div class="dropdown">
 						<form:select path="companyId">

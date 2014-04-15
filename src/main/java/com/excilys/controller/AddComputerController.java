@@ -54,6 +54,7 @@ public class AddComputerController {
     		return "addComputer";
     	} else { //valid information
     		Computer computer = compMapper.toComputer(computerdto);
+    		System.out.println(computer);
     		computerservice.save(computer);
     		model.addAttribute("displayDivAdd", true);
     		return "addComputer";

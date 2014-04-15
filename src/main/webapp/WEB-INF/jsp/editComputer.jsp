@@ -18,6 +18,7 @@
 <spring:message code="label.name" var="name"/>
 <spring:message code="label.introduced" var="introduced"/>
 <spring:message code="label.discontinued" var="discontinued"/>
+<spring:message code="label.company" var="company"/>
 <spring:message code="add.select.nkcompany" var="nkcompany"/>
 <spring:message code="format.datePattern" var="datePattern"/>
 <spring:message code="DateValid.computerdto.introduced" var="patternError"/>
@@ -46,7 +47,6 @@
 					<form:input type="text" 
 					data-validation="length" data-validation-length="2-255" data-validation-error-msg="${sizeError }"
 					path="name" class="form-control" placeholder="${name }"/>
-					<span class="glyphicon form-control-feedback"></span>
 					<form:errors path="name" />
 				</div>
 			</div>
@@ -57,7 +57,6 @@
 					<form:input type="text" 
 					data-validation="date" data-validation-format="${datePattern }" data-validation-error-msg="${patternError } : ${datePattern }"
 					path="introduced" class="datepicker form-control" placeholder="${introduced }"/>
-					<span class="glyphicon form-control-feedback"></span>
 					<form:errors path="introduced" />
 				</div>
 			</div>
@@ -68,13 +67,12 @@
 					<form:input type="text" 
 					data-validation="date" data-validation-format="${datePattern }" data-validation-error-msg="${patternError } : ${datePattern }"
 					path="discontinued" class="datepicker form-control" placeholder="${discontinued }"/>
-					<span class="glyphicon form-control-feedback"></span>
 					<form:errors path="discontinued" />
 				</div>
 			</div>
 			
 			<div class="form-group" id="company">
-				<label class="col-sm-2 control-label"><spring:message code="label.company"/> : </label>
+				<label class="col-sm-2 control-label">${company } : </label>
 				<div class="col-md-3">
 					<div class="dropdown">
 						<form:select path="companyId">

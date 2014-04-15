@@ -21,6 +21,7 @@ public class UtilDate {
 	    bean.setBasename("messages");
 	    return bean;
 	}
+	
 	static String pattern = messageSource().getMessage("format.datePattern", null, LocaleContextHolder.getLocale());
 	static SimpleDateFormat formatter = new SimpleDateFormat(pattern);
 	
