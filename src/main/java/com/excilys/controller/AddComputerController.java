@@ -17,7 +17,6 @@ import com.excilys.service.impl.CompanyServiceImpl;
 import com.excilys.service.impl.ComputerServiceImpl;
 import com.excilys.validator.ComputerValidator;
 
-
 /**
  * Controller implementation class AddComputerController
  */
@@ -55,9 +54,7 @@ public class AddComputerController {
     	} else { //valid information
     		Computer computer = compMapper.toComputer(computerdto);
     		computerservice.save(computer);
-    		
     		model.addAttribute("add", true);
-    		
     		return "redirect:/Dashboard";
     	}
 	}

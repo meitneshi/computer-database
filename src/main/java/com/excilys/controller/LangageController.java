@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-
 @Controller
 @RequestMapping("/Langage")
 public class LangageController {
@@ -15,5 +14,4 @@ public class LangageController {
 	protected ModelAndView doGet(@RequestHeader(value="referer") String previousPage) {
 		return new ModelAndView("redirect:"+previousPage);
 	}
-
 }

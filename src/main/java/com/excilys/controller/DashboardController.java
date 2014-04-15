@@ -44,13 +44,11 @@ public class DashboardController {
 		
 		//Add lang parameter
 		model.addAttribute("lang", LocaleContextHolder.getLocale());
-		
+
 		model.addAttribute("page", pageW);
-		
 		return "dashboard";
-		
-		
 	}
+    
     @RequestMapping(method=RequestMethod.POST)
 	protected void doPost() {
 		//nothing to do for the moment
