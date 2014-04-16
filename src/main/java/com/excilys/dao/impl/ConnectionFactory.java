@@ -15,7 +15,6 @@ import org.springframework.stereotype.Repository;
 import ch.qos.logback.classic.Logger;
 
 import com.excilys.exceptions.IllegalPersonnalException;
-import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPDataSource;
 
 
