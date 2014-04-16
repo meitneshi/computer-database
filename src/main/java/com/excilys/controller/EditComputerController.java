@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import ch.qos.logback.classic.Logger;
 
-import com.excilys.dao.impl.ConnectionFactory;
 import com.excilys.dto.ComputerDTO;
 import com.excilys.mapper.ComputerMapper;
 import com.excilys.om.Computer;
@@ -28,7 +27,7 @@ import com.excilys.validator.ComputerValidator;
 @Controller
 @RequestMapping("/EditComputer")
 public class EditComputerController {
-	private final static Logger logger = (Logger) LoggerFactory.getLogger(ConnectionFactory.class);
+	private final static Logger logger = (Logger) LoggerFactory.getLogger(EditComputerController.class);
 	
 	@Autowired
 	private ICompanyService companyService;

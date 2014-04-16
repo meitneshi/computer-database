@@ -20,7 +20,7 @@ import com.excilys.om.Company;
 @Repository
 public class CompanyDAOImpl implements ICompanyDAO{
 
-	private final static Logger logger = (Logger) LoggerFactory.getLogger(ConnectionFactory.class);
+	private final static Logger logger = (Logger) LoggerFactory.getLogger(CompanyDAOImpl.class);
 	
 	public CompanyDAOImpl() {
 		super();

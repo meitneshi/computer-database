@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 
 import ch.qos.logback.classic.Logger;
 
-import com.excilys.dao.impl.ConnectionFactory;
 import com.excilys.dto.ComputerDTO;
 import com.excilys.util.UtilDate;
 
@@ -19,7 +18,7 @@ import com.excilys.util.UtilDate;
 @Component
 public class ComputerValidator {
 
-	private final static Logger logger = (Logger) LoggerFactory.getLogger(ConnectionFactory.class);
+	private final static Logger logger = (Logger) LoggerFactory.getLogger(ComputerValidator.class);
 	
 	/*
 	 * errorCode : an int representing the code of the error based on a byte increments (1,2,4,8,...)

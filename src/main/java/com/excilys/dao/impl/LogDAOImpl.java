@@ -20,7 +20,7 @@ import com.jolbox.bonecp.BoneCPDataSource;
 @Repository
 public class LogDAOImpl implements ILogDAO{
 
-	private final static Logger logger = (Logger) LoggerFactory.getLogger(ConnectionFactory.class);
+	private final static Logger logger = (Logger) LoggerFactory.getLogger(LogDAOImpl.class);
 	
 	@Autowired
 	private BoneCPDataSource dataSource;

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import ch.qos.logback.classic.Logger;
 
-import com.excilys.dao.impl.ConnectionFactory;
 import com.excilys.service.IComputerService;
 
 
@@ -25,7 +24,7 @@ import com.excilys.service.IComputerService;
 @Controller
 @RequestMapping("/DeleteComputer")
 public class DeleteComputerController {
-	private final static Logger logger = (Logger) LoggerFactory.getLogger(ConnectionFactory.class);
+	private final static Logger logger = (Logger) LoggerFactory.getLogger(DeleteComputerController.class);
 	
 	@Autowired
 	private IComputerService computerService;

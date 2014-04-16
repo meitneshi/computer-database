@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import ch.qos.logback.classic.Logger;
 
-import com.excilys.dao.impl.ConnectionFactory;
 import com.excilys.dto.ComputerDTO;
 import com.excilys.om.Company;
 import com.excilys.om.Computer;
@@ -17,7 +16,7 @@ import com.excilys.util.UtilDate;
 @Component
 public class ComputerMapper {
 
-	private final static Logger logger = (Logger) LoggerFactory.getLogger(ConnectionFactory.class);
+	private final static Logger logger = (Logger) LoggerFactory.getLogger(ComputerMapper.class);
 	
 	@Autowired
 	private CompanyServiceImpl companyservice;

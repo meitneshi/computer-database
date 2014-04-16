@@ -33,7 +33,7 @@ public class ComputerDAOImpl implements IComputerDAO{
 	@Autowired
 	private BoneCPDataSource dataSource;
 	
-	private final static Logger logger = (Logger) LoggerFactory.getLogger(ConnectionFactory.class);
+	private final static Logger logger = (Logger) LoggerFactory.getLogger(ComputerDAOImpl.class);
 	
 	public void delete(int computerIdToDelete) {
 		logger.info("trying to delete a computer");
