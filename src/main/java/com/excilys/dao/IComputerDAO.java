@@ -17,7 +17,7 @@ public interface IComputerDAO {
 	 * @param id
 	 * @return Computer
 	 */
-	public Computer findById (int id);
+	public Computer getById (int id);
 	
 	/**
 	 * Find a list of computer according to the parameters given
@@ -28,7 +28,7 @@ public interface IComputerDAO {
 	 * @param criteria			-> the criteria to order (computer's name or company's name)
 	 * @return List
 	 */
-	public List<Computer> findInPage (int numPage, int entitiesPerPage, String filter, String order, String criteria);
+	public List<Computer> getInPage (int numPage, int entitiesPerPage, String filter, String order, String criteria);
 
 	/**
 	 * Count the number of computer according to a filter

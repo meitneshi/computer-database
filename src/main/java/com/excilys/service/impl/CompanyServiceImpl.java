@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.excilys.dao.impl.CompanyDAOImpl;
+import com.excilys.dao.ICompanyDAO;
 import com.excilys.om.Company;
 import com.excilys.service.ICompanyService;
 
@@ -13,7 +13,7 @@ import com.excilys.service.ICompanyService;
 public class CompanyServiceImpl implements ICompanyService{
 
 	@Autowired
-	private CompanyDAOImpl companyDAO;
+	private ICompanyDAO companyDAO;
 	
 	public CompanyServiceImpl() {
 		super();

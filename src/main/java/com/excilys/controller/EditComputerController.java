@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import ch.qos.logback.classic.Logger;
 
-import com.excilys.service.impl.CompanyServiceImpl;
-import com.excilys.service.impl.ComputerServiceImpl;
-import com.excilys.validator.ComputerValidator;
 import com.excilys.dao.impl.ConnectionFactory;
 import com.excilys.dto.ComputerDTO;
 import com.excilys.mapper.ComputerMapper;
 import com.excilys.om.Computer;
+import com.excilys.service.ICompanyService;
+import com.excilys.service.IComputerService;
+import com.excilys.validator.ComputerValidator;
 
 /**
  * Controller implementation class EditComputerController
@@ -31,9 +31,9 @@ public class EditComputerController {
 	private final static Logger logger = (Logger) LoggerFactory.getLogger(ConnectionFactory.class);
 	
 	@Autowired
-	private CompanyServiceImpl companyService;
+	private ICompanyService companyService;
 	@Autowired
-	private ComputerServiceImpl computerService;
+	private IComputerService computerService;
 	@Autowired
 	private ComputerValidator compValidator;
 	@Autowired
@@ -52,7 +52,7 @@ public class EditComputerController {
 		
 		try {
 			id = Integer.parseInt(request.getParameter("id"));
-			finalComputer = computerService.findById(id);
+			finalComputer = computerService.getById(id);
 			computerdto = compMapper.toDto(finalComputer);
 		} catch (NumberFormatException e){
 			logger.debug("failed to parse id into int "+e.getMessage());

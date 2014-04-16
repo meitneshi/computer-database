@@ -1,7 +1,5 @@
 package com.excilys.controller;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
@@ -10,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.excilys.service.impl.ComputerServiceImpl;
+import com.excilys.service.IComputerService;
 import com.excilys.wrapper.PageWrapper;
 
 /**
@@ -21,7 +19,7 @@ import com.excilys.wrapper.PageWrapper;
 public class DashboardController {
 	
 	@Autowired
-	private ComputerServiceImpl computerService;
+	private IComputerService computerService;
        
     public DashboardController() {
         super();
@@ -39,7 +37,6 @@ public class DashboardController {
 			@RequestParam(value="delete", required = false) String delete,
 			Model model) {
 		
-//    	return "test";
     	//Generate Page
 		PageWrapper pageW = new PageWrapper();
 		pageW = computerService.generatePage(page, entitiesPerPage, filter, order, criteria, add, edit, delete);

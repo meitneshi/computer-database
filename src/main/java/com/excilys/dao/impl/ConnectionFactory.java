@@ -28,12 +28,12 @@ public class ConnectionFactory {
 		super();
 	}
 
-	private final Logger logger = (Logger) LoggerFactory.getLogger(ConnectionFactory.class);
+	private final static Logger logger = (Logger) LoggerFactory.getLogger(ConnectionFactory.class);
 	
 	@Autowired
-	private BoneCPDataSource connectionPool;
+	private static BoneCPDataSource connectionPool;
 
-	private ThreadLocal<Connection> connectionTL = new ThreadLocal<Connection>(){
+	private static ThreadLocal<Connection> connectionTL = new ThreadLocal<Connection>(){
 		@Override
 		protected Connection initialValue() {
 			Connection connection = null;

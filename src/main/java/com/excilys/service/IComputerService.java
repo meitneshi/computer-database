@@ -3,6 +3,7 @@ package com.excilys.service;
 import java.util.List;
 
 import com.excilys.om.Computer;
+import com.excilys.wrapper.PageWrapper;
 
 public interface IComputerService {
 	
@@ -17,7 +18,7 @@ public interface IComputerService {
 	 * @param id
 	 * @return Computer
 	 */
-	public Computer findById (int id);
+	public Computer getById (int id);
 	
 	/**
 	 * Find a list of computer according to the parameters given
@@ -28,7 +29,7 @@ public interface IComputerService {
 	 * @param criteria			-> the criteria to order (computer's name or company's name)
 	 * @return List
 	 */
-	public List<Computer> findInPage (int numPage, int entitiesPerPage, String filter, String order, String criteria);
+	public List<Computer> getInPage (int numPage, int entitiesPerPage, String filter, String order, String criteria);
 
 	/**
 	 * Count the number of computer according to a filter
@@ -45,4 +46,8 @@ public interface IComputerService {
 	 * @param computer
 	 */
 	public void save(Computer computer);
+
+	public PageWrapper generatePage(String page, String entitiesPerPage,
+			String filter, String order, String criteria, String add,
+			String edit, String delete);
 }

@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.excilys.dto.ComputerDTO;
 import com.excilys.mapper.ComputerMapper;
 import com.excilys.om.Computer;
-import com.excilys.service.impl.CompanyServiceImpl;
-import com.excilys.service.impl.ComputerServiceImpl;
+import com.excilys.service.ICompanyService;
+import com.excilys.service.IComputerService;
 import com.excilys.validator.ComputerValidator;
 
 /**
@@ -25,9 +25,9 @@ import com.excilys.validator.ComputerValidator;
 public class AddComputerController {
 	
 	@Autowired
-	private CompanyServiceImpl companyservice;
+	private ICompanyService companyservice;
 	@Autowired
-	private ComputerServiceImpl computerservice;
+	private IComputerService computerservice;
 	@Autowired
 	private ComputerValidator compValidator;
 	@Autowired
