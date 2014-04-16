@@ -9,18 +9,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ch.qos.logback.classic.Logger;
 
 import com.excilys.exceptions.IllegalPersonnalException;
 import com.jolbox.bonecp.BoneCP;
-import com.jolbox.bonecp.BoneCPConfig;
+import com.jolbox.bonecp.BoneCPDataSource;
 
 
 /**
  * @author mbibos
- * Implement Singleton
  */
 @Repository
 public class ConnectionFactory {
@@ -30,33 +30,10 @@ public class ConnectionFactory {
 	}
 
 	private final Logger logger = (Logger) LoggerFactory.getLogger(ConnectionFactory.class);
-	private BoneCP connectionPool = null;
-
-	{
-		logger.info("searching for Driver...");
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			logger.debug("Driver found");
-			
-			BoneCPConfig config = new BoneCPConfig();
-			config.setJdbcUrl("jdbc:mysql://localhost:3306/computer-database-db?zeroDateTimeBehavior=convertToNull"); 
-			config.setUsername("root"); 
-			config.setPassword("jmlld3fpj");
-			config.setMinConnectionsPerPartition(1);
-			config.setMaxConnectionsPerPartition(10);
-			config.setPartitionCount(1);
-			connectionPool = new BoneCP(config);
-			
-			logger.info("connection pool done");
-		} catch (ClassNotFoundException e) {
-			logger.debug("Driver not found "+e.getMessage());
-			throw new IllegalPersonnalException();
-		} catch (SQLException e) {
-			logger.debug("Connection Pool failed "+e.getMessage());
-			throw new IllegalPersonnalException();
-		}		
-	}
 	
+	@Autowired
+	private BoneCPDataSource connectionPool;
+
 	private ThreadLocal<Connection> connectionTL = new ThreadLocal<Connection>(){
 		@Override
 		protected Connection initialValue() {
