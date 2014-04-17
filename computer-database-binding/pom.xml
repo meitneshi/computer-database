@@ -25,11 +25,33 @@
 		<groupId>org.hibernate</groupId>
 		<artifactId>hibernate-validator</artifactId>
 	</dependency>
+
+<!-- Logback for logging -->
+	<dependency>
+		<groupId>ch.qos.logback</groupId>
+		<artifactId>logback-core</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>ch.qos.logback</groupId>
+		<artifactId>logback-classic</artifactId>
+	</dependency>
 	
-<!-- 	Module Service including core & persistance -->
+<!-- 	Spring MVC -->
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-webmvc</artifactId>
+	</dependency>
+
+<!-- Module Service -->
 	<dependency>
       <groupId>com.excilys</groupId>
       <artifactId>computer-database-service</artifactId>
+    </dependency>
+    
+<!-- 	Module Core -->
+	<dependency>
+      <groupId>com.excilys</groupId>
+      <artifactId>computer-database-core</artifactId>
     </dependency>
   </dependencies>
 </project>

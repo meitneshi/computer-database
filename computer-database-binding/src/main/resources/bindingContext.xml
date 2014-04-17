@@ -6,9 +6,7 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 http://www.springframework.org/schema/context
 http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 	
-	<context:component-scan base-package="com.excilys.dao"/>
-
-	<import resource="classpath:serviceContext.xml"/>
-	<import resource="classpath:persistanceContext.xml"/>
+	<context:component-scan base-package="com.excilys.mapper"/>
+	<context:component-scan base-package="com.excilys.validator"/>
 	
 </beans>

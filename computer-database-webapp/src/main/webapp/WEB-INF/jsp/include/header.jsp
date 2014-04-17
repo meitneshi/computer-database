@@ -25,7 +25,7 @@
 <body>
 	<header class="navbar">
 		<h1 class="navbar-link">
-			<a href="dashboard.jsp"> <spring:message code="header.title"/> </a>
+			<a href="Dashboard"> <spring:message code="header.title"/> </a>
 		</h1>
 		<span style="float: right">
     		<a href="Langage?lang=en"><img src="resources/img/unionjack.jpg" height="38px" width="38px" alt="Translate into english" /></a> 

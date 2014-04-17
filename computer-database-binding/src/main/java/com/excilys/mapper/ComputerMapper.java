@@ -10,7 +10,7 @@ import ch.qos.logback.classic.Logger;
 import com.excilys.dto.ComputerDTO;
 import com.excilys.om.Company;
 import com.excilys.om.Computer;
-import com.excilys.service.impl.CompanyServiceImpl;
+import com.excilys.service.ICompanyService;
 import com.excilys.util.UtilDate;
 
 @Component
@@ -19,7 +19,7 @@ public class ComputerMapper {
 	private final static Logger logger = (Logger) LoggerFactory.getLogger(ComputerMapper.class);
 	
 	@Autowired
-	private CompanyServiceImpl companyservice;
+	private ICompanyService companyservice;
 	
 	/**
 	 * convert a computerDTO into a Computer
