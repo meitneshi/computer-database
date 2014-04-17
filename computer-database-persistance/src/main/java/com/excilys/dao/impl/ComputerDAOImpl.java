@@ -85,7 +85,7 @@ public class ComputerDAOImpl implements IComputerDAO{
 			logger.debug("failed to find a computer by id "+e.getMessage());
 			throw new IllegalPersonnalException();
 		}finally {
-			this.safeClose(connection, preparedStatement, null);
+			this.safeClose(null, preparedStatement, null);
 		}
 	}
 		

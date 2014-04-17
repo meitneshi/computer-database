@@ -49,7 +49,7 @@ public class CompanyDAOImpl implements ICompanyDAO{
 			logger.debug("failed to found a company by id "+e.getMessage());
 			throw new IllegalPersonnalException();
 		} finally {
-			this.safeClose(connection, preparedStatement, null);
+			this.safeClose(preparedStatement, null);
 		}
 		return company;
 	}
@@ -73,7 +73,7 @@ public class CompanyDAOImpl implements ICompanyDAO{
 			logger.debug("failed to find the list of companies "+e.getMessage());
 			throw new IllegalPersonnalException();
 		} finally {
-			this.safeClose(connection, preparedStatement, queryResult);
+			this.safeClose(preparedStatement, queryResult);
 		}
 		return companies;
 	}
@@ -94,13 +94,9 @@ public class CompanyDAOImpl implements ICompanyDAO{
 		return company;
 	}
 	
-	public void safeClose(Connection connection, PreparedStatement preparedStatement, ResultSet resultSet){
+	public void safeClose(PreparedStatement preparedStatement, ResultSet resultSet){
 		logger.info("attempting to close safe");
 		try {
-			if (connection != null) {
-				connection.close();
-				logger.info("connection closed");
-			}
 			if (resultSet != null){
 				resultSet.close();
 				logger.info("resultSet closed");

@@ -1,0 +1,31 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.excilys</groupId>
+    <artifactId>computer-database</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>computer-database-webapp</artifactId>
+  <packaging>war</packaging>
+  
+  <dependencies>
+    <!-- 	Module Binding including all -->
+	<dependency>
+      <groupId>com.excilys</groupId>
+      <artifactId>computer-database-binding</artifactId>
+    </dependency>
+    
+<!--     JSTL tag lib -->
+	<dependency>
+		<groupId>jstl</groupId>
+		<artifactId>jstl</artifactId>
+		<scope>runtime</scope>
+	</dependency>
+    
+<!--     Joda Time tag lib -->
+	<dependency>
+   		<groupId>joda-time</groupId>
+   		<artifactId>joda-time-jsptags</artifactId>
+	</dependency>
+  </dependencies>
+</project>
