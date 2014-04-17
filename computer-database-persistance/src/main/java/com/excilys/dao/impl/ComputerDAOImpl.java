@@ -49,7 +49,7 @@ public class ComputerDAOImpl implements IComputerDAO{
 			logger.debug("failed to delete computer "+e.getMessage());
 			throw new DataAccessResourceFailureException(e.getMessage());
 		} finally {
-			this.safeClose(null, preparedStatement, null);
+			this.safeClose(preparedStatement, null);
 		}
 	}
 	
@@ -85,7 +85,7 @@ public class ComputerDAOImpl implements IComputerDAO{
 			logger.debug("failed to find a computer by id "+e.getMessage());
 			throw new IllegalPersonnalException();
 		}finally {
-			this.safeClose(null, preparedStatement, null);
+			this.safeClose(preparedStatement, null);
 		}
 	}
 		
@@ -141,7 +141,7 @@ public class ComputerDAOImpl implements IComputerDAO{
 			logger.debug("failed to load the list of computer "+e.getMessage());
 			throw new IllegalPersonnalException();
 		} finally {
-			this.safeClose(connection, preparedStatement, null);
+			this.safeClose(preparedStatement, null);
 		}
 		return computers;
 	}
@@ -171,7 +171,7 @@ public class ComputerDAOImpl implements IComputerDAO{
 			logger.debug("failed to count...such a shame ..... "+e.getMessage());
 			throw new IllegalPersonnalException();
 		} finally {
-			this.safeClose(connection, preparedStatement, null);
+			this.safeClose(preparedStatement, null);
 		}
 		return numberFinal;
 	}
@@ -216,17 +216,13 @@ public class ComputerDAOImpl implements IComputerDAO{
 			logger.debug("failed to save the computer "+e.getMessage());
 			throw new IllegalPersonnalException();
 		} finally {
-			this.safeClose(null, preparedStatement, null);
+			this.safeClose(preparedStatement, null);
 		}
 	}
 	
-	public void safeClose(Connection connection, PreparedStatement preparedStatement, ResultSet resultSet){
+	public void safeClose(PreparedStatement preparedStatement, ResultSet resultSet){
 		logger.info("attempting to close safe");
 		try {
-			if (connection != null) {
-				connection.close();
-				logger.info("connection closed");
-			}
 			if (resultSet != null){
 				resultSet.close();
 				logger.info("resultSet closed");
