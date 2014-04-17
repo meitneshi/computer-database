@@ -46,6 +46,7 @@ public class ComputerServiceImpl implements IComputerService {
 				criteria);
 	}
 
+	@Transactional(readOnly = true)
 	public PageWrapper generatePage(String numPageS, String entitiesPerPageS,
 			String filter, String order, String criteria, String add,
 			String edit, String delete) {
@@ -111,6 +112,7 @@ public class ComputerServiceImpl implements IComputerService {
 		return page;
 	}
 
+	@Transactional(readOnly = false)
 	public int count(String filter) {
 		try {
 			return computerDAO.count(filter);

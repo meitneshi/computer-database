@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.excilys.dao.ICompanyDAO;
 import com.excilys.om.Company;
@@ -19,14 +20,17 @@ public class CompanyServiceImpl implements ICompanyService{
 		super();
 	}
 	
+	@Transactional(readOnly = false)
 	public Company findById(int id) {
 		return companyDAO.findById(id);
 	}
 	
+	@Transactional(readOnly = false)
 	public List<Company> findAll() {
 		return companyDAO.findAll();
 	}
 
+	@Transactional(readOnly = false)
 	public Company initCompany(String id) {
 		return companyDAO.initCompany(id);
 	}
