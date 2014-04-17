@@ -15,7 +15,6 @@ import com.excilys.mapper.ComputerMapper;
 import com.excilys.om.Computer;
 import com.excilys.service.ICompanyService;
 import com.excilys.service.IComputerService;
-//import com.excilys.validator.ComputerValidator;
 
 /**
  * Controller implementation class AddComputerController
@@ -28,8 +27,6 @@ public class AddComputerController {
 	private ICompanyService companyservice;
 	@Autowired
 	private IComputerService computerservice;
-//	@Autowired
-//	private ComputerValidator compValidator;
 	@Autowired
 	private ComputerMapper compMapper;
 	
