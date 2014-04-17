@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
 
 import ch.qos.logback.classic.Logger;
@@ -16,6 +17,7 @@ import ch.qos.logback.classic.Logger;
 import com.excilys.dao.ICompanyDAO;
 import com.excilys.exceptions.IllegalPersonnalException;
 import com.excilys.om.Company;
+import com.jolbox.bonecp.BoneCPDataSource;
 
 @Repository
 public class CompanyDAOImpl implements ICompanyDAO{
@@ -27,11 +29,11 @@ public class CompanyDAOImpl implements ICompanyDAO{
 	}
 	
 	@Autowired
-	private ConnectionFactory daoFactory;
+	private BoneCPDataSource datasource;
 	
 	public Company findById(int id) {
 		logger.info("attempting to find a company by id");
-		Connection connection = daoFactory.getConnection();
+		Connection connection = DataSourceUtils.getConnection(datasource);
 		PreparedStatement preparedStatement = null;
 		Company company = null;
 		ResultSet queryResult = null;
@@ -47,14 +49,14 @@ public class CompanyDAOImpl implements ICompanyDAO{
 			logger.debug("failed to found a company by id "+e.getMessage());
 			throw new IllegalPersonnalException();
 		} finally {
-			daoFactory.safeClose(connection, preparedStatement, null);
+			this.safeClose(connection, preparedStatement, null);
 		}
 		return company;
 	}
 	
 	public List<Company> findAll() {
 		logger.info("attempting to find a company by id");
-		Connection connection = daoFactory.getConnection();
+		Connection connection = DataSourceUtils.getConnection(datasource);
 		PreparedStatement preparedStatement = null;
 		List<Company> companies = new ArrayList<Company>();
 		ResultSet queryResult = null;
@@ -71,7 +73,7 @@ public class CompanyDAOImpl implements ICompanyDAO{
 			logger.debug("failed to find the list of companies "+e.getMessage());
 			throw new IllegalPersonnalException();
 		} finally {
-			daoFactory.safeClose(connection, preparedStatement, queryResult);
+			this.safeClose(connection, preparedStatement, queryResult);
 		}
 		return companies;
 	}
@@ -90,5 +92,26 @@ public class CompanyDAOImpl implements ICompanyDAO{
 			company = this.findById(companyIdInt);
 		}
 		return company;
+	}
+	
+	public void safeClose(Connection connection, PreparedStatement preparedStatement, ResultSet resultSet){
+		logger.info("attempting to close safe");
+		try {
+			if (connection != null) {
+				connection.close();
+				logger.info("connection closed");
+			}
+			if (resultSet != null){
+				resultSet.close();
+				logger.info("resultSet closed");
+			}
+			if (preparedStatement != null) {
+				preparedStatement.close();
+				logger.info("presparedStatement closed");
+			}
+		} catch (SQLException e) {
+			logger.debug("Safe Close failed "+e.getMessage());
+			throw new IllegalPersonnalException();
+		}
 	}
 }
