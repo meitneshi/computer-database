@@ -1,21 +1,18 @@
 package com.excilys.dao.impl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import ch.qos.logback.classic.Logger;
 
 import com.excilys.dao.ICompanyDAO;
 import com.excilys.exceptions.IllegalPersonnalException;
+import com.excilys.mapper.CompanyRowMapper;
 import com.excilys.om.Company;
 import com.jolbox.bonecp.BoneCPDataSource;
 
@@ -33,49 +30,29 @@ public class CompanyDAOImpl implements ICompanyDAO{
 	
 	public Company findById(int id) {
 		logger.info("attempting to find a company by id");
-		Connection connection = DataSourceUtils.getConnection(datasource);
-		PreparedStatement preparedStatement = null;
-		Company company = null;
-		ResultSet queryResult = null;
+		JdbcTemplate jt = new JdbcTemplate(datasource);
 		String sql = "SELECT * FROM company WHERE company.id = ?";
 		try {
-			preparedStatement = (PreparedStatement) connection.prepareStatement(sql);
-			preparedStatement.setLong(1, id);
-			queryResult = preparedStatement.executeQuery();
-			queryResult.next();
-			company = new Company(queryResult.getString("name"), id);
-			logger.info("company found");
-		} catch (SQLException e) {
+			Company company = jt.query(sql, new Object[] { id }, new CompanyRowMapper()).get(0);
+			return company;
+		} catch (DataAccessException e) {
 			logger.debug("failed to found a company by id "+e.getMessage());
 			throw new IllegalPersonnalException();
-		} finally {
-			this.safeClose(preparedStatement, null);
 		}
-		return company;
 	}
 	
 	public List<Company> findAll() {
 		logger.info("attempting to find a company by id");
-		Connection connection = DataSourceUtils.getConnection(datasource);
-		PreparedStatement preparedStatement = null;
-		List<Company> companies = new ArrayList<Company>();
-		ResultSet queryResult = null;
+		JdbcTemplate jt = new JdbcTemplate(datasource);
 		String sql = "SELECT id, name FROM company ;";
 		try {
-			preparedStatement = (PreparedStatement) connection.prepareStatement(sql);
-			queryResult = preparedStatement.executeQuery(sql);
-			while (queryResult.next()) {
-				Company comp = new Company(queryResult.getString(2), queryResult.getInt(1));
-				companies.add(comp);
-			}
+			List<Company> companies = jt.query(sql, new CompanyRowMapper());
 			logger.info("list of companies found");
-		} catch (SQLException e) {
+			return companies;
+		} catch (DataAccessException e) {
 			logger.debug("failed to find the list of companies "+e.getMessage());
 			throw new IllegalPersonnalException();
-		} finally {
-			this.safeClose(preparedStatement, queryResult);
 		}
-		return companies;
 	}
 
 	public Company initCompany(String id) {
@@ -92,22 +69,5 @@ public class CompanyDAOImpl implements ICompanyDAO{
 			company = this.findById(companyIdInt);
 		}
 		return company;
-	}
-	
-	public void safeClose(PreparedStatement preparedStatement, ResultSet resultSet){
-		logger.info("attempting to close safe");
-		try {
-			if (resultSet != null){
-				resultSet.close();
-				logger.info("resultSet closed");
-			}
-			if (preparedStatement != null) {
-				preparedStatement.close();
-				logger.info("presparedStatement closed");
-			}
-		} catch (SQLException e) {
-			logger.debug("Safe Close failed "+e.getMessage());
-			throw new IllegalPersonnalException();
-		}
 	}
 }

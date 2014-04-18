@@ -16,10 +16,10 @@ public class Computer {
 	private DateTime discontinued;
 	
 	/**
-	 * @param id the id to set
+	 * @param l the id to set
 	 */
-	public void setId(int id) {
-		this.id = id;
+	public void setId(long l) {
+		this.id = l;
 	}
 	
 	/**

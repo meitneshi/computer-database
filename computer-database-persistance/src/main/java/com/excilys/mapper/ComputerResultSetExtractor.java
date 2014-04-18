@@ -16,7 +16,7 @@ public class ComputerResultSetExtractor implements ResultSetExtractor<Computer> 
 	public Computer extractData(ResultSet rs) throws SQLException, DataAccessException {
 
 		Computer computer = new Computer();
-		computer.setId(rs.getInt("id"));
+		computer.setId(rs.getLong("id"));
 		computer.setName(rs.getString("name"));
 		
 		computer.setIntroduced((rs.getTimestamp("introduced") == null) ? null : new DateTime(rs.getTimestamp("introduced")));
