@@ -113,7 +113,6 @@
 				<groupId>javax.servlet</groupId>
 				<artifactId>servlet-api</artifactId>
 				<version>${serveltapi.version}</version>
-	<!-- 			<scope>provided</scope> -->
 			</dependency>
 			
 			<!-- Joda Time -->
@@ -185,8 +184,8 @@
   <modules>
   	<module>computer-database-core</module>
   	<module>computer-database-persistance</module>
+	<module>computer-database-service</module>
   	<module>computer-database-binding</module>
   	<module>computer-database-webapp</module>
-  	<module>computer-database-service</module>
   </modules>
 </project>
