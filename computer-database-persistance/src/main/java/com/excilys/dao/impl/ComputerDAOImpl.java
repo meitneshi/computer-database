@@ -52,8 +52,7 @@ public class ComputerDAOImpl implements IComputerDAO{
 				+ "WHERE computer.id = ?";
 		
 		try {
-			Computer computer = ((JdbcTemplate) jt).queryForObject(
-					sql, new Object[] { id }, new ComputerRowMapper());
+			Computer computer = jt.query(sql, new Object[] { id }, new ComputerRowMapper()).get(0);
 			logger.info("computer was found");
 			return computer;
 		} catch (DataAccessException e) {
