@@ -47,6 +47,18 @@ public interface IComputerService {
 	 */
 	public void save(Computer computer);
 
+	/**
+	 * Generate the page to show
+	 * @param page
+	 * @param entitiesPerPage
+	 * @param filter
+	 * @param order
+	 * @param criteria
+	 * @param add
+	 * @param edit
+	 * @param delete
+	 * @return
+	 */
 	public PageWrapper generatePage(String page, String entitiesPerPage,
 			String filter, String order, String criteria, String add,
 			String edit, String delete);

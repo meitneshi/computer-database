@@ -23,13 +23,14 @@
 
 </head>
 <body>
-	<header class="navbar">
+	<header class="navbar navbar-inverse">
 		<h1 class="navbar-link">
 			<a href="Dashboard"> <spring:message code="header.title"/> </a>
 		</h1>
 		<span style="float: right">
-    		<a href="Langage?lang=en"><img src="resources/img/unionjack.jpg" height="38px" width="38px" alt="Translate into english" /></a> 
-    		<a href="Langage?lang=fr"><img src="resources/img/francais.jpg" height="40px" width="40px" alt="Traduire en français" /></a>
-    		<a href="Langage?lang=sp"><img src="resources/img/spain.jpg" height="48px" width="48px" alt="Traducir al español" /></a>
+    		<a href="Langage?lang=en"><img src="resources/img/flag-icon/uk.png" height="38px" width="38px" alt="Translate into english" /></a> 
+    		<a href="Langage?lang=fr"><img src="resources/img/flag-icon/fr.png" height="40px" width="40px" alt="Traduire en français" /></a>
+    		<a href="Langage?lang=sp"><img src="resources/img/flag-icon/sp.png" height="40px" width="40px" alt="Traducir al español" /></a>
+    		<a href="Langage?lang=de"><img src="resources/img/flag-icon/de.png" height="40px" width="40px" alt="ins Deutsche übersetzt"></a>
 		</span>
 	</header>

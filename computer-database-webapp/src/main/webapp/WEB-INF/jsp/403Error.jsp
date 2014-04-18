@@ -10,7 +10,7 @@
 <table>
 	<tr>
 		<td>
-			<img src="resources/img/daleks.jpg">
+			<img src="resources/img/errors/daleks.jpg">
 		</td>
 		<td>
 			<h1><spring:message code="403.header"/><br>

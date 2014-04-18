@@ -10,7 +10,7 @@
 <table>
 	<tr>
 		<td>
-			<img src="resources/img/400.jpg">
+			<img src="resources/img/errors/400.jpg">
 		</td>
 		<td>
 			<h1><a href="Dashboard"><spring:message code="error.redirect" /></a></h1>

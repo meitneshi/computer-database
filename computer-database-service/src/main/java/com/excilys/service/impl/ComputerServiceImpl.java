@@ -67,6 +67,10 @@ public class ComputerServiceImpl implements IComputerService {
 
 		double entitiesPerPageDouble = (double) entitiesPerPage;
 		double numberOfComputerDouble = (double) this.count("");
+		if (filter != null) {
+			numberOfComputerDouble = (double) this.count(filter);
+		}
+		
 		double pageMaxDouble = numberOfComputerDouble / entitiesPerPageDouble;
 		int pageMax = (int) Math.ceil(pageMaxDouble);
 
