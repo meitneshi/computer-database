@@ -15,6 +15,8 @@
 
 <spring:message code="format.datePattern" var="datePattern"/>
 <spring:message code="delete.confirm" var="deleteConfirm" />
+<spring:message code="delete.warning" var="deleteWarning" />
+
 
 <div id="main" class="col-md-10">
 	<h1 id="homeTitle">
@@ -113,7 +115,7 @@
 						<a type="button" href="EditComputer?id=${computer.id }" class="btn btn-info">
 							<span class="glyphicon glyphicon-pencil" ></span>
 						</a>
-						<a type="button" href="DeleteComputer?id=${computer.id }" class="btn btn-danger" onclick="return confirm('${deleteConfirm}')">
+						<a type="button" href="DeleteComputer?id=${computer.id }" class="btn btn-danger" onclick="return confirm('${deleteConfirm} ${deleteWarning }')">
 							<span class="glyphicon glyphicon-trash" ></span>
 						</a>
 					</td>

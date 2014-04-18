@@ -5,7 +5,7 @@
 
 <div class="col-md-2">
     <nav class="navbar navbar-default">
-            <div class="panel-heading"><h1>Menu</h1></div>
+            <div class="panel-heading"><h1><spring:message code="menu.title"/></h1></div>
 			<hr>
 			<ul class="list-unstyled">
 <!-- 			Dropdown select number of entites to show -->
