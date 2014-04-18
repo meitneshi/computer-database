@@ -10,11 +10,12 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 
 @Documented
-@Constraint(validatedBy = DateConstraintValidator.class)
+@Constraint(validatedBy = NameConstraintValidator.class)
 @Target( { ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface DateValid {
-	String message() default "DateValid.computerdto.date";
+public @interface NameValid {
+	String message() default "NameValid.computerdto.name";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
+

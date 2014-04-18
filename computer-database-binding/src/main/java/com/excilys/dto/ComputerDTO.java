@@ -6,6 +6,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.excilys.validator.DateValid;
+import com.excilys.validator.NameValid;
 
 
 /**
@@ -23,6 +24,7 @@ public class ComputerDTO {
 	
 	@NotEmpty
 	@Size(min = 2, max = 255)
+	@NameValid
 	private String name;
 	
 	@DateValid
