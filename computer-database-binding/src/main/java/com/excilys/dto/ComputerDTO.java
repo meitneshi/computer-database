@@ -5,8 +5,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.excilys.validator.DateValid;
-import com.excilys.validator.NameValid;
+import com.excilys.validator.annotations.DateValid;
+import com.excilys.validator.annotations.NameValid;
 
 
 /**

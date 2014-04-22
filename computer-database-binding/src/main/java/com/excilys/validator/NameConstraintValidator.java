@@ -3,6 +3,8 @@ package com.excilys.validator;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+import com.excilys.validator.annotations.NameValid;
+
 public class NameConstraintValidator implements ConstraintValidator<NameValid, String> {
     
 	@Override

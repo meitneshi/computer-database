@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import ch.qos.logback.classic.Logger;
 
 import com.excilys.dto.ComputerDTO;
-import com.excilys.mapper.ComputerMapper;
+import com.excilys.mapper.IComputerMapper;
 import com.excilys.om.Computer;
 import com.excilys.service.ICompanyService;
 import com.excilys.service.IComputerService;
@@ -33,7 +33,7 @@ public class EditComputerController {
 	@Autowired
 	private IComputerService computerService;
 	@Autowired
-	private ComputerMapper compMapper;
+	private IComputerMapper compMapper;
 	
     public EditComputerController() {
         super();

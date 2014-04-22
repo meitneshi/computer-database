@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
+import com.excilys.validator.annotations.DateValid;
+
 public class DateConstraintValidator implements ConstraintValidator<DateValid, String> {
     
 	

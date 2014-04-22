@@ -17,4 +17,6 @@ http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 	
 	<tx:annotation-driven transaction-manager="txManager"/>
 	
+	<import resource="classpath:persistenceContext.xml"/>
+	
 </beans>

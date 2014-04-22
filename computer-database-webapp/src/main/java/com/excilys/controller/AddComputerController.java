@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.excilys.dto.ComputerDTO;
-import com.excilys.mapper.ComputerMapper;
+import com.excilys.mapper.IComputerMapper;
 import com.excilys.om.Computer;
 import com.excilys.service.ICompanyService;
 import com.excilys.service.IComputerService;
@@ -28,7 +28,7 @@ public class AddComputerController {
 	@Autowired
 	private IComputerService computerservice;
 	@Autowired
-	private ComputerMapper compMapper;
+	private IComputerMapper compMapper;
 	
     public AddComputerController() {
         super();
