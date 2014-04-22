@@ -7,8 +7,8 @@
     <artifactId>computer-database</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>computer-database-persistance</artifactId>
-  <name>computer-database-persistance</name>
+  <artifactId>computer-database-persistence</artifactId>
+  <name>computer-database-persistence</name>
   <url>http://maven.apache.org</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -26,13 +26,6 @@
     <dependency>
 		<groupId>com.excilys</groupId>
 		<artifactId>computer-database-core</artifactId>
-	</dependency>
-	
-<!-- 	slf4j for logging -->
-	<dependency>
-		<groupId>org.slf4j</groupId>
-		<artifactId>slf4j-api</artifactId>
-		<scope>compile</scope>
 	</dependency>
 	
 <!-- 	logback for logging -->

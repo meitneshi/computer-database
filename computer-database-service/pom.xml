@@ -8,10 +8,10 @@
   <artifactId>computer-database-service</artifactId>
   
   <dependencies>
-  <!--     Module Persistance including Core -->
+  <!--     Module Persistence including Core -->
 	    <dependency>
 			<groupId>com.excilys</groupId>
-			<artifactId>computer-database-persistance</artifactId>
+			<artifactId>computer-database-persistence</artifactId>
 		</dependency>
 	</dependencies>
 </project>

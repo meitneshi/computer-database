@@ -9,6 +9,6 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 	<context:component-scan base-package="com.excilys.dao"/>
 
 	<import resource="classpath:serviceContext.xml"/>
-	<import resource="classpath:persistanceContext.xml"/>
+	<import resource="classpath:persistenceContext.xml"/>
 	
 </beans>

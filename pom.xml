@@ -1,51 +1,53 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.excilys</groupId>
-  <artifactId>computer-database</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>pom</packaging>
+	<groupId>com.excilys</groupId>
+	<artifactId>computer-database</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
 
-  <name>computer-database</name>
-  <url>http://maven.apache.org</url>
+	<name>computer-database</name>
+	<url>http://maven.apache.org</url>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <spring.version>4.0.3.RELEASE</spring.version>
-    <junit.version>3.8.1</junit.version>
-    <jstl.version>1.2</jstl.version>
-    <logback.version>1.1.1</logback.version>
-    <slf4j.version>1.7.6</slf4j.version>
-    <mysql.connector.version>5.1.30</mysql.connector.version>
-    <bonecp.version>0.8.0.RELEASE</bonecp.version>
-    <hibernate.validator.version>4.2.0.Final</hibernate.validator.version>
-    <serveltapi.version>3.0-alpha-1</serveltapi.version>
-    <jodatime.version>2.3</jodatime.version>
-    <jodatime.tag.version>1.1.1</jodatime.tag.version>
-    <computerDatabase.core.version>0.0.1-SNAPSHOT</computerDatabase.core.version>
-    <computerDatabase.persistance.version>0.0.1-SNAPSHOT</computerDatabase.persistance.version>
-    <computerDatabase.service.version>0.0.1-SNAPSHOT</computerDatabase.service.version>
-    <computerDatabase.binding.version>0.0.1-SNAPSHOT</computerDatabase.binding.version>
-    <computerDatabase.webapp.version>0.0.1-SNAPSHOT</computerDatabase.webapp.version>
-  </properties>
-  
-  <dependencyManagement>
-	  <dependencies>
-	    <!-- JUnit for test -->
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<spring.version>4.0.3.RELEASE</spring.version>
+		<junit.version>3.8.1</junit.version>
+		<jstl.version>1.2</jstl.version>
+		<logback.version>1.1.1</logback.version>
+		<slf4j.version>1.7.6</slf4j.version>
+		<mysql.connector.version>5.1.30</mysql.connector.version>
+		<bonecp.version>0.8.0.RELEASE</bonecp.version>
+		<hibernate.validator.version>4.2.0.Final</hibernate.validator.version>
+		<hibernate.version>4.3.5.Final</hibernate.version>
+		<serveltapi.version>3.0-alpha-1</serveltapi.version>
+		<jodatime.version>2.3</jodatime.version>
+		<jodatime.tag.version>1.1.1</jodatime.tag.version>
+		<computerDatabase.core.version>0.0.1-SNAPSHOT</computerDatabase.core.version>
+		<computerDatabase.persistence.version>0.0.1-SNAPSHOT</computerDatabase.persistence.version>
+		<computerDatabase.service.version>0.0.1-SNAPSHOT</computerDatabase.service.version>
+		<computerDatabase.binding.version>0.0.1-SNAPSHOT</computerDatabase.binding.version>
+		<computerDatabase.webapp.version>0.0.1-SNAPSHOT</computerDatabase.webapp.version>
+		<bridge.jclOverSlf4j.version>1.7.7</bridge.jclOverSlf4j.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- JUnit for test -->
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
 				<version>${junit.version}</version>
 			</dependency>
-	
+
 			<!-- JSTL for tag -->
 			<dependency>
 				<groupId>jstl</groupId>
 				<artifactId>jstl</artifactId>
 				<version>${jstl.version}</version>
 			</dependency>
-	
+
 			<!-- Logback for logging -->
 			<dependency>
 				<groupId>ch.qos.logback</groupId>
@@ -57,135 +59,161 @@
 				<artifactId>logback-classic</artifactId>
 				<version>${logback.version}</version>
 			</dependency>
-	
+
 			<!-- MySQL for DB connection -->
 			<dependency>
 				<groupId>mysql</groupId>
 				<artifactId>mysql-connector-java</artifactId>
 				<version>${mysql.connector.version}</version>
 			</dependency>
-	
+
 			<!-- slf4j for logging -->
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api</artifactId>
 				<version>${slf4j.version}</version>
 			</dependency>
-	
+
 			<!-- BoneCP for connection Pool -->
 			<dependency>
 				<groupId>com.jolbox</groupId>
 				<artifactId>bonecp</artifactId>
 				<version>${bonecp.version}</version>
 			</dependency>
-	
+
 			<!-- Spring Framework -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-core</artifactId>
 				<version>${spring.version}</version>
+				<!-- Exclude commons Logging -->
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
+
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-web</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
+
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-webmvc</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
+
 			<dependency>
-			    <groupId>org.springframework</groupId>
-			    <artifactId>spring-jdbc</artifactId>
-			    <version>${spring.version}</version>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jdbc</artifactId>
+				<version>${spring.version}</version>
 			</dependency>
-	
+
 			<!-- Hibernate Validator -->
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-validator</artifactId>
 				<version>${hibernate.validator.version}</version>
 			</dependency>
-	
+
+			<!-- Hibernate ORM -->
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-entitymanager</artifactId>
+				<version>${hibernate.version}</version>
+			</dependency>
+
 			<!-- Servlet API -->
 			<dependency>
 				<groupId>javax.servlet</groupId>
 				<artifactId>servlet-api</artifactId>
 				<version>${serveltapi.version}</version>
 			</dependency>
-			
+
 			<!-- Joda Time -->
 			<dependency>
-			    <groupId>joda-time</groupId>
-			    <artifactId>joda-time</artifactId>
-			    <version>${jodatime.version}</version>
+				<groupId>joda-time</groupId>
+				<artifactId>joda-time</artifactId>
+				<version>${jodatime.version}</version>
 			</dependency>
-			
+
 			<dependency>
-	    		<groupId>joda-time</groupId>
-	    		<artifactId>joda-time-jsptags</artifactId>
-	    		<version>${jodatime.tag.version}</version>
+				<groupId>joda-time</groupId>
+				<artifactId>joda-time-jsptags</artifactId>
+				<version>${jodatime.tag.version}</version>
 			</dependency>
-			
-<!-- 		Module dependency -->
-<!-- 	Core -->
+
+			<!-- Module dependency -->
+			<!-- Core -->
 			<dependency>
 				<groupId>com.excilys</groupId>
 				<artifactId>computer-database-core</artifactId>
 				<version>${computerDatabase.core.version}</version>
 			</dependency>
-			
-<!-- 	Persistance -->
+
+			<!-- Persistence -->
 			<dependency>
 				<groupId>com.excilys</groupId>
-				<artifactId>computer-database-persistance</artifactId>
-				<version>${computerDatabase.persistance.version}</version>
+				<artifactId>computer-database-persistence</artifactId>
+				<version>${computerDatabase.persistence.version}</version>
 			</dependency>
-			
-<!-- 	Service -->
+
+			<!-- Service -->
 			<dependency>
 				<groupId>com.excilys</groupId>
 				<artifactId>computer-database-service</artifactId>
 				<version>${computerDatabase.service.version}</version>
 			</dependency>
-			
-<!-- 	Binding -->
+
+			<!-- Binding -->
 			<dependency>
 				<groupId>com.excilys</groupId>
 				<artifactId>computer-database-binding</artifactId>
 				<version>${computerDatabase.binding.version}</version>
 			</dependency>
-			
-<!-- 	Webapp -->
+
+			<!-- Webapp -->
 			<dependency>
 				<groupId>com.excilys</groupId>
 				<artifactId>computer-database-webapp</artifactId>
 				<version>${computerDatabase.webapp.version}</version>
 			</dependency>
-	  </dependencies>
-  </dependencyManagement>
-  
-  <build>
-	<finalName>computer-database</finalName>
-	<plugins>
-		<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-compiler-plugin</artifactId>
-			<version>3.1</version>
-			<configuration>
-				<source>1.7</source>
-				<target>1.7</target>
-			</configuration>
-		</plugin>
-	</plugins>
-  </build>
-  
-  <modules>
-  	<module>computer-database-core</module>
-  	<module>computer-database-persistance</module>
-	<module>computer-database-service</module>
-  	<module>computer-database-binding</module>
-  	<module>computer-database-webapp</module>
-  </modules>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<!-- slf4j commons-logging replacement -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${bridge.jclOverSlf4j.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>computer-database</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<modules>
+		<module>computer-database-core</module>
+		<module>computer-database-persistence</module>
+		<module>computer-database-service</module>
+		<module>computer-database-binding</module>
+		<module>computer-database-webapp</module>
+	</modules>
 </project>

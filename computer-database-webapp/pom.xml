@@ -9,7 +9,7 @@
   <packaging>war</packaging>
   
   <dependencies>
-    <!-- 	Module Binding including all excluding persistance -->
+    <!-- 	Module Binding including all -->
 	<dependency>
       <groupId>com.excilys</groupId>
       <artifactId>computer-database-binding</artifactId>
