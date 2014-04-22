@@ -102,7 +102,7 @@ public class ComputerDAOImpl implements IComputerDAO{
 		JdbcTemplate jt = new JdbcTemplate(dataSource);
 		StringBuilder builder = new StringBuilder();
 		String sql = "";
-		if ("".equals(filter)){ //count all computer
+		if (filter.isEmpty()){ //count all computer
 			sql = builder.append("SELECT COUNT(id) FROM computer;").toString();
 		} else { //count searching computer
 			sql = builder.append("SELECT COUNT(id) FROM computer WHERE name LIKE '%").

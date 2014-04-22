@@ -32,7 +32,7 @@ public class DateConstraintValidator implements ConstraintValidator<DateValid, S
 		String dateRegexFr = "^|(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-[0-9]{4}$";
 		String dateRegexEn = "^|(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])-[0-9]{4}$";
 		
-		if ("".equals(date) || date == null) {
+		if (date.isEmpty() || date == null) {
 			return true;
 		}
 		if (date.matches(dateRegexFr) || date.matches(dateRegexEn)) {

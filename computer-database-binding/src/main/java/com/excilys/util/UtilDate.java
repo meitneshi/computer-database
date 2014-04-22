@@ -26,7 +26,7 @@ public class UtilDate {
 		String pattern = messageSource().getMessage("format.datePattern", null, LocaleContextHolder.getLocale());
 		DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(pattern);
 		DateTime date = null;
-		if (!"".equals(dateStr)) {
+		if (!(dateStr.isEmpty())) {
 			date = dateTimeFormatter.parseDateTime(dateStr);
 		}
 		return date;

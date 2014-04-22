@@ -24,7 +24,7 @@ public class NameConstraintValidator implements ConstraintValidator<NameValid, S
 		
 		String nameRegex = "^[a-zA-Z0-9]*$";
 		
-		if ("".equals(name) || name == null) {
+		if (name.isEmpty() || name == null) {
 			return false;
 		}
 		if (name.matches(nameRegex)) {
