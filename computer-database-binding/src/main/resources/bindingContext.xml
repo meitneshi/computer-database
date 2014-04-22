@@ -6,14 +6,14 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 http://www.springframework.org/schema/context
 http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 	
-	<context:component-scan base-package="com.excilys.mapper"/>
-	<context:component-scan base-package="com.excilys.validator"/>
-	<context:component-scan base-package="com.excilys.util"/>
-	
 	<bean id="messageSource" name="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basename" value="messages"/>
 	</bean>
 	
 	<import resource="classpath:serviceContext.xml"/>
+	
+	<context:component-scan base-package="com.excilys.mapper"/>
+	<context:component-scan base-package="com.excilys.validator"/>
+	<context:component-scan base-package="com.excilys.util"/>
 	
 </beans>
