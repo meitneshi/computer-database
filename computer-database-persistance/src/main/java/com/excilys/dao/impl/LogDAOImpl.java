@@ -19,10 +19,11 @@ public class LogDAOImpl implements ILogDAO{
 	
 	@Autowired
 	private BoneCPDataSource dataSource;
+	@Autowired
+	private JdbcTemplate jt;
 	
 	public void create(String logMessage) {
 		logger.info("Attempting to log in database");
-		JdbcTemplate jt = new JdbcTemplate(dataSource);
 		String sql = "INSERT INTO log (id, date, label) "
 				+ "VALUES (null, null, ?)";
 		try {

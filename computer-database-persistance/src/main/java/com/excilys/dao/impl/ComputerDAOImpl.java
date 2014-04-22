@@ -27,12 +27,13 @@ public class ComputerDAOImpl implements IComputerDAO{
 
 	@Autowired
 	private BoneCPDataSource dataSource;
+	@Autowired
+	private JdbcTemplate jt;
 	
 	private final static Logger logger = (Logger) LoggerFactory.getLogger(ComputerDAOImpl.class);
 	
 	public void delete(int computerIdToDelete) {
 		logger.info("trying to delete a computer");
-		JdbcTemplate jt = new JdbcTemplate(dataSource);
 		String sql = "DELETE FROM computer WHERE computer.id= ?";
 		try {
 			jt.update(sql, new Object[] { computerIdToDelete });
@@ -45,7 +46,6 @@ public class ComputerDAOImpl implements IComputerDAO{
 	
 	public Computer getById (int id) {
 		logger.info("trying to find a computer by id");
-		JdbcTemplate jt = new JdbcTemplate(dataSource);
 		String sql = "SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name "
 				+ "FROM computer "
 				+ "LEFT JOIN company ON computer.company_id = company.id "
@@ -63,7 +63,6 @@ public class ComputerDAOImpl implements IComputerDAO{
 		
 	public List<Computer> getInPage (int numPage, int entitiesPerPage, String filter, String order, String criteria) {
 		logger.info("trying to find a list of computer according to several criteria");
-		JdbcTemplate jt = new JdbcTemplate(dataSource);
 		
 		String orderSQL = "asc";
 		String criteriaSQL = "computer.name";
@@ -99,7 +98,6 @@ public class ComputerDAOImpl implements IComputerDAO{
 	public int count(String filter) {
 		logger.info("attempting to count the number of computer with a filter");
 		int numberFinal = 0;
-		JdbcTemplate jt = new JdbcTemplate(dataSource);
 		StringBuilder builder = new StringBuilder();
 		String sql = "";
 		if (filter.isEmpty()){ //count all computer
@@ -122,7 +120,6 @@ public class ComputerDAOImpl implements IComputerDAO{
 
 	public void save(Computer computer) {
 		logger.info("attempting to save a computer");
-		JdbcTemplate jt = new JdbcTemplate(dataSource);
 		String sql = "INSERT INTO computer (id, name, introduced, discontinued, company_id) "
 				+ "VALUES (?, ?, (FROM_UNIXTIME(?)), (FROM_UNIXTIME(?)), ?) "
 				+ "ON DUPLICATE KEY UPDATE "

@@ -27,10 +27,11 @@ public class CompanyDAOImpl implements ICompanyDAO{
 	
 	@Autowired
 	private BoneCPDataSource datasource;
+	@Autowired
+	private JdbcTemplate jt;
 	
 	public Company findById(int id) {
 		logger.info("attempting to find a company by id");
-		JdbcTemplate jt = new JdbcTemplate(datasource);
 		String sql = "SELECT * FROM company WHERE company.id = ?";
 		try {
 			Company company = jt.query(sql, new Object[] { id }, new CompanyRowMapper()).get(0);
@@ -43,7 +44,7 @@ public class CompanyDAOImpl implements ICompanyDAO{
 	
 	public List<Company> findAll() {
 		logger.info("attempting to find a company by id");
-		JdbcTemplate jt = new JdbcTemplate(datasource);
+//		JdbcTemplate jt = new JdbcTemplate(datasource);
 		String sql = "SELECT id, name FROM company ;";
 		try {
 			List<Company> companies = jt.query(sql, new CompanyRowMapper());
