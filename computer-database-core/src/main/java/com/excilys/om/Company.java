@@ -1,12 +1,25 @@
 package com.excilys.om;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
+@Entity
+@Table (name = "company")
 public class Company {
 	
 	/**
 	 * Class to represent a company.
 	 * A company is represented by its id (unique) and its name (legally unique...)
 	 */
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
+	
 	private String name;
 
 	/**

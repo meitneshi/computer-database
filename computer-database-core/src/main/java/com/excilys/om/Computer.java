@@ -1,27 +1,48 @@
 package com.excilys.om;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 import org.joda.time.DateTime;
 
+@Entity
+@Table (name= "computer")
 public class Computer {
-	
+
 	/**
 	 * Class to represent a computer.
 	 * A computer is represented by its id (unique), its name (legally unique), 
 	 * its company (represented in DB by the company's id and its introduced and discontinued Date (can be null)
 	 */
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
-	private Company company;
-	private String name;
-	private DateTime introduced;
-	private DateTime discontinued;
 	
+	private Company company;
+	
+	private String name;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column (name="introduced")
+	private DateTime introduced;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column (name="discontinued")
+	private DateTime discontinued;
+
 	/**
 	 * @param l the id to set
 	 */
 	public void setId(long l) {
 		this.id = l;
 	}
-	
+
 	/**
 	 * @return the id
 	 */
@@ -84,11 +105,11 @@ public class Computer {
 	public void setDiscontinued(DateTime discontinued) {
 		this.discontinued = discontinued;
 	}
-	
+
 	public Computer() {
 		super();
 	}
-	
+
 	public Computer(long id, Company company, String name, DateTime introduced, DateTime discontinued) {
 		this.id = id;
 		this.company = company;

@@ -44,7 +44,6 @@ public class CompanyDAOImpl implements ICompanyDAO{
 	
 	public List<Company> findAll() {
 		logger.info("attempting to find a company by id");
-//		JdbcTemplate jt = new JdbcTemplate(datasource);
 		String sql = "SELECT id, name FROM company ;";
 		try {
 			List<Company> companies = jt.query(sql, new CompanyRowMapper());

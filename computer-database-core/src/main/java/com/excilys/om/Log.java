@@ -1,7 +1,18 @@
 package com.excilys.om;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 import org.joda.time.DateTime;
 
+@Entity
+@Table(name = "log")
 public class Log {
 
 	/**
@@ -9,9 +20,16 @@ public class Log {
 	 * a log is represented by its id (unique), its date of generation (current_timestamp) and its label
 	 * which is the message given by the code (computer created, computer updated, computer deleted....)
 	 */
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column (name="introduced")
 	private DateTime date;
+	
 	private String label;
+	
 	/**
 	 * @return the id
 	 */
