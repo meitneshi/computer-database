@@ -1,6 +1,5 @@
 package com.excilys.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.LoggerFactory;
@@ -11,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ch.qos.logback.classic.Logger;
 
@@ -40,14 +40,15 @@ public class EditComputerController {
     }
     
     @RequestMapping(method=RequestMethod.GET)
-    protected String doGet(HttpServletRequest request, Model model) {
+    protected String doGet(
+    		@RequestParam(value="id", required = true) int id,
+    		@RequestParam(value="error", required = false) String error,
+    		Model model) {
 
-		int id;
 		Computer finalComputer = null;
 		ComputerDTO computerdto = null;
 		
 		try {
-			id = Integer.parseInt(request.getParameter("id"));
 			finalComputer = computerService.getById(id);
 			computerdto = compMapper.toDto(finalComputer);
 		} catch (NumberFormatException e){
@@ -58,7 +59,7 @@ public class EditComputerController {
 		model.addAttribute("displayDivEdit", false);	
 		model.addAttribute("companyList", companyService.findAll());
 		
-		if("true".equals(request.getParameter("error"))) {
+		if("true".equals(error)) {
 			model.addAttribute("displayDivEditError", true);
 		}
 		return "editComputer";

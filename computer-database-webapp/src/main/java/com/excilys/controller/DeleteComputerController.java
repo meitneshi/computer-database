@@ -1,17 +1,12 @@
 package com.excilys.controller;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ch.qos.logback.classic.Logger;
 
@@ -34,10 +29,11 @@ public class DeleteComputerController {
     }
 
     @RequestMapping(method=RequestMethod.GET)
-	protected String doGet(Model model, HttpServletRequest request) {
+	protected String doGet(
+			@RequestParam(value="id", required = true) int id,
+			Model model) {
 		try {
-			int idToDelete = Integer.parseInt(request.getParameter("id"));
-			computerService.delete(idToDelete);
+			computerService.delete(id);
 		} catch (NumberFormatException e) {
 			logger.debug("failed to parse id to delete into int "+e.getMessage());
 		}
@@ -46,7 +42,7 @@ public class DeleteComputerController {
 	}
 
     @RequestMapping(method=RequestMethod.POST)
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(Model model) {
     	//nothing to do
     }
 }
