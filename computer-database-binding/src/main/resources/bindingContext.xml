@@ -9,4 +9,8 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 	<context:component-scan base-package="com.excilys.mapper"/>
 	<context:component-scan base-package="com.excilys.validator"/>
 	
+	<bean id="messageSource" name="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="baseName" value="messages"/>
+	</bean>
+	
 </beans>

@@ -6,18 +6,15 @@ import java.text.SimpleDateFormat;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
 public class DateConstraintValidator implements ConstraintValidator<DateValid, String> {
     
-	@Bean(name = "messageSource")
-	public ResourceBundleMessageSource messageSource() {
-		ResourceBundleMessageSource bean = new ResourceBundleMessageSource();
-	    bean.setBasename("messages");
-	    return bean;
-	}
+	
+	@Autowired
+	public ResourceBundleMessageSource messageSource;
 	
 	@Override
 	public void initialize(DateValid dateValid) {
@@ -26,7 +23,7 @@ public class DateConstraintValidator implements ConstraintValidator<DateValid, S
 	@Override
 	public boolean isValid(String date, ConstraintValidatorContext cxt) {
 		
-		String pattern = messageSource().getMessage("format.datePattern", null, LocaleContextHolder.getLocale());
+		String pattern = messageSource.getMessage("format.datePattern", null, LocaleContextHolder.getLocale());
 		SimpleDateFormat formatter = new SimpleDateFormat(pattern);
 		
 		String dateRegexFr = "^|(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-[0-9]{4}$";
