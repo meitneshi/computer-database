@@ -2,6 +2,10 @@ package com.excilys.dao.impl;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -30,12 +34,18 @@ public class CompanyDAOImpl implements ICompanyDAO{
 	@Autowired
 	private JdbcTemplate jt;
 	
+	@PersistenceContext
+    private EntityManager em;
+	
 	public Company findById(int id) {
 		logger.info("attempting to find a company by id");
-		String sql = "SELECT * FROM company WHERE company.id = ?";
+//		String sql = "SELECT * FROM company WHERE company.id = ?";
 		try {
-			Company company = jt.query(sql, new Object[] { id }, new CompanyRowMapper()).get(0);
-			return company;
+			Query query =  em.createQuery("from company as c where c.id = :compdId");
+			query.setParameter("compId", id);
+		    return (Company) query.getResultList().get(0);
+//			Company company = jt.query(sql, new Object[] { id }, new CompanyRowMapper()).get(0);
+//			return company;
 		} catch (DataAccessException e) {
 			logger.debug("failed to found a company by id "+e.getMessage());
 			throw new IllegalPersonnalException();

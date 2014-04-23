@@ -3,10 +3,13 @@ package com.excilys.dao.impl;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -30,31 +33,28 @@ public class ComputerDAOImpl implements IComputerDAO{
 	@Autowired
 	private JdbcTemplate jt;
 	
+	@PersistenceContext(unitName="computerPersistenceUnit")
+    private EntityManager em;
+	
 	private final static Logger logger = (Logger) LoggerFactory.getLogger(ComputerDAOImpl.class);
 	
-	public void delete(int computerIdToDelete) {
+	public void delete(long computerIdToDelete) {
+		
 		logger.info("trying to delete a computer");
-		String sql = "DELETE FROM computer WHERE computer.id= ?";
-		try {
-			jt.update(sql, new Object[] { computerIdToDelete });
-			logger.info("delete computer is successfull");
-		} catch (DataAccessException e) {
-			logger.debug("failed to delete computer "+e.getMessage());
-			throw new DataAccessResourceFailureException(e.getMessage());
-		}
+		Computer computer = em.find(Computer.class, computerIdToDelete);
+		em.remove(computer);	
 	}
 	
-	public Computer getById (int id) {
+	public Computer getById (long id) {
 		logger.info("trying to find a computer by id");
-		String sql = "SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name "
-				+ "FROM computer "
-				+ "LEFT JOIN company ON computer.company_id = company.id "
-				+ "WHERE computer.id = ?";
-		
+		String hql = "select cp from Computer cp "
+				+ "left join cp.company c "
+				+ "where cp.id = :id";
 		try {
-			Computer computer = jt.query(sql, new Object[] { id }, new ComputerRowMapper()).get(0);
+			Query query = em.createQuery(hql, Computer.class);
+			query.setParameter("id", id);
 			logger.info("computer was found");
-			return computer;
+			return (Computer) query.getResultList().get(0);
 		} catch (DataAccessException e) {
 			logger.debug("failed to find a computer by id "+e.getMessage());
 			throw new IllegalPersonnalException();
@@ -132,6 +132,7 @@ public class ComputerDAOImpl implements IComputerDAO{
 		Long companyId = (computer.getCompany().getId() == 0) ? null : computer.getCompany().getId();		
 		
 		try {
+//			em.persist(computer);
 			jt.update(sql, new Object [] { id, name, introducedL, discontinuedL, companyId, name, introducedL, discontinuedL, companyId });
 			logger.info("save is successfull");	
 		} catch (DataAccessException e) {

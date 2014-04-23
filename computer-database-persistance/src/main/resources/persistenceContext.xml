@@ -23,6 +23,25 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 		<constructor-arg ref="datasource" />
 	</bean>
 	
+	<bean id="entityManagerFactory"
+        class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="persistenceXmlLocation" value="classpath:persistence.xml"/>
+        <property name="persistenceUnitName" value="computerPersistenceUnit" /> 
+        <property name="dataSource" ref="datasource" />
+        <property name="packagesToScan" value="com.excilys.computerdatabase.om"/>
+        <property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
+        <property name="jpaDialect" ref="jpaDialect" />
+    </bean>
+    
+    <bean id="jpaVendorAdapter"
+        class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="database" value="HSQL" />
+        <property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect" />
+    </bean>
+ 
+    <bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
+	
 	<context:component-scan base-package="com.excilys.dao" />
+	<context:component-scan base-package="com.excilys.om" />
 
 </beans>

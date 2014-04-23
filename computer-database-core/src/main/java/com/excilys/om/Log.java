@@ -6,9 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
 @Entity
@@ -24,10 +23,11 @@ public class Log {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column (name="introduced")
+	@Column(name="date")
+	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
 	private DateTime date;
 	
+	@Column(name="label")
 	private String label;
 	
 	/**

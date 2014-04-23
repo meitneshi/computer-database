@@ -44,8 +44,10 @@ public class ComputerMapperImpl implements IComputerMapper{
 		String introduced = utilDate.toString(computer.getIntroduced());
 		String discontinued = utilDate.toString(computer.getDiscontinued());
 		String id = String.valueOf(computer.getId());
-		String companyId = String.valueOf(computer.getCompany().getId());
-		
+		String companyId = "";
+		if (computer.getCompany() != null) {
+			companyId = String.valueOf(computer.getCompany().getId());
+		}
 		ComputerDTO computerDTO = new ComputerDTO(id, computer.getName(), introduced, discontinued, companyId);
 		return computerDTO;
 	}

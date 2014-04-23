@@ -29,6 +29,7 @@
 		<computerDatabase.binding.version>0.0.1-SNAPSHOT</computerDatabase.binding.version>
 		<computerDatabase.webapp.version>0.0.1-SNAPSHOT</computerDatabase.webapp.version>
 		<bridge.jclOverSlf4j.version>1.7.7</bridge.jclOverSlf4j.version>
+		<jadira.version>2.0.1</jadira.version>
 	</properties>
 
 	<dependencyManagement>
@@ -105,6 +106,12 @@
 				<version>${spring.version}</version>
 			</dependency>
 
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-orm</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+
 			<!-- Hibernate Validator -->
 			<dependency>
 				<groupId>org.hibernate</groupId>
@@ -137,6 +144,13 @@
 				<groupId>joda-time</groupId>
 				<artifactId>joda-time-jsptags</artifactId>
 				<version>${jodatime.tag.version}</version>
+			</dependency>
+			
+			<!-- Jadira -->
+			<dependency>
+				<groupId>org.jadira.usertype</groupId>
+				<artifactId>usertype.jodatime</artifactId>
+				<version>${jadira.version}</version>
 			</dependency>
 
 			<!-- Module dependency -->

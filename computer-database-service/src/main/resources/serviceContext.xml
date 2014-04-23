@@ -11,8 +11,8 @@ http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 	
 	<import resource="classpath:persistenceContext.xml"/>
 	
-	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="datasource"/>
+	<bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
 	</bean>
 	
 	<tx:annotation-driven transaction-manager="txManager"/>
