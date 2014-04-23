@@ -16,7 +16,6 @@ import ch.qos.logback.classic.Logger;
 
 import com.excilys.dao.ICompanyDAO;
 import com.excilys.exceptions.IllegalPersonnalException;
-import com.excilys.mapper.CompanyRowMapper;
 import com.excilys.om.Company;
 import com.jolbox.bonecp.BoneCPDataSource;
 
@@ -39,26 +38,23 @@ public class CompanyDAOImpl implements ICompanyDAO{
 	
 	public Company findById(int id) {
 		logger.info("attempting to find a company by id");
-//		String sql = "SELECT * FROM company WHERE company.id = ?";
+		String hql = "from Company c where c.id = :compdId";
 		try {
-			Query query =  em.createQuery("from company as c where c.id = :compdId");
+			Query query =  em.createQuery(hql);
 			query.setParameter("compId", id);
 		    return (Company) query.getResultList().get(0);
-//			Company company = jt.query(sql, new Object[] { id }, new CompanyRowMapper()).get(0);
-//			return company;
 		} catch (DataAccessException e) {
 			logger.debug("failed to found a company by id "+e.getMessage());
 			throw new IllegalPersonnalException();
 		}
 	}
-	
+	@SuppressWarnings("unchecked")
 	public List<Company> findAll() {
 		logger.info("attempting to find a company by id");
-		String sql = "SELECT id, name FROM company ;";
+		String hql = "from Company";
 		try {
-			List<Company> companies = jt.query(sql, new CompanyRowMapper());
-			logger.info("list of companies found");
-			return companies;
+			Query query = em.createQuery(hql);
+			return query.getResultList();
 		} catch (DataAccessException e) {
 			logger.debug("failed to find the list of companies "+e.getMessage());
 			throw new IllegalPersonnalException();
