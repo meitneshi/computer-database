@@ -19,10 +19,6 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 		<property name="partitionCount" value="1" />
 	</bean>
 
-	<bean name="jt" id="jt" class="org.springframework.jdbc.core.JdbcTemplate">
-		<constructor-arg ref="datasource" />
-	</bean>
-	
 	<bean id="entityManagerFactory"
         class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="persistenceXmlLocation" value="classpath:persistence.xml"/>

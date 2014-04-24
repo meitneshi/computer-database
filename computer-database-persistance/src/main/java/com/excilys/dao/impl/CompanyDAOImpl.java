@@ -9,7 +9,6 @@ import javax.persistence.Query;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import ch.qos.logback.classic.Logger;
@@ -30,8 +29,6 @@ public class CompanyDAOImpl implements ICompanyDAO{
 	
 	@Autowired
 	private BoneCPDataSource datasource;
-	@Autowired
-	private JdbcTemplate jt;
 	
 	@PersistenceContext
     private EntityManager em;

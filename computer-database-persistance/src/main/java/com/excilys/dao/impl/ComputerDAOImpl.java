@@ -6,11 +6,13 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import ch.qos.logback.classic.Logger;
@@ -29,8 +31,6 @@ public class ComputerDAOImpl implements IComputerDAO{
 
 	@Autowired
 	private BoneCPDataSource dataSource;
-	@Autowired
-	private JdbcTemplate jt;
 	
 	@PersistenceContext(unitName="computerPersistenceUnit")
     private EntityManager em;
@@ -45,19 +45,16 @@ public class ComputerDAOImpl implements IComputerDAO{
 	}
 	
 	public Computer getById (long id) {
+		
 		logger.info("trying to find a computer by id");
-		String hql = "select cp from Computer cp "
-				+ "left join cp.company c "
-				+ "where cp.id = :id";
-		try {
-			Query query = em.createQuery(hql, Computer.class);
-			query.setParameter("id", id);
-			logger.info("computer was found");
-			return (Computer) query.getResultList().get(0);
-		} catch (DataAccessException e) {
-			logger.debug("failed to find a computer by id "+e.getMessage());
-			throw new IllegalPersonnalException();
-		}
+		
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<Computer> criteria = builder.createQuery(Computer.class );
+		Root<Computer> computer = criteria.from(Computer.class );
+
+		criteria.select(computer);
+		criteria.where( builder.equal( computer.get("id"), id ) );
+		return em.createQuery(criteria).getResultList().get(0);
 	}
 		
 	@SuppressWarnings("unchecked")

@@ -6,5 +6,6 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/x
     <persistence-unit name="computerPersistenceUnit">
         <class>com.excilys.om.Company</class>
         <class>com.excilys.om.Computer</class>
+        <class>com.excilys.om.Log</class>
     </persistence-unit>
 </persistence>

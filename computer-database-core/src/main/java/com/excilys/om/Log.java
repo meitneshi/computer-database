@@ -76,8 +76,7 @@ public class Log {
 		super();
 	}
 	
-	public Log(DateTime date, String label){
-		this.date = date;
+	public Log(String label){
 		this.label = label;
 	}
 }
