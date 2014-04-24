@@ -37,7 +37,7 @@ public interface IComputerService {
 	 * @param filter
 	 * @return int
 	 */
-	public int count(String filter);
+	public long count(String filter);
 	
 	/**
 	 * Save a computer in the database

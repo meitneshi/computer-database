@@ -117,7 +117,7 @@ public class ComputerServiceImpl implements IComputerService {
 	}
 
 	@Transactional(readOnly = false)
-	public int count(String filter) {
+	public long count(String filter) {
 		try {
 			return computerDAO.count(filter);
 		} catch (IllegalPersonnalException e) {

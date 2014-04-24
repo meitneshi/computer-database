@@ -17,7 +17,6 @@ import ch.qos.logback.classic.Logger;
 
 import com.excilys.dao.IComputerDAO;
 import com.excilys.exceptions.IllegalPersonnalException;
-import com.excilys.mapper.ComputerRowMapper;
 import com.excilys.om.Computer;
 import com.jolbox.bonecp.BoneCPDataSource;
 
@@ -61,11 +60,12 @@ public class ComputerDAOImpl implements IComputerDAO{
 		}
 	}
 		
+	@SuppressWarnings("unchecked")
 	public List<Computer> getInPage (int numPage, int entitiesPerPage, String filter, String order, String criteria) {
 		logger.info("trying to find a list of computer according to several criteria");
 		
 		String orderSQL = "asc";
-		String criteriaSQL = "computer.name";
+		String criteriaSQL = "cp.name";
 		boolean orderBool = false; //false = asc, true = desc
 		if ("desc".equals(order)){
 			orderBool = true;
@@ -74,44 +74,47 @@ public class ComputerDAOImpl implements IComputerDAO{
 			orderSQL = "desc";
 		}
 		if("company".equals(criteria)) {
-			criteriaSQL = "company.name";
+			criteriaSQL = "c.name";
 		}
-		
-		String sql = "SELECT computer.id, computer.name, computer.introduced, computer.discontinued, computer.company_id, company.name "
-				+ "FROM computer "
-				+ "LEFT JOIN company "
-				+ "ON computer.company_id = company.id WHERE computer.name LIKE ? "
-				+ "ORDER BY " + criteriaSQL + " " + orderSQL + " "
-				+ "LIMIT ?, ? ";
-		
+		String hql = "select cp "
+				+ "from Computer cp "
+				+ "left join cp.company c "
+				+ "where cp.name like :filter "
+				+ "order by "+criteriaSQL +" " +orderSQL+" ";
+
 		try {
-			List<Computer> computers = jt.query(sql,
-		            new Object[] { "%"+filter+"%", ((numPage-1)*entitiesPerPage), entitiesPerPage }, new ComputerRowMapper());
+			int firstResult = ((numPage-1)*entitiesPerPage);
+			Query query = em.createQuery(hql);
+			query.setParameter("filter", "%"+filter+"%");
+			
+			System.out.println(firstResult);
+			System.out.println(entitiesPerPage);
+			
+			query.setFirstResult(firstResult);
+			query.setMaxResults(entitiesPerPage);
 			logger.info("loading the list is complete");
-			return computers;
+			return query.getResultList();
 		} catch (DataAccessException e) {
 			logger.debug("failed to load the list of computer "+e.getMessage());
 			throw new IllegalPersonnalException();
 		}
 	}
 
-	public int count(String filter) {
+	public long count(String filter) {
 		logger.info("attempting to count the number of computer with a filter");
-		int numberFinal = 0;
 		StringBuilder builder = new StringBuilder();
-		String sql = "";
+		String hql = "";
 		if (filter.isEmpty()){ //count all computer
-			sql = builder.append("SELECT COUNT(id) FROM computer;").toString();
+			hql = builder.append("select count(*) from Computer cp").toString();
 		} else { //count searching computer
-			sql = builder.append("SELECT COUNT(id) FROM computer WHERE name LIKE '%").
+			hql = builder.append("select count(*) from Computer cp where cp.name like '%").
 					append(filter).
-					append("%';").toString();
+					append("%'").toString();
 		}
 		
 		try {
-			numberFinal = jt.queryForObject(sql, Integer.class);
-			logger.info("count is successfull....");
-			return numberFinal;
+			Query query = em.createQuery(hql);
+			return (long) query.getResultList().get(0);
 		} catch (DataAccessException e) {
 			logger.debug("failed to count...such a shame ..... "+e.getMessage());
 			throw new IllegalPersonnalException();

@@ -8,8 +8,8 @@ public class PageWrapper {
 
 	private int entitiesPerPage;
 	private int currentPagenumber;
-	private int numberOfComputer;
-	private int numberTotalOfComputer;
+	private long numberOfComputer;
+	private long numberTotalOfComputer;
 	private int pageMax;
 	
 	private String criteria;
@@ -53,29 +53,29 @@ public class PageWrapper {
 	/**
 	 * @return the numberOfComputer
 	 */
-	public int getNumberOfComputer() {
+	public long getNumberOfComputer() {
 		return numberOfComputer;
 	}
 
 	/**
-	 * @param numberOfComputer the numberOfComputer to set
+	 * @param l the numberOfComputer to set
 	 */
-	public void setNumberOfComputer(int numberOfComputer) {
-		this.numberOfComputer = numberOfComputer;
+	public void setNumberOfComputer(long l) {
+		this.numberOfComputer = l;
 	}
 
 	/**
 	 * @return the numberTotalOfComputer
 	 */
-	public int getNumberTotalOfComputer() {
+	public long getNumberTotalOfComputer() {
 		return numberTotalOfComputer;
 	}
 
 	/**
-	 * @param numberTotalOfComputer the numberTotalOfComputer to set
+	 * @param l the numberTotalOfComputer to set
 	 */
-	public void setNumberTotalOfComputer(int numberTotalOfComputer) {
-		this.numberTotalOfComputer = numberTotalOfComputer;
+	public void setNumberTotalOfComputer(long l) {
+		this.numberTotalOfComputer = l;
 	}
 
 	/**
