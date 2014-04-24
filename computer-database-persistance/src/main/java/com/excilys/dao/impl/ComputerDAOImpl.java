@@ -86,10 +86,6 @@ public class ComputerDAOImpl implements IComputerDAO{
 			int firstResult = ((numPage-1)*entitiesPerPage);
 			Query query = em.createQuery(hql);
 			query.setParameter("filter", "%"+filter+"%");
-			
-			System.out.println(firstResult);
-			System.out.println(entitiesPerPage);
-			
 			query.setFirstResult(firstResult);
 			query.setMaxResults(entitiesPerPage);
 			logger.info("loading the list is complete");
@@ -123,20 +119,15 @@ public class ComputerDAOImpl implements IComputerDAO{
 
 	public void save(Computer computer) {
 		logger.info("attempting to save a computer");
-		String sql = "INSERT INTO computer (id, name, introduced, discontinued, company_id) "
-				+ "VALUES (?, ?, (FROM_UNIXTIME(?)), (FROM_UNIXTIME(?)), ?) "
-				+ "ON DUPLICATE KEY UPDATE "
-				+ "id=LAST_INSERT_ID(id), name=?, introduced=(FROM_UNIXTIME(?)), discontinued=(FROM_UNIXTIME(?)), company_id=?";
 		
-		Long id = computer.getId();
-		String name = computer.getName();
-		Long introducedL = (computer.getIntroduced() == null) ? null : computer.getIntroduced().getMillis()/1000;
-		Long discontinuedL = (computer.getDiscontinued() == null) ? null : computer.getDiscontinued().getMillis()/1000;
-		Long companyId = (computer.getCompany().getId() == 0) ? null : computer.getCompany().getId();		
+		Long id = (computer.getId() == 0) ? null : computer.getId();
 		
 		try {
-//			em.persist(computer);
-			jt.update(sql, new Object [] { id, name, introducedL, discontinuedL, companyId, name, introducedL, discontinuedL, companyId });
+			if (id == null){ //new computer, create
+				em.persist(computer);
+			} else { //existing computer, edit
+				em.merge(computer);
+			}
 			logger.info("save is successfull");	
 		} catch (DataAccessException e) {
 			logger.debug("failed to save the computer "+e.getMessage());

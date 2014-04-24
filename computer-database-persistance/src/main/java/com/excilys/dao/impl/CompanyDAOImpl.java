@@ -36,9 +36,9 @@ public class CompanyDAOImpl implements ICompanyDAO{
 	@PersistenceContext
     private EntityManager em;
 	
-	public Company findById(int id) {
+	public Company findById(long id) {
 		logger.info("attempting to find a company by id");
-		String hql = "from Company c where c.id = :compdId";
+		String hql = "from Company c where c.id = :compId";
 		try {
 			Query query =  em.createQuery(hql);
 			query.setParameter("compId", id);

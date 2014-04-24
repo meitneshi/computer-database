@@ -28,13 +28,18 @@ public class ComputerMapperImpl implements IComputerMapper{
 	public Computer toComputer(ComputerDTO computerDto) {
 		DateTime introduced = utilDate.toDate(computerDto.getIntroduced());
 		DateTime discontinued = utilDate.toDate(computerDto.getDiscontinued());
+		Company company = null;
 		int id = 0;
 		try {
 			id = Integer.parseInt(computerDto.getId());
 		} catch (NumberFormatException e){
 			logger.info("failed to parse the id into integer "+e.getMessage());
 		}
-		Company company = companyservice.initCompany(computerDto.getCompanyId());
+		if ("0".equals(computerDto.getCompanyId())) {
+			company = null;
+		} else {
+			company = companyservice.initCompany(computerDto.getCompanyId());
+		}
 		Computer computer = new Computer(id, company, computerDto.getName(), introduced, discontinued);
 		return computer;
 	}
