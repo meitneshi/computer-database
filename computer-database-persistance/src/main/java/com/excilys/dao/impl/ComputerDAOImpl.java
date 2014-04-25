@@ -5,9 +5,12 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 
 import org.slf4j.LoggerFactory;
@@ -19,6 +22,7 @@ import ch.qos.logback.classic.Logger;
 
 import com.excilys.dao.IComputerDAO;
 import com.excilys.exceptions.IllegalPersonnalException;
+import com.excilys.om.Company;
 import com.excilys.om.Computer;
 import com.jolbox.bonecp.BoneCPDataSource;
 
@@ -37,6 +41,7 @@ public class ComputerDAOImpl implements IComputerDAO{
 	
 	private final static Logger logger = (Logger) LoggerFactory.getLogger(ComputerDAOImpl.class);
 	
+	
 	public void delete(long computerIdToDelete) {
 		
 		logger.info("trying to delete a computer");
@@ -48,69 +53,57 @@ public class ComputerDAOImpl implements IComputerDAO{
 		
 		logger.info("trying to find a computer by id");
 		
-		CriteriaBuilder builder = em.getCriteriaBuilder();
-		CriteriaQuery<Computer> criteria = builder.createQuery(Computer.class );
-		Root<Computer> computer = criteria.from(Computer.class );
-
-		criteria.select(computer);
-		criteria.where( builder.equal( computer.get("id"), id ) );
-		return em.createQuery(criteria).getResultList().get(0);
+		return em.find(Computer.class, id);
 	}
 		
-	@SuppressWarnings("unchecked")
 	public List<Computer> getInPage (int numPage, int entitiesPerPage, String filter, String order, String criteria) {
 		logger.info("trying to find a list of computer according to several criteria");
-		
-		String orderSQL = "asc";
-		String criteriaSQL = "cp.name";
-		boolean orderBool = false; //false = asc, true = desc
-		if ("desc".equals(order)){
-			orderBool = true;
-		}
-		if(orderBool){
-			orderSQL = "desc";
-		}
-		if("company".equals(criteria)) {
-			criteriaSQL = "c.name";
-		}
-		String hql = "select cp "
-				+ "from Computer cp "
-				+ "left join cp.company c "
-				+ "where cp.name like :filter "
-				+ "order by "+criteriaSQL +" " +orderSQL+" ";
 
-		try {
-			int firstResult = ((numPage-1)*entitiesPerPage);
-			Query query = em.createQuery(hql);
-			query.setParameter("filter", "%"+filter+"%");
-			query.setFirstResult(firstResult);
-			query.setMaxResults(entitiesPerPage);
-			logger.info("loading the list is complete");
-			return query.getResultList();
-		} catch (DataAccessException e) {
-			logger.debug("failed to load the list of computer "+e.getMessage());
-			throw new IllegalPersonnalException();
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<Computer> criteriaQuery = builder.createQuery(Computer.class);
+		Root<Computer> computerRoot = criteriaQuery.from(Computer.class);
+		Join<Computer, Company> company = computerRoot.join("company", JoinType.LEFT);
+
+		if(filter != null){
+			criteriaQuery.where(
+					builder.like(computerRoot.<String>get("name"), "%"+filter+"%")
+					);
 		}
+		
+//		initialize path		
+		Path<Object> path = computerRoot.get("name");
+		if ("company".equals(criteria)) {
+			path = company.get("name");
+		}
+		
+//		create order by
+		if("desc".equals(order)) { //order desc
+			criteriaQuery.orderBy(builder.desc(path));
+		} else { //order asc
+			criteriaQuery.orderBy(builder.asc(path));
+		}
+
+		TypedQuery<Computer> query = em.createQuery(criteriaQuery);
+		return query.setFirstResult(((numPage-1)*entitiesPerPage))
+				.setMaxResults(entitiesPerPage)
+				.getResultList();
 	}
 
 	public long count(String filter) {
-		logger.info("attempting to count the number of computer with a filter");
-		StringBuilder builder = new StringBuilder();
-		String hql = "";
-		if (filter.isEmpty()){ //count all computer
-			hql = builder.append("select count(*) from Computer cp").toString();
-		} else { //count searching computer
-			hql = builder.append("select count(*) from Computer cp where cp.name like '%").
-					append(filter).
-					append("%'").toString();
-		}
 		
-		try {
-			Query query = em.createQuery(hql);
-			return (long) query.getResultList().get(0);
-		} catch (DataAccessException e) {
-			logger.debug("failed to count...such a shame ..... "+e.getMessage());
-			throw new IllegalPersonnalException();
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+		Root<Computer> computerRoot = cq.from(Computer.class);
+		
+		if (filter.isEmpty()) {//count all computers
+			cq.select(cb.count(computerRoot));
+			return (Long)em.createQuery(cq).getSingleResult();
+		} else { //count according to filter
+			cq.select(cb.count(computerRoot));
+			cq.where(
+					cb.like(computerRoot.<String>get("name"), "%"+filter+"%")
+					);
+			return (Long)em.createQuery(cq).getSingleResult();
 		}
 	}
 
@@ -118,7 +111,6 @@ public class ComputerDAOImpl implements IComputerDAO{
 		logger.info("attempting to save a computer");
 		
 		Long id = (computer.getId() == 0) ? null : computer.getId();
-		
 		try {
 			if (id == null){ //new computer, create
 				em.persist(computer);
