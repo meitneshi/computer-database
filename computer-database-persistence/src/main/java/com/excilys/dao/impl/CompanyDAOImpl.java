@@ -4,22 +4,18 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import ch.qos.logback.classic.Logger;
 
 import com.excilys.dao.ICompanyDAO;
-import com.excilys.exceptions.IllegalPersonnalException;
 import com.excilys.om.Company;
+import com.excilys.om.QCompany;
 import com.jolbox.bonecp.BoneCPDataSource;
+import com.mysema.query.jpa.impl.JPAQuery;
 
 @Repository
 public class CompanyDAOImpl implements ICompanyDAO{
@@ -38,41 +34,22 @@ public class CompanyDAOImpl implements ICompanyDAO{
 	
 	public Company findById(long id) {
 		logger.info("attempting to find a company by id");
-		
-		CriteriaBuilder builder = em.getCriteriaBuilder();
-		CriteriaQuery<Company> criteria = builder.createQuery(Company.class );
-		Root<Company> company = criteria.from(Company.class );
-
-		criteria.select(company);
-		criteria.where( builder.equal( company.get("id"), id ) );
-		return em.createQuery(criteria).getResultList().get(0);
+		return em.find(Company.class, id);
 	}
 	
-	@SuppressWarnings("unchecked")
 	public List<Company> findAll() {
 		logger.info("attempting to find a company by id");
-		String hql = "from Company";
-		try {
-			Query query = em.createQuery(hql);
-			return query.getResultList();
-		} catch (DataAccessException e) {
-			logger.debug("failed to find the list of companies "+e.getMessage());
-			throw new IllegalPersonnalException();
-		}
+		JPAQuery query = new JPAQuery(em);
+		QCompany company = QCompany.company;
+		return query.from(company).list(company);
 	}
 
-	public Company initCompany(String id) {
+	public Company initCompany(long id) {
 		Company company;
-		int companyIdInt = 0;
-		try {
-			companyIdInt = Integer.parseInt(id);
-		} catch (NumberFormatException e) {
-			logger.debug("failed to parseInt the company Id "+e.getMessage());
-		}
-		if (companyIdInt == 0) {
+		if (id == 0) {
 			company = new Company(null);
 		} else {
-			company = this.findById(companyIdInt);
+			company = this.findById(id);
 		}
 		return company;
 	}

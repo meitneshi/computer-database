@@ -5,26 +5,20 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.Path;
-import javax.persistence.criteria.Root;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import ch.qos.logback.classic.Logger;
 
 import com.excilys.dao.IComputerDAO;
-import com.excilys.exceptions.IllegalPersonnalException;
-import com.excilys.om.Company;
 import com.excilys.om.Computer;
+import com.excilys.om.QCompany;
+import com.excilys.om.QComputer;
 import com.jolbox.bonecp.BoneCPDataSource;
+import com.mysema.query.jpa.impl.JPAQuery;
+import com.mysema.query.types.path.StringPath;
 
 @Repository
 public class ComputerDAOImpl implements IComputerDAO{
@@ -50,60 +44,52 @@ public class ComputerDAOImpl implements IComputerDAO{
 	}
 	
 	public Computer getById (long id) {
-		
 		logger.info("trying to find a computer by id");
-		
 		return em.find(Computer.class, id);
 	}
 		
 	public List<Computer> getInPage (int numPage, int entitiesPerPage, String filter, String order, String criteria) {
 		logger.info("trying to find a list of computer according to several criteria");
 
-		CriteriaBuilder builder = em.getCriteriaBuilder();
-		CriteriaQuery<Computer> criteriaQuery = builder.createQuery(Computer.class);
-		Root<Computer> computerRoot = criteriaQuery.from(Computer.class);
-		Join<Computer, Company> company = computerRoot.join("company", JoinType.LEFT);
-
+		JPAQuery query = new JPAQuery (em);
+		QComputer computer = QComputer.computer;
+		QCompany company = QCompany.company;
+		
+		query.from(computer).leftJoin(computer.company, company);
+		
 		if(filter != null){
-			criteriaQuery.where(
-					builder.like(computerRoot.<String>get("name"), "%"+filter+"%")
-					);
+			query.where(computer.name.like("%"+filter+"%"));
 		}
 		
-//		initialize path		
-		Path<Object> path = computerRoot.get("name");
-		if ("company".equals(criteria)) {
-			path = company.get("name");
+		StringPath path = computer.name;
+		if("company".equals(criteria)) {
+			path = company.name;
 		}
 		
-//		create order by
 		if("desc".equals(order)) { //order desc
-			criteriaQuery.orderBy(builder.desc(path));
+			query.orderBy(path.desc());
 		} else { //order asc
-			criteriaQuery.orderBy(builder.asc(path));
+			query.orderBy(path.asc());
 		}
-
-		TypedQuery<Computer> query = em.createQuery(criteriaQuery);
-		return query.setFirstResult(((numPage-1)*entitiesPerPage))
-				.setMaxResults(entitiesPerPage)
-				.getResultList();
+		
+		query.limit(entitiesPerPage);
+		query.offset(((numPage-1)*entitiesPerPage));
+		
+		return query.list(computer);
 	}
 
 	public long count(String filter) {
 		
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-		Root<Computer> computerRoot = cq.from(Computer.class);
+		JPAQuery query = new JPAQuery (em);
+		QComputer computer = QComputer.computer;
+		QCompany company = QCompany.company;
+		query.from(computer).leftJoin(computer.company, company);
 		
 		if (filter.isEmpty()) {//count all computers
-			cq.select(cb.count(computerRoot));
-			return (Long)em.createQuery(cq).getSingleResult();
+			return query.list(computer).size();
 		} else { //count according to filter
-			cq.select(cb.count(computerRoot));
-			cq.where(
-					cb.like(computerRoot.<String>get("name"), "%"+filter+"%")
-					);
-			return (Long)em.createQuery(cq).getSingleResult();
+			query.where(computer.name.like("%"+filter+"%"));
+			return query.list(computer).size();
 		}
 	}
 
@@ -111,16 +97,10 @@ public class ComputerDAOImpl implements IComputerDAO{
 		logger.info("attempting to save a computer");
 		
 		Long id = (computer.getId() == 0) ? null : computer.getId();
-		try {
-			if (id == null){ //new computer, create
-				em.persist(computer);
-			} else { //existing computer, edit
-				em.merge(computer);
-			}
-			logger.info("save is successfull");	
-		} catch (DataAccessException e) {
-			logger.debug("failed to save the computer "+e.getMessage());
-			throw new IllegalPersonnalException();
+		if (id == null){ //new computer, create
+			em.persist(computer);
+		} else { //existing computer, edit
+			em.merge(computer);
 		}
 	}
 }

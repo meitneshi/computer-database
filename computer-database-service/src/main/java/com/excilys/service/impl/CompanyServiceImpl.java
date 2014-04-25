@@ -31,7 +31,7 @@ public class CompanyServiceImpl implements ICompanyService{
 	}
 
 	@Transactional(readOnly = false)
-	public Company initCompany(String id) {
+	public Company initCompany(long id) {
 		return companyDAO.initCompany(id);
 	}
 }

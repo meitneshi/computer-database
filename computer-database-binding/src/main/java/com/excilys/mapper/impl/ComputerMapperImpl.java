@@ -38,7 +38,8 @@ public class ComputerMapperImpl implements IComputerMapper{
 		if ("0".equals(computerDto.getCompanyId())) {
 			company = null;
 		} else {
-			company = companyservice.initCompany(computerDto.getCompanyId());
+			long compId = Long.parseLong(computerDto.getCompanyId());
+			company = companyservice.initCompany(compId);
 		}
 		Computer computer = new Computer(id, company, computerDto.getName(), introduced, discontinued);
 		return computer;

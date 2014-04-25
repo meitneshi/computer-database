@@ -24,5 +24,5 @@ public interface ICompanyService {
 	 * @param id
 	 * @return Company
 	 */
-	public Company initCompany(String id);
+	public Company initCompany(long id);
 }

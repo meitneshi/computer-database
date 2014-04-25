@@ -24,5 +24,5 @@ public interface ICompanyDAO {
 	 * @param companyId
 	 * @return Company
 	 */
-	public Company initCompany(String id);
+	public Company initCompany(long id);
 }
