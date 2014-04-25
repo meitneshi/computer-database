@@ -27,7 +27,7 @@ public class Computer {
 	private long id;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "company_id")
+    @JoinColumn(name = "company_id", referencedColumnName = "id")
 	private Company company;
 	
 	@Column(name="name")
