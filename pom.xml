@@ -28,8 +28,11 @@
 		<computerDatabase.service.version>0.0.1-SNAPSHOT</computerDatabase.service.version>
 		<computerDatabase.binding.version>0.0.1-SNAPSHOT</computerDatabase.binding.version>
 		<computerDatabase.webapp.version>0.0.1-SNAPSHOT</computerDatabase.webapp.version>
-		<bridge.jclOverSlf4j.version>1.7.7</bridge.jclOverSlf4j.version>
+		<bridge.jcl.over.slf4j.version>1.7.7</bridge.jcl.over.slf4j.version>
+		<bridge.slf4j.log4j.version>1.6.1</bridge.slf4j.log4j.version>
+		<querydsl.version>3.3.2</querydsl.version>
 		<jadira.version>2.0.1</jadira.version>
+		<apt.maven.plugin.version>1.0.9</apt.maven.plugin.version>
 	</properties>
 
 	<dependencyManagement>
@@ -145,12 +148,26 @@
 				<artifactId>joda-time-jsptags</artifactId>
 				<version>${jodatime.tag.version}</version>
 			</dependency>
-			
+
 			<!-- Jadira -->
 			<dependency>
 				<groupId>org.jadira.usertype</groupId>
 				<artifactId>usertype.jodatime</artifactId>
 				<version>${jadira.version}</version>
+			</dependency>
+
+			<!-- QueryDSL -->
+			<dependency>
+				<groupId>com.mysema.querydsl</groupId>
+				<artifactId>querydsl-apt</artifactId>
+				<version>${querydsl.version}</version>
+				<!-- <scope>provided</scope> -->
+			</dependency>
+
+			<dependency>
+				<groupId>com.mysema.querydsl</groupId>
+				<artifactId>querydsl-jpa</artifactId>
+				<version>${querydsl.version}</version>
 			</dependency>
 
 			<!-- Module dependency -->
@@ -196,13 +213,14 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
-			<version>${bridge.jclOverSlf4j.version}</version>
+			<version>${bridge.jcl.over.slf4j.version}</version>
 		</dependency>
 	</dependencies>
 
 	<build>
 		<finalName>computer-database</finalName>
 		<plugins>
+			<!-- maven plugin for compiling -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
