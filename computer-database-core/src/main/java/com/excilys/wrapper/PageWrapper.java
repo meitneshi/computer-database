@@ -6,21 +6,21 @@ import com.excilys.om.Computer;
 
 public class PageWrapper {
 
-	private int entitiesPerPage;
-	private int currentPagenumber;
-	private long numberOfComputer;
-	private long numberTotalOfComputer;
-	private int pageMax;
+	public int entitiesPerPage;
+	public int currentPagenumber;
+	public long numberOfComputer;
+	public long numberTotalOfComputer;
+	public int pageMax;
 	
-	private String criteria;
-	private String order;
-	private String filter;
+	public String criteria;
+	public String order;
+	public String filter;
 	
-	private String add;
-	private String edit;
-	private String delete;
+	public String add;
+	public String edit;
+	public String delete;
 	
-	private List<Computer> computerPageList;
+	public List<Computer> computerPageList;
 
 	/**
 	 * @return the entitiesPerPage
