@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 	<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+	<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,4 +34,14 @@
     		<a href="Langage?lang=sp"><img src="resources/img/flag-icon/sp.png" height="40px" width="40px" alt="Traducir al español" /></a>
     		<a href="Langage?lang=de"><img src="resources/img/flag-icon/de.png" height="40px" width="40px" alt="ins Deutsche übersetzt"></a>
 		</span>
+		
+		<sec:authorize access="isAuthenticated()">
+  			<spring:message code="header.welcome"/>  
+  			<sec:authentication property="principal.username"/>
+  			<a href="j_spring_security_logout" type="button" class="btn btn-danger">
+  				<span class="glyphicon glyphicon-remove" ></span>
+  				<spring:message code="connection.disconnect" />
+  			</a>
+		</sec:authorize>
+
 	</header>

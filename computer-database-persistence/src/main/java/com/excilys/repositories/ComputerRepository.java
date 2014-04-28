@@ -9,7 +9,7 @@ import com.excilys.om.Computer;
 
 public interface ComputerRepository extends JpaRepository<Computer, Long>{
 	
-	List<Computer> findByNameContainingOrCompanyName(String name, String companyName, Pageable page);
+	List<Computer> findByNameContaining(String name, Pageable page);
 	
 	long countByNameContaining(String pattern);
 }

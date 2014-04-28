@@ -49,7 +49,7 @@ public class ComputerServiceImpl implements IComputerService {
 			String filter, String order, String criteria) {
 		Sort sort = new Sort(Sort.Direction.ASC, "name");
 		Pageable page = new PageRequest(numPage-1, entitiesPerPage, sort);
-		return repository.findByNameContainingOrCompanyName(filter, filter, page);
+		return repository.findByNameContaining(filter, page);
 	}
 
 	@Transactional(readOnly = true)
@@ -110,11 +110,11 @@ public class ComputerServiceImpl implements IComputerService {
 		if (filter != null) {
 			page.setNumberOfComputer(this.count(filter));
 			page.setFilter(filter);
-			page.setComputerPageList(repository.findByNameContainingOrCompanyName(filter, filter, pageR));
+			page.setComputerPageList(repository.findByNameContaining(filter, pageR));
 		} else { // default
 			page.setNumberOfComputer(this.count(""));
 			page.setFilter("");
-			page.setComputerPageList(repository.findByNameContainingOrCompanyName("", "",  pageR));
+			page.setComputerPageList(repository.findByNameContaining("",  pageR));
 		}
 
 		page.setNumberTotalOfComputer(this.count(""));

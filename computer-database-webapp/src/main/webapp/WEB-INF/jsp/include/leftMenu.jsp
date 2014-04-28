@@ -1,5 +1,6 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 
 <%@ taglib tagdir="/WEB-INF/tags" prefix="page" %>
 
@@ -51,10 +52,12 @@
 		<hr>
 		
 <!--             Add Computer Button -->
-		<div>
-			<a href="AddComputer" class="btn btn-success btn-lg active"><spring:message code="dashboard.add"/></a>
-		</div>
-		<hr>
+		<sec:authorize ifAllGranted="ROLE_ADMIN">
+			<div>
+				<a href="AddComputer" class="btn btn-success btn-lg active"><spring:message code="dashboard.add"/></a>
+			</div>
+			<hr>
+		</sec:authorize>
 		
 <!-- 			Menu footer -->
 		<div>

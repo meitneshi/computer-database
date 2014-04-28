@@ -2,6 +2,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://www.joda.org/joda/time/tags" prefix="joda" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 
 <%@ taglib tagdir="/WEB-INF/tags" prefix="page" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="link" %>
@@ -70,10 +71,11 @@
 					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-up' ></span>" servlet="Dashboard" entitiesperpage="${page.entitiesPerPage }" page="1" filter="${page.filter }" order="asc" criteria="companyName"/>
 					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-down' ></span>" servlet="Dashboard" entitiesperpage="${page.entitiesPerPage }" page="1" filter="${page.filter }" order="desc" criteria="companyName"/>
 				</th>
-				
-				<th>
-					<spring:message code="label.actions"/>
-				</th>
+				<sec:authorize ifAllGranted="ROLE_ADMIN">
+					<th>
+						<spring:message code="label.actions"/>
+					</th>
+				</sec:authorize>
 			</tr>
 		</thead>
 		<tbody>
@@ -115,14 +117,16 @@
 						</c:choose>
 					</td>
 					
-					<td id="actions">
-						<a type="button" href="EditComputer?id=${computer.id }" class="btn btn-info">
-							<span class="glyphicon glyphicon-pencil" ></span>
-						</a>
-						<a type="button" href="DeleteComputer?id=${computer.id }" class="btn btn-danger" onclick="return confirm('${deleteConfirm} ${deleteWarning }')">
-							<span class="glyphicon glyphicon-trash" ></span>
-						</a>
-					</td>
+					<sec:authorize ifAllGranted="ROLE_ADMIN">
+						<td id="actions">
+							<a type="button" href="EditComputer?id=${computer.id }" class="btn btn-info">
+								<span class="glyphicon glyphicon-pencil" ></span>
+							</a>
+							<a type="button" href="DeleteComputer?id=${computer.id }" class="btn btn-danger" onclick="return confirm('${deleteConfirm} ${deleteWarning }')">
+								<span class="glyphicon glyphicon-trash" ></span>
+							</a>
+						</td>
+					</sec:authorize>
 				</tr>
 			</c:forEach>
 		</tbody>
