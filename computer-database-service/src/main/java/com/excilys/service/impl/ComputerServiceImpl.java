@@ -93,10 +93,8 @@ public class ComputerServiceImpl implements IComputerService {
 		Sort sort = null;
 		Direction direction = Sort.Direction.ASC;
 		
-		if ("company".equals(criteria)) {
-			pCriteria = "companyName";
-		} else { //default value
-			pCriteria = "name";
+		if (criteria != null) {
+			pCriteria = criteria;
 		}
 		page.setCriteria(criteria);
 		
