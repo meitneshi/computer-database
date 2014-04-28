@@ -43,5 +43,4 @@ http://www.springframework.org/schema/data/jpa http://www.springframework.org/sc
     <jpa:repositories base-package="com.excilys.repositories"/>
 
 	<context:component-scan base-package="com.excilys.om" />
-	<context:component-scan base-package="com.excilys.dao" />
 </beans>

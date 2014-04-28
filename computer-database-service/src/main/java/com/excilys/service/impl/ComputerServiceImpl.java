@@ -10,9 +10,10 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.excilys.dao.ILogDAO;
 import com.excilys.om.Computer;
+import com.excilys.om.Log;
 import com.excilys.repositories.ComputerRepository;
+import com.excilys.repositories.LogRepository;
 import com.excilys.service.IComputerService;
 import com.excilys.wrapper.PageWrapper;
 
@@ -20,7 +21,7 @@ import com.excilys.wrapper.PageWrapper;
 public class ComputerServiceImpl implements IComputerService {
 
 	@Autowired
-	private ILogDAO logDao;
+	private LogRepository logRepo;
 	@Autowired
 	private ComputerRepository repository;
 	
@@ -34,7 +35,8 @@ public class ComputerServiceImpl implements IComputerService {
 		StringBuilder logB = new StringBuilder();
 		logB.append("computer (id=").append(id)
 		.append(") was deleted from the database");
-		logDao.create(logB.toString());
+		Log log = new Log(logB.toString());
+		logRepo.saveAndFlush(log);
 	}
 
 	@Transactional(readOnly = true)
@@ -90,10 +92,9 @@ public class ComputerServiceImpl implements IComputerService {
 		}
 		
 		String pCriteria = "name";
-		Sort sort = null;
 		Direction direction = Sort.Direction.ASC;
 		
-		if (criteria != null) {
+		if (criteria != null && !(criteria.isEmpty())) {
 			pCriteria = criteria;
 		}
 		page.setCriteria(criteria);
@@ -102,7 +103,9 @@ public class ComputerServiceImpl implements IComputerService {
 			direction = Sort.Direction.DESC;
 		}
 		page.setOrder(order);
-		sort = new Sort(direction, pCriteria);
+		System.out.println(direction);
+		System.out.println(pCriteria);
+		Sort sort = new Sort(direction, pCriteria);
 		
 		Pageable pageR = new PageRequest(numPage-1, entitiesPerPage, sort);
 		
@@ -142,6 +145,7 @@ public class ComputerServiceImpl implements IComputerService {
 			.append(String.valueOf(computer.getId()))
 			.append(") was edited in database");
 		}
-		logDao.create(logB.toString());
+		Log log = new Log(logB.toString());
+		logRepo.saveAndFlush(log);
 	}
 }
