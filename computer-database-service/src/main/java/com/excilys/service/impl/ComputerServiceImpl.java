@@ -3,13 +3,16 @@ package com.excilys.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.excilys.dao.IComputerDAO;
 import com.excilys.dao.ILogDAO;
-import com.excilys.exceptions.IllegalPersonnalException;
 import com.excilys.om.Computer;
+import com.excilys.repositories.ComputerRepository;
 import com.excilys.service.IComputerService;
 import com.excilys.wrapper.PageWrapper;
 
@@ -21,29 +24,30 @@ public class ComputerServiceImpl implements IComputerService {
 	}
 
 	@Autowired
-	private IComputerDAO computerDAO;
-	@Autowired
 	private ILogDAO logDao;
+	@Autowired
+	private ComputerRepository repository;
 
 	@Transactional(readOnly = false)
-	public void delete(int id) {
-		computerDAO.delete(id);
+	public void delete(long id) {
+		repository.delete(id);
 		StringBuilder logB = new StringBuilder();
 		logB.append("computer (id=").append(id)
-				.append(") was deleted from the database");
+		.append(") was deleted from the database");
 		logDao.create(logB.toString());
 	}
 
 	@Transactional(readOnly = true)
-	public Computer getById(int id) {
-		return computerDAO.getById(id);
+	public Computer getById(long id) {
+		return repository.findOne(id);
 	}
 
 	@Transactional(readOnly = true)
 	public List<Computer> getInPage(int numPage, int entitiesPerPage,
 			String filter, String order, String criteria) {
-		return computerDAO.getInPage(numPage, entitiesPerPage, filter, order,
-				criteria);
+		Sort sort = new Sort(Sort.Direction.ASC, "name");
+		Pageable page = new PageRequest(numPage-1, entitiesPerPage, sort);
+		return repository.findByNameContaining(filter, page);
 	}
 
 	@Transactional(readOnly = true)
@@ -70,7 +74,6 @@ public class ComputerServiceImpl implements IComputerService {
 		if (filter != null) {
 			numberOfComputerDouble = (double) this.count(filter);
 		}
-		
 		double pageMaxDouble = numberOfComputerDouble / entitiesPerPageDouble;
 		int pageMax = (int) Math.ceil(pageMaxDouble);
 
@@ -85,29 +88,34 @@ public class ComputerServiceImpl implements IComputerService {
 		} else {
 			page.setCurrentPagenumber(1); // default
 		}
-
-		if (criteria != null) {
-			page.setCriteria(criteria);
-		} else {
-			page.setCriteria("name");
+		
+		String pCriteria = "name";
+		Sort sort = null;
+		Direction direction = Sort.Direction.ASC;
+		
+		if ("company".equals(criteria)) {
+			pCriteria = "companyName";
+		} else { //default value
+			pCriteria = "name";
 		}
-
-		if (order != null) {
-			page.setOrder(order);
-		} else {
-			page.setOrder("asc");
+		page.setCriteria(criteria);
+		
+		if ("desc".equals(order)) {
+			direction = Sort.Direction.DESC;
 		}
-
+		page.setOrder(order);
+		sort = new Sort(direction, pCriteria);
+		
+		Pageable pageR = new PageRequest(numPage-1, entitiesPerPage, sort);
+		
 		if (filter != null) {
 			page.setNumberOfComputer(this.count(filter));
 			page.setFilter(filter);
-			page.setComputerPageList(computerDAO.getInPage(numPage,
-					entitiesPerPage, filter, order, criteria));
+			page.setComputerPageList(repository.findByNameContaining(filter, pageR));
 		} else { // default
 			page.setNumberOfComputer(this.count(""));
 			page.setFilter("");
-			page.setComputerPageList(computerDAO.getInPage(numPage,
-					entitiesPerPage, "", order, criteria));
+			page.setComputerPageList(repository.findByNameContaining("", pageR));
 		}
 
 		page.setNumberTotalOfComputer(this.count(""));
@@ -118,23 +126,23 @@ public class ComputerServiceImpl implements IComputerService {
 
 	@Transactional(readOnly = false)
 	public long count(String filter) {
-		try {
-			return computerDAO.count(filter);
-		} catch (IllegalPersonnalException e) {
-			throw e;
+		if (filter.isEmpty()) {
+			return repository.count();
+		} else {
+			return repository.countByNameContaining("%"+filter+"%");
 		}
 	}
 
 	@Transactional(readOnly = false)
 	public void save(Computer computer) {
-		computerDAO.save(computer);
+		repository.saveAndFlush(computer);
 		StringBuilder logB = new StringBuilder();
 		if (computer.getId() == 0) {
 			logB.append("new computer create in database");
 		} else {
 			logB.append("computer (id=")
-					.append(String.valueOf(computer.getId()))
-					.append(") was edited in database");
+			.append(String.valueOf(computer.getId()))
+			.append(") was edited in database");
 		}
 		logDao.create(logB.toString());
 	}

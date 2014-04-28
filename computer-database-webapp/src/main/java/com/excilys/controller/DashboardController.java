@@ -29,9 +29,9 @@ public class DashboardController {
 	protected String doGet(
 			@RequestParam(value="page", required = false) String page,
 			@RequestParam(value="entitiesperpage", required = false) String entitiesPerPage,
-			@RequestParam(value="filter", required = false) String filter,
-			@RequestParam(value="order", required = false) String order,
-			@RequestParam(value="criteria", required = false) String criteria,
+			@RequestParam(value="filter", required = false) String filter, //string to search
+			@RequestParam(value="order", required = false) String order, //asc or desc
+			@RequestParam(value="criteria", required = false) String criteria, //name or company
 			@RequestParam(value="add", required = false) String add,
 			@RequestParam(value="edit", required = false) String edit,
 			@RequestParam(value="delete", required = false) String delete,
@@ -44,6 +44,7 @@ public class DashboardController {
 		//Add lang parameter
 		model.addAttribute("lang", LocaleContextHolder.getLocale());
 
+		//Add Page
 		model.addAttribute("page", pageW);
 		return "dashboard";
 	}

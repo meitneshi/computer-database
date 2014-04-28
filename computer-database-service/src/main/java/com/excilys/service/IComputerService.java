@@ -11,14 +11,14 @@ public interface IComputerService {
 	 * delete the computer with the selected id
 	 * @param id
 	 */
-	public void delete (int id);
+	public void delete (long id);
 	
 	/**
 	 * find a computer by its Id
 	 * @param id
 	 * @return Computer
 	 */
-	public Computer getById (int id);
+	public Computer getById (long id);
 	
 	/**
 	 * Find a list of computer according to the parameters given

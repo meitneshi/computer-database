@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 http://www.springframework.org/schema/context
-http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+http://www.springframework.org/schema/context/spring-context-4.0.xsd
+http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.1.xsd">
 
 	<!-- BoneCP configuration -->
 	<bean name="datasource" id="datasource" class="com.jolbox.bonecp.BoneCPDataSource"
@@ -20,24 +21,27 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 	</bean>
 
 	<bean id="entityManagerFactory"
-        class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="persistenceXmlLocation" value="classpath:persistence.xml"/>
-        <property name="persistenceUnitName" value="computerPersistenceUnit" /> 
-        <property name="dataSource" ref="datasource" />
-        <property name="packagesToScan" value="com.excilys.computerdatabase.om"/>
-        <property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
-        <property name="jpaDialect" ref="jpaDialect" />
-    </bean>
-    
-    <bean id="jpaVendorAdapter"
-        class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-        <property name="database" value="MYSQL" />
-        <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" />
-    </bean>
- 
-    <bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
-	
-	<context:component-scan base-package="com.excilys.dao" />
-	<context:component-scan base-package="com.excilys.om" />
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceXmlLocation" value="classpath:persistence.xml" />
+		<property name="persistenceUnitName" value="computerPersistenceUnit" />
+		<property name="dataSource" ref="datasource" />
+		<property name="packagesToScan" value="com.excilys.computerdatabase.om" />
+		<property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
+		<property name="jpaDialect" ref="jpaDialect" />
+	</bean>
 
+	<bean id="jpaVendorAdapter"
+		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+		<property name="database" value="MYSQL" />
+		<property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" />
+	</bean>
+
+	<bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
+
+    <context:component-scan base-package="com.excilys.computerdatabase.persistence"/>
+    
+    <jpa:repositories base-package="com.excilys.repositories"/>
+
+	<context:component-scan base-package="com.excilys.om" />
+	<context:component-scan base-package="com.excilys.dao" />
 </beans>
