@@ -67,9 +67,9 @@
 		</li>
 	</c:if>
 	
-<!-- disable next button if last page -->
+<!-- disable next button if last page or nb page=1 or 0(empty result)  -->
 	<c:choose>
-		<c:when test="${currentPageNumber == pageMax}">
+		<c:when test="${currentPageNumber == pageMax || pageMax == 1 || pageMax == 0}">
 			<li class="disabled">
 				<a href="">&gt;</a>
 			</li>
@@ -81,8 +81,15 @@
 		</c:otherwise>
 	</c:choose>
 
-<!-- button last page -->
+<!-- button last page disable if nb page = 1 or 0(empty result) -->
 	<li>
-		<link:linkGen label="&raquo;" servlet="Dashboard" entitiesperpage="${page.entitiesPerPage }" page="${pageMax }" filter="${filter }" order="${order }" criteria="${criteria }"/>
+		<c:choose>
+			<c:when test="${pageMax == 0 || pageMax == 1 }">
+				<link:linkGen label="&raquo;" servlet="Dashboard" entitiesperpage="${page.entitiesPerPage }" page="1" filter="${filter }" order="${order }" criteria="${criteria }"/>
+			</c:when>
+			<c:otherwise>
+				<link:linkGen label="&raquo;" servlet="Dashboard" entitiesperpage="${page.entitiesPerPage }" page="${pageMax }" filter="${filter }" order="${order }" criteria="${criteria }"/>
+			</c:otherwise>
+		</c:choose>
 	</li>
 </ul>
