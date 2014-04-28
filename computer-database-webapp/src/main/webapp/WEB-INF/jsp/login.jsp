@@ -1,6 +1,4 @@
-
-
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <jsp:include page="include/header.jsp" />
@@ -8,6 +6,10 @@
 <spring:message code="connection.login" var="labelLogin" />
 <spring:message code="connection.pass" var="labelPass" />
 <spring:message code="connection.connect" var="labelConnect" />
+
+<c:if test="${error }">
+	COUCOU
+</c:if>
 
 <form class="form" id="login" name="login" method="POST" action="j_spring_security_check">
 	<div class="form-group has-feedback">

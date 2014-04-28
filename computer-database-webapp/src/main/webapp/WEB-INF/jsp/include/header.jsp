@@ -36,12 +36,18 @@
 		</span>
 		
 		<sec:authorize access="isAuthenticated()">
-  			<spring:message code="header.welcome"/>  
-  			<sec:authentication property="principal.username"/>
-  			<a href="j_spring_security_logout" type="button" class="btn btn-danger">
-  				<span class="glyphicon glyphicon-remove" ></span>
-  				<spring:message code="connection.disconnect" />
-  			</a>
+  			<div align="center">
+	  			<h1><span class="label label-info">
+	  				<spring:message code="header.welcome"/>  
+	  				<sec:authentication property="principal.username"/>
+	  			</span></h1>
+  		</div>	
+		<div style="float: right">
+			<a href="j_spring_security_logout" type="button" class="btn btn-danger">
+				<span class="glyphicon glyphicon-remove" ></span>
+				<spring:message code="connection.disconnect" />
+			</a>
+		</div>
 		</sec:authorize>
 
 	</header>

@@ -71,7 +71,7 @@
 					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-up' ></span>" servlet="Dashboard" entitiesperpage="${page.entitiesPerPage }" page="1" filter="${page.filter }" order="asc" criteria="companyName"/>
 					<link:linkGen type="button" label="<span class='glyphicon glyphicon-chevron-down' ></span>" servlet="Dashboard" entitiesperpage="${page.entitiesPerPage }" page="1" filter="${page.filter }" order="desc" criteria="companyName"/>
 				</th>
-				<sec:authorize ifAllGranted="ROLE_ADMIN">
+				<sec:authorize access="hasRole('ROLE_ADMIN')">
 					<th>
 						<spring:message code="label.actions"/>
 					</th>
@@ -117,7 +117,7 @@
 						</c:choose>
 					</td>
 					
-					<sec:authorize ifAllGranted="ROLE_ADMIN">
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
 						<td id="actions">
 							<a type="button" href="EditComputer?id=${computer.id }" class="btn btn-info">
 								<span class="glyphicon glyphicon-pencil" ></span>
