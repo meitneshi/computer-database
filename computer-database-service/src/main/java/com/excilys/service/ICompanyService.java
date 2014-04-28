@@ -11,7 +11,7 @@ public interface ICompanyService {
 	 * @param id
 	 * @return Company
 	 */
-	public Company findById(int id);
+	public Company findById(long id);
 	
 	/**
 	 * return the full list of company

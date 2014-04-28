@@ -19,14 +19,14 @@ import com.excilys.wrapper.PageWrapper;
 @Service
 public class ComputerServiceImpl implements IComputerService {
 
-	public ComputerServiceImpl() {
-		super();
-	}
-
 	@Autowired
 	private ILogDAO logDao;
 	@Autowired
 	private ComputerRepository repository;
+	
+	public ComputerServiceImpl() {
+		super();
+	}
 
 	@Transactional(readOnly = false)
 	public void delete(long id) {
