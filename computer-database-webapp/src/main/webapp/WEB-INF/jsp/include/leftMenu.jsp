@@ -29,7 +29,7 @@
 		<div><spring:message code="search.numberOfResult"/> : <c:out value="${page.pageMax }"/></div>
 		<hr>
 
-<!-- 			Search form -->
+<!-- 			Search by computer name form -->
 		<div>
 			<form class="form-inline" method="GET" action="Dashboard">
 				<input type="hidden" name="entitiesperpage" value="${page.entitiesPerPage }">
@@ -40,6 +40,7 @@
 				<button type="submit" class="btn btn-default"><spring:message code="search.button"/></button>
 			</form>
 		</div>
+		
 		
 <!-- 			Explicit Searching criteria -->
 		<div>
