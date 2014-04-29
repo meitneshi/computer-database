@@ -10,10 +10,15 @@
 	<packaging>war</packaging>
 
 	<dependencies>
-		<!-- Module Binding including all -->
+		<!-- Module binding -->
 		<dependency>
 			<groupId>com.excilys</groupId>
 			<artifactId>computer-database-binding</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
 
 		<!-- JSTL tag lib -->

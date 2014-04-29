@@ -5,13 +5,14 @@
 	id="WebApp_ID" version="3.0">
 	<display-name>computer-database</display-name>
 	<welcome-file-list>
-		<welcome-file>dashboard.jsp</welcome-file>
+		<welcome-file>Dashboard</welcome-file>
 	</welcome-file-list>
 
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
+	<!-- Mapping -->
 	<servlet>
 		<servlet-name>spring</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -23,13 +24,13 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
-	<!-- Spring Security -->
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>
-			/WEB-INF/spring-security.xml, /WEB-INF/applicationContext.xml
-		</param-value>
-	</context-param>
+	<!-- Spring context -->
+<!-- 	<context-param> -->
+<!-- 		<param-name>contextConfigLocation</param-name> -->
+<!-- 		<param-value> -->
+<!-- 			/WEB-INF/spring-security.xml, /WEB-INF/applicationContext.xml -->
+<!-- 		</param-value> -->
+<!-- 	</context-param> -->
 
 	<!-- Spring Security -->
 	<filter>

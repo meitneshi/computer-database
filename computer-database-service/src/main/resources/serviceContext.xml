@@ -10,13 +10,15 @@ http://www.springframework.org/schema/tx
 http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 	
 	<import resource="classpath:persistenceContext.xml"/>
+	<context:component-scan base-package="com.excilys.service"/>
 	
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+		<property name="dataSource" ref="datasource" />
 	</bean>
 	
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 	
-	<context:component-scan base-package="com.excilys.service"/>
+	
 	
 </beans>

@@ -15,12 +15,12 @@ import com.excilys.wrapper.PageWrapper;
  * Controller implementation class DashboardController
  */
 @Controller
-@RequestMapping("/Dashboard")
+@RequestMapping(value={"/Dashboard"})
 public class DashboardController {
 	
 	@Autowired
 	private IComputerService computerService;
-       
+	
     public DashboardController() {
         super();
     }

@@ -51,6 +51,11 @@ public class ComputerServiceImpl implements IComputerService {
 		Pageable page = new PageRequest(numPage-1, entitiesPerPage, sort);
 		return repository.findByNameContaining(filter, page);
 	}
+	
+	@Transactional(readOnly = true)
+	public List<Computer> findAll() {
+		return repository.findAll();
+	}
 
 	@Transactional(readOnly = true)
 	public PageWrapper generatePage(String numPageS, String entitiesPerPageS,

@@ -32,6 +32,12 @@ public interface IComputerService {
 	public List<Computer> getInPage (int numPage, int entitiesPerPage, String filter, String order, String criteria);
 
 	/**
+	 * return the entire list of computer
+	 * @return
+	 */
+	public List<Computer> findAll();
+	
+	/**
 	 * Count the number of computer according to a filter
 	 * if filter = "" -> count all computers
 	 * @param filter

@@ -29,12 +29,15 @@
 		<computerDatabase.service.version>0.0.1-SNAPSHOT</computerDatabase.service.version>
 		<computerDatabase.binding.version>0.0.1-SNAPSHOT</computerDatabase.binding.version>
 		<computerDatabase.webapp.version>0.0.1-SNAPSHOT</computerDatabase.webapp.version>
+		<computerDatabase.webservice.version>0.0.1-SNAPSHOT</computerDatabase.webservice.version>
 		<bridge.jcl.over.slf4j.version>1.7.7</bridge.jcl.over.slf4j.version>
 		<bridge.slf4j.log4j.version>1.6.1</bridge.slf4j.log4j.version>
 		<querydsl.version>3.3.2</querydsl.version>
 		<jadira.version>2.0.1</jadira.version>
 		<apt.maven.plugin.version>1.0.9</apt.maven.plugin.version>
 		<spring.data.jpa.version>1.5.2.RELEASE</spring.data.jpa.version>
+		<jaxws.spring.version>1.9</jaxws.spring.version>
+		<jaxws.version>2.2.3</jaxws.version>
 	</properties>
 
 	<dependencyManagement>
@@ -122,6 +125,13 @@
 				<version>${spring.version}</version>
 			</dependency>
 
+			<!-- Spring beans -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+
 			<!-- Spring Data JPA -->
 			<dependency>
 				<groupId>org.springframework.data</groupId>
@@ -146,6 +156,19 @@
 				<groupId>org.springframework.security</groupId>
 				<artifactId>spring-security-taglibs</artifactId>
 				<version>${spring.security.version}</version>
+			</dependency>
+
+			<!-- Web Service jax ws -->
+<!-- 			<dependency> -->
+<!-- 				<groupId>com.sun.xml.ws</groupId> -->
+<!-- 				<artifactId>jaxws-rt</artifactId> -->
+<!-- 				<version>${jaxws.version}</version> -->
+<!-- 			</dependency> -->
+			
+			<dependency>
+				<groupId>org.jvnet.jax-ws-commons.spring</groupId>
+				<artifactId>jaxws-spring</artifactId>
+				<version>${jaxws.spring.version}</version>
 			</dependency>
 
 			<!-- Hibernate Validator -->
@@ -237,6 +260,13 @@
 				<artifactId>computer-database-webapp</artifactId>
 				<version>${computerDatabase.webapp.version}</version>
 			</dependency>
+			<!-- Web Service -->
+			<dependency>
+				<groupId>com.excilys</groupId>
+				<artifactId>computer-database-webservices</artifactId>
+				<version>${computerDatabase.webservice.version}</version>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 
@@ -271,5 +301,6 @@
 		<module>computer-database-service</module>
 		<module>computer-database-binding</module>
 		<module>computer-database-webapp</module>
+		<module>computer-database-webservices</module>
 	</modules>
 </project>

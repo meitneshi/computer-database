@@ -4,7 +4,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 
 
-<a href=#>coucou</a>
 <%
-response.sendRedirect("/jsp/dashboard.jsp");
+response.sendRedirect("/Dashboard");
 %>
