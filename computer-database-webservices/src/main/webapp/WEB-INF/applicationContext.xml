@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:ws="http://jax-ws.dev.java.net/spring/core" xmlns:wss="http://jax-ws.dev.java.net/spring/servlet"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
 	xsi:schemaLocation="
-				http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-				http://jax-ws.dev.java.net/spring/core http://jax-ws.java.net/spring/core.xsd
-				http://jax-ws.dev.java.net/spring/servlet http://jax-ws.java.net/spring/servlet.xsd">
+	http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://cxf.apache.org/jaxrs 
+	http://cxf.apache.org/schemas/jaxrs.xsd">
+
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 
 	<import resource="classpath:/serviceContext.xml" />
-	
+
 	<bean id="service" class="com.excilys.webService.ComputerWebService"></bean>
-	
-	<wss:binding url="/webservice">
-		<wss:service>
-			<ws:service bean="#service" />
-		</wss:service>
-	</wss:binding>	
+
+	<jaxrs:server id="computerService" address="/computers">
+		<jaxrs:serviceBeans>
+			<bean class="com.excilys.webService.ComputerWebService"></bean>
+		</jaxrs:serviceBeans>
+	</jaxrs:server>
 
 </beans>
