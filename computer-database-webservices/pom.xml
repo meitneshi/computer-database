@@ -9,7 +9,6 @@
 	<artifactId>computer-database-webservices</artifactId>
 	<packaging>war</packaging>
 
-
 	<dependencies>
 		<!-- Module binding -->
 		<dependency>
