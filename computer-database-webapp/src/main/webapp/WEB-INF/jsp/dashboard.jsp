@@ -82,7 +82,9 @@
 			<c:forEach items="${page.computerPageList}" var="computer">
 				<tr>
 					<td id="name">
-						<a href="EditComputer?id=${computer.id }" onclick="">
+						<sec:authorize access="hasRole('ROLE_ADMIN')">
+							<a href="EditComputer?id=${computer.id }" onclick="">
+						</sec:authorize>
 							<c:out value="${computer.name }"/>
 						</a>
 					</td>
