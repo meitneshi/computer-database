@@ -19,8 +19,11 @@
 
 	<jaxrs:server id="computerService" address="/computers">
 		<jaxrs:serviceBeans>
-			<bean class="com.excilys.webService.ComputerWebService"></bean>
+			<bean class="com.excilys.webService.ComputerWebService"/>
 		</jaxrs:serviceBeans>
+		<jaxrs:providers>
+			<bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
+		</jaxrs:providers>
 	</jaxrs:server>
 
 </beans>

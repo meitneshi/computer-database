@@ -36,9 +36,8 @@
 		<jadira.version>2.0.1</jadira.version>
 		<apt.maven.plugin.version>1.0.9</apt.maven.plugin.version>
 		<spring.data.jpa.version>1.5.2.RELEASE</spring.data.jpa.version>
-		<jaxws.spring.version>1.9</jaxws.spring.version>
-		<jaxws.version>2.2.3</jaxws.version>
 		<jaxrs.version>2.7.0</jaxrs.version>
+		<cxf-jaxrs-jackson.version>1.9.0</cxf-jaxrs-jackson.version>
 		<javax.servlet.version>3.1.0</javax.servlet.version>
 	</properties>
 
@@ -160,7 +159,7 @@
 				<version>${spring.security.version}</version>
 			</dependency>
 
-			<!-- Web Service jax ws -->
+			<!-- Web Service jax ws jackson-->
 			<dependency>
 				<groupId>javax.servlet</groupId>
 				<artifactId>javax.servlet-api</artifactId>
@@ -171,6 +170,12 @@
 				<artifactId>cxf-rt-frontend-jaxrs</artifactId>
 				<version>${jaxrs.version}</version>
 			</dependency>
+			
+			<dependency>
+ 				<groupId>org.codehaus.jackson</groupId>
+ 				<artifactId>jackson-jaxrs</artifactId>
+ 				<version>${cxf-jaxrs-jackson.version}</version>
+ 			</dependency>
 
 			<!-- Hibernate Validator -->
 			<dependency>
