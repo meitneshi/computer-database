@@ -27,5 +27,4 @@ public class ComputerWebService {
 	public List<Computer> findAll() {
 		return services.findAll();
 	}
-	
 }

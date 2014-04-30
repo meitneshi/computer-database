@@ -1,4 +1,4 @@
-package com.excilys.repositories;
+package com.excilys.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

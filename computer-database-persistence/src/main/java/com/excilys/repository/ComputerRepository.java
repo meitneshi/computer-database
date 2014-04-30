@@ -1,4 +1,4 @@
-package com.excilys.repositories;
+package com.excilys.repository;
 
 import java.util.List;
 

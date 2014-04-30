@@ -40,9 +40,4 @@ public class DeleteComputerController {
 		model.addAttribute("delete", true);
 		return "redirect:/Dashboard";
 	}
-
-    @RequestMapping(method=RequestMethod.POST)
-    protected void doPost(Model model) {
-    	//nothing to do
-    }
 }

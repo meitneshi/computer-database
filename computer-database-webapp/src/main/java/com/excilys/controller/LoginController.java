@@ -18,9 +18,4 @@ public class LoginController {
 	protected String doGet() {
     	return "login";
 	}
-    
-    @RequestMapping(method=RequestMethod.POST)
-	protected void doPost() {
-		//nothing to do for the moment
-	}
 }

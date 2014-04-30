@@ -48,9 +48,4 @@ public class DashboardController {
 		model.addAttribute("page", pageW);
 		return "dashboard";
 	}
-    
-    @RequestMapping(method=RequestMethod.POST)
-	protected void doPost() {
-		//nothing to do for the moment
-	}
 }

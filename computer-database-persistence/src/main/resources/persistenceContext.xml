@@ -11,8 +11,7 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd
 http://www.springframework.org/schema/data/jpa 
 http://www.springframework.org/schema/data/jpa/spring-jpa-1.1.xsd">
 
-<!-- 	<context:component-scan base-package="com.excilys.om" /> -->
-	<context:component-scan base-package="com.excilys.repositories"/>
+	<context:component-scan base-package="com.excilys.repository"/>
 	
 	<!-- BoneCP configuration -->
 	<bean name="datasource" id="datasource" class="com.jolbox.bonecp.BoneCPDataSource"
@@ -45,7 +44,5 @@ http://www.springframework.org/schema/data/jpa/spring-jpa-1.1.xsd">
 
 	<bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
 
-    <jpa:repositories base-package="com.excilys.repositories"/>
-
-	
+    <jpa:repositories base-package="com.excilys.repository"/>
 </beans>

@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ch.qos.logback.classic.Logger;
 
 import com.excilys.om.Company;
-import com.excilys.repositories.CompanyRepository;
+import com.excilys.repository.CompanyRepository;
 import com.excilys.service.ICompanyService;
 
 @Service
@@ -21,8 +21,6 @@ public class CompanyServiceImpl implements ICompanyService{
 	
 	private final static Logger logger = (Logger) LoggerFactory.getLogger(CompanyServiceImpl.class);
 
-//	@Autowired
-//	private ICompanyDAO companyDAO;
 	@Autowired
 	private CompanyRepository repository;
 	@PersistenceContext

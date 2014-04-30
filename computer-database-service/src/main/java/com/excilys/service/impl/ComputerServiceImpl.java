@@ -12,8 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.excilys.om.Computer;
 import com.excilys.om.Log;
-import com.excilys.repositories.ComputerRepository;
-import com.excilys.repositories.LogRepository;
+import com.excilys.repository.ComputerRepository;
+import com.excilys.repository.LogRepository;
 import com.excilys.service.IComputerService;
 import com.excilys.wrapper.PageWrapper;
 
