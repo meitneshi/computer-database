@@ -10,6 +10,7 @@
 	<name>computer-database</name>
 	<url>http://maven.apache.org</url>
 
+	<!-- BEGIN VERSION DECLARATION -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.version>4.0.3.RELEASE</spring.version>
@@ -24,12 +25,7 @@
 		<serveltapi.version>3.0-alpha-1</serveltapi.version>
 		<jodatime.version>2.3</jodatime.version>
 		<jodatime.tag.version>1.1.1</jodatime.tag.version>
-		<computerDatabase.core.version>0.0.1-SNAPSHOT</computerDatabase.core.version>
-		<computerDatabase.persistence.version>0.0.1-SNAPSHOT</computerDatabase.persistence.version>
-		<computerDatabase.service.version>0.0.1-SNAPSHOT</computerDatabase.service.version>
-		<computerDatabase.binding.version>0.0.1-SNAPSHOT</computerDatabase.binding.version>
-		<computerDatabase.webapp.version>0.0.1-SNAPSHOT</computerDatabase.webapp.version>
-		<computerDatabase.webservice.version>0.0.1-SNAPSHOT</computerDatabase.webservice.version>
+		<project.version>0.0.1-SNAPSHOT</project.version>
 		<bridge.jcl.over.slf4j.version>1.7.7</bridge.jcl.over.slf4j.version>
 		<bridge.slf4j.log4j.version>1.6.1</bridge.slf4j.log4j.version>
 		<querydsl.version>3.3.2</querydsl.version>
@@ -40,17 +36,21 @@
 		<cxf-jaxrs-jackson.version>1.9.0</cxf-jaxrs-jackson.version>
 		<javax.servlet.version>3.1.0</javax.servlet.version>
 	</properties>
+	<!-- END VERSION DECLARATION -->
 
+
+	<!-- BEGIN DEPENDENCY MANAGEMENT -->
 	<dependencyManagement>
 		<dependencies>
-			<!-- JSTL for tag -->
+			<!-- JSTL -->
 			<dependency>
 				<groupId>jstl</groupId>
 				<artifactId>jstl</artifactId>
 				<version>${jstl.version}</version>
 			</dependency>
 
-			<!-- Logback for logging -->
+			<!-- BEGIN LOGGING -->
+			<!-- Logback -->
 			<dependency>
 				<groupId>ch.qos.logback</groupId>
 				<artifactId>logback-core</artifactId>
@@ -61,29 +61,41 @@
 				<artifactId>logback-classic</artifactId>
 				<version>${logback.version}</version>
 			</dependency>
-
-			<!-- MySQL for DB connection -->
-			<dependency>
-				<groupId>mysql</groupId>
-				<artifactId>mysql-connector-java</artifactId>
-				<version>${mysql.connector.version}</version>
-			</dependency>
-
-			<!-- slf4j for logging -->
+			<!-- slf4j -->
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api</artifactId>
 				<version>${slf4j.version}</version>
 			</dependency>
+			<!-- END LOGGING -->
 
+			<!-- BEGIN DATABASE -->
+			<!-- MySQL -->
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>${mysql.connector.version}</version>
+			</dependency>
 			<!-- BoneCP for connection Pool -->
 			<dependency>
 				<groupId>com.jolbox</groupId>
 				<artifactId>bonecp</artifactId>
 				<version>${bonecp.version}</version>
 			</dependency>
+			<!-- QueryDSL -->
+			<dependency>
+				<groupId>com.mysema.querydsl</groupId>
+				<artifactId>querydsl-apt</artifactId>
+				<version>${querydsl.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.mysema.querydsl</groupId>
+				<artifactId>querydsl-jpa</artifactId>
+				<version>${querydsl.version}</version>
+			</dependency>
+			<!-- END DATABASE -->
 
-			<!-- Spring Framework -->
+			<!-- BEGIN SPRING -->
 			<!-- Spring core -->
 			<dependency>
 				<groupId>org.springframework</groupId>
@@ -97,69 +109,62 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
-
 			<!-- Spring web -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-web</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
-
 			<!-- Spring MVC -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-webmvc</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
-
 			<!-- Spring JDBC -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-jdbc</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
-
 			<!-- Spring ORM -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-orm</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
-
 			<!-- Spring beans -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-beans</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
-
 			<!-- Spring Data JPA -->
 			<dependency>
 				<groupId>org.springframework.data</groupId>
 				<artifactId>spring-data-jpa</artifactId>
 				<version>${spring.data.jpa.version}</version>
 			</dependency>
-
 			<!-- Spring security -->
 			<dependency>
 				<groupId>org.springframework.security</groupId>
 				<artifactId>spring-security-web</artifactId>
 				<version>${spring.security.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>org.springframework.security</groupId>
 				<artifactId>spring-security-config</artifactId>
 				<version>${spring.security.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>org.springframework.security</groupId>
 				<artifactId>spring-security-taglibs</artifactId>
 				<version>${spring.security.version}</version>
 			</dependency>
+			<!-- END SPRING -->
 
-			<!-- Web Service jax ws jackson-->
+			<!-- BEGIN WEB SERVICE -->
+			<!-- Web Service jax ws jackson -->
 			<dependency>
 				<groupId>javax.servlet</groupId>
 				<artifactId>javax.servlet-api</artifactId>
@@ -170,26 +175,47 @@
 				<artifactId>cxf-rt-frontend-jaxrs</artifactId>
 				<version>${jaxrs.version}</version>
 			</dependency>
-			
 			<dependency>
- 				<groupId>org.codehaus.jackson</groupId>
- 				<artifactId>jackson-jaxrs</artifactId>
- 				<version>${cxf-jaxrs-jackson.version}</version>
- 			</dependency>
+				<groupId>org.codehaus.jackson</groupId>
+				<artifactId>jackson-jaxrs</artifactId>
+				<version>${cxf-jaxrs-jackson.version}</version>
+			</dependency>
+			<!-- END WEB SERVICE -->
 
+			<!-- BEGIN HIBERNATE RELATIVES -->
 			<!-- Hibernate Validator -->
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-validator</artifactId>
 				<version>${hibernate.validator.version}</version>
 			</dependency>
-
 			<!-- Hibernate ORM -->
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-entitymanager</artifactId>
 				<version>${hibernate.version}</version>
 			</dependency>
+			<!-- END HIBERNATE RELATIVES -->
+
+			<!-- BEGIN JODA TIME -->
+			<!-- Joda Time -->
+			<dependency>
+				<groupId>joda-time</groupId>
+				<artifactId>joda-time</artifactId>
+				<version>${jodatime.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>joda-time</groupId>
+				<artifactId>joda-time-jsptags</artifactId>
+				<version>${jodatime.tag.version}</version>
+			</dependency>
+			<!-- Jadira -->
+			<dependency>
+				<groupId>org.jadira.usertype</groupId>
+				<artifactId>usertype.jodatime</artifactId>
+				<version>${jadira.version}</version>
+			</dependency>
+			<!-- END JODA TIME -->
 
 			<!-- Servlet API -->
 			<dependency>
@@ -198,84 +224,49 @@
 				<version>${serveltapi.version}</version>
 			</dependency>
 
-			<!-- Joda Time -->
-			<dependency>
-				<groupId>joda-time</groupId>
-				<artifactId>joda-time</artifactId>
-				<version>${jodatime.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>joda-time</groupId>
-				<artifactId>joda-time-jsptags</artifactId>
-				<version>${jodatime.tag.version}</version>
-			</dependency>
-
-			<!-- Jadira -->
-			<dependency>
-				<groupId>org.jadira.usertype</groupId>
-				<artifactId>usertype.jodatime</artifactId>
-				<version>${jadira.version}</version>
-			</dependency>
-
-			<!-- QueryDSL -->
-			<dependency>
-				<groupId>com.mysema.querydsl</groupId>
-				<artifactId>querydsl-apt</artifactId>
-				<version>${querydsl.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.mysema.querydsl</groupId>
-				<artifactId>querydsl-jpa</artifactId>
-				<version>${querydsl.version}</version>
-			</dependency>
-
-			<!-- Module dependency -->
+			<!-- BEGIN MODULE DEPENDENCY -->
 			<!-- Core -->
 			<dependency>
 				<groupId>com.excilys</groupId>
 				<artifactId>computer-database-core</artifactId>
-				<version>${computerDatabase.core.version}</version>
+				<version>${project.version}</version>
 			</dependency>
-
 			<!-- Persistence -->
 			<dependency>
 				<groupId>com.excilys</groupId>
 				<artifactId>computer-database-persistence</artifactId>
-				<version>${computerDatabase.persistence.version}</version>
+				<version>${project.version}</version>
 			</dependency>
-
 			<!-- Service -->
 			<dependency>
 				<groupId>com.excilys</groupId>
 				<artifactId>computer-database-service</artifactId>
-				<version>${computerDatabase.service.version}</version>
+				<version>${project.version}</version>
 			</dependency>
-
 			<!-- Binding -->
 			<dependency>
 				<groupId>com.excilys</groupId>
 				<artifactId>computer-database-binding</artifactId>
-				<version>${computerDatabase.binding.version}</version>
+				<version>${project.version}</version>
 			</dependency>
-
 			<!-- Webapp -->
 			<dependency>
 				<groupId>com.excilys</groupId>
 				<artifactId>computer-database-webapp</artifactId>
-				<version>${computerDatabase.webapp.version}</version>
+				<version>${project.version}</version>
 			</dependency>
-			<!-- Web Service -->
+			<!-- Web Service Jackson -->
 			<dependency>
 				<groupId>com.excilys</groupId>
 				<artifactId>computer-database-webservices</artifactId>
-				<version>${computerDatabase.webservice.version}</version>
+				<version>${project.version}</version>
 			</dependency>
-
+			<!-- END MODULE DEPENDENCY -->
 		</dependencies>
 	</dependencyManagement>
+	<!-- END DEPENDENCY MANAGEMENT -->
 
+	<!-- BEGIN COMMMON DEPENDENCY -->
 	<dependencies>
 		<!-- slf4j commons-logging replacement -->
 		<dependency>
@@ -284,7 +275,9 @@
 			<version>${bridge.jcl.over.slf4j.version}</version>
 		</dependency>
 	</dependencies>
+	<!-- END COMMON DEPENDENCY -->
 
+	<!-- BEGIN BUILD -->
 	<build>
 		<finalName>computer-database</finalName>
 		<plugins>
@@ -300,7 +293,9 @@
 			</plugin>
 		</plugins>
 	</build>
+	<!-- END BUILD -->
 
+	<!-- BEGIN LIST MODULES -->
 	<modules>
 		<module>computer-database-core</module>
 		<module>computer-database-persistence</module>
@@ -309,4 +304,6 @@
 		<module>computer-database-webapp</module>
 		<module>computer-database-webservices</module>
 	</modules>
+
+	<!-- END LIST MODULE -->
 </project>

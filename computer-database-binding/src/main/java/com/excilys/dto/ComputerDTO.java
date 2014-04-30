@@ -8,7 +8,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.excilys.validator.annotations.DateValid;
 import com.excilys.validator.annotations.NameValid;
 
-
 /**
  * this class represent the DTO of a computer
  * every field is represented with a simple type

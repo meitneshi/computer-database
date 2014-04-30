@@ -11,42 +11,37 @@
 	<artifactId>computer-database-persistence</artifactId>
 	<name>computer-database-persistence</name>
 	<url>http://maven.apache.org</url>
+	<!-- BEGIN PROPERTIES -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+	<!-- END PROPERTIES -->
 
+	<!-- BEGIN DEPENDENCIES -->
 	<dependencies>
+		<!-- BEGIN MODULE DEPENDENCIES -->
 		<!-- Module Core -->
 		<dependency>
 			<groupId>com.excilys</groupId>
 			<artifactId>computer-database-core</artifactId>
 		</dependency>
+		<!-- END MODULE DEPENDENCIES -->
 
-		<!-- logback for logging -->
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-core</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<scope>compile</scope>
-		</dependency>
-
+		<!-- BEGIN DATABASE -->
 		<!-- Bone CP for Datasource -->
 		<dependency>
 			<groupId>com.jolbox</groupId>
 			<artifactId>bonecp</artifactId>
 			<scope>compile</scope>
 		</dependency>
-
 		<!-- Mysql connector -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
+		<!-- END DATABASE -->
 
+		<!-- BEGIN SPRING -->
 		<!-- Spring Framework -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -68,27 +63,7 @@
 			<exclusions>
 				<exclusion>
 					<groupId>org.springframework</groupId>
-					<artifactId>spring-context</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-aop</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-tx</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-beans</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-orm</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-core</artifactId>
+					<artifactId>*</artifactId>
 				</exclusion>
 				<exclusion>
 					<groupId>org.slf4j</groupId>
@@ -96,5 +71,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<!-- END SPRING -->
 	</dependencies>
+	<!-- END DEPENDENCIES -->
 </project>

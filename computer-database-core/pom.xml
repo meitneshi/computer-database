@@ -11,16 +11,26 @@
 	<artifactId>computer-database-core</artifactId>
 	<name>computer-database-core</name>
 	<url>http://maven.apache.org</url>
+	<!-- BEGIN PROPERTIES -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+	<!-- END PROPERTIES -->
 
+	<!-- BEGIN DEPENDENCIES -->
 	<dependencies>
+		<!-- BEGIN JODA TIME -->
 		<!-- Joda Time -->
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
 		</dependency>
+		<!-- Jadira -->
+		<dependency>
+			<groupId>org.jadira.usertype</groupId>
+			<artifactId>usertype.jodatime</artifactId>
+		</dependency>
+		<!-- END JODA TIME -->
 
 		<!-- Hibernate ORM -->
 		<dependency>
@@ -28,22 +38,18 @@
 			<artifactId>hibernate-entitymanager</artifactId>
 		</dependency>
 
-		<!-- Jadira -->
-		<dependency>
-			<groupId>org.jadira.usertype</groupId>
-			<artifactId>usertype.jodatime</artifactId>
-		</dependency>
-
+		<!-- BEGIN DATABASE -->
 		<!-- QueryDSL -->
 		<dependency>
 			<groupId>com.mysema.querydsl</groupId>
 			<artifactId>querydsl-apt</artifactId>
 			<scope>provided</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>com.mysema.querydsl</groupId>
 			<artifactId>querydsl-jpa</artifactId>
 		</dependency>
+		<!-- END DATABASE -->
 	</dependencies>
+	<!-- END DEPENDENCIES -->
 </project>
