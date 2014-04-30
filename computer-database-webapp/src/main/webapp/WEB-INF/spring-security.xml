@@ -11,9 +11,6 @@
 		<intercept-url pattern="/AddComputer**" access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/EditComputer**" access="hasRole('ROLE_ADMIN')" />
  
-		<!-- access denied page -->
-		<access-denied-handler error-page="/403" />
- 
 		<form-login 
 		    login-page="/Login" 
 		    default-target-url="/Dashboard" 
