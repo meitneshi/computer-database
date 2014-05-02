@@ -12,29 +12,28 @@
 
 	<!-- BEGIN VERSION DECLARATION -->
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.version>4.0.3.RELEASE</spring.version>
-		<spring.security.version>3.2.3.RELEASE</spring.security.version>
-		<jstl.version>1.2</jstl.version>
-		<logback.version>1.1.1</logback.version>
-		<slf4j.version>1.7.6</slf4j.version>
-		<mysql.connector.version>5.1.30</mysql.connector.version>
-		<bonecp.version>0.8.0.RELEASE</bonecp.version>
-		<hibernate.validator.version>4.2.0.Final</hibernate.validator.version>
-		<hibernate.version>4.3.5.Final</hibernate.version>
-		<serveltapi.version>3.0-alpha-1</serveltapi.version>
-		<jodatime.version>2.3</jodatime.version>
-		<jodatime.tag.version>1.1.1</jodatime.tag.version>
-		<project.version>0.0.1-SNAPSHOT</project.version>
-		<bridge.jcl.over.slf4j.version>1.7.7</bridge.jcl.over.slf4j.version>
-		<bridge.slf4j.log4j.version>1.6.1</bridge.slf4j.log4j.version>
-		<querydsl.version>3.3.2</querydsl.version>
-		<jadira.version>2.0.1</jadira.version>
-		<apt.maven.plugin.version>1.0.9</apt.maven.plugin.version>
-		<spring.data.jpa.version>1.5.2.RELEASE</spring.data.jpa.version>
-		<jaxrs.version>2.7.0</jaxrs.version>
-		<cxf-jaxrs-jackson.version>1.9.0</cxf-jaxrs-jackson.version>
-		<javax.servlet.version>3.1.0</javax.servlet.version>
+		<projectBuildSourceEncoding>UTF-8</projectBuildSourceEncoding>
+		<springVersion>4.0.3.RELEASE</springVersion>
+		<springSecurityVersion>3.2.3.RELEASE</springSecurityVersion>
+		<jstlVersion>1.2</jstlVersion>
+		<logbackVersion>1.1.1</logbackVersion>
+		<slf4jVersion>1.7.6</slf4jVersion>
+		<mysqlConnectorVersion>5.1.30</mysqlConnectorVersion>
+		<bonecpVersion>0.8.0.RELEASE</bonecpVersion>
+		<hibernateValidatorVersion>4.2.0.Final</hibernateValidatorVersion>
+		<hibernateVersion>4.3.5.Final</hibernateVersion>
+		<serveltapiVersion>3.0-alpha-1</serveltapiVersion>
+		<jodatimeVersion>2.3</jodatimeVersion>
+		<jodatimeTagVersion>1.1.1</jodatimeTagVersion>
+		<projectVersion>0.0.1-SNAPSHOT</projectVersion>
+		<bridgeJclOverSlf4jVersion>1.7.7</bridgeJclOverSlf4jVersion>
+		<bridgeSlf4jLog4jVersion>1.6.1</bridgeSlf4jLog4jVersion>
+		<querydslVersion>3.3.2</querydslVersion>
+		<jadiraVersion>2.0.1</jadiraVersion>
+		<springDataJpaVersion>1.5.2.RELEASE</springDataJpaVersion>
+		<jaxrsVersion>2.7.0</jaxrsVersion>
+		<cxfJaxrsJacksonVersion>1.9.0</cxfJaxrsJacksonVersion>
+		<javaxServletVersion>3.1.0</javaxServletVersion>
 	</properties>
 	<!-- END VERSION DECLARATION -->
 
@@ -46,7 +45,7 @@
 			<dependency>
 				<groupId>jstl</groupId>
 				<artifactId>jstl</artifactId>
-				<version>${jstl.version}</version>
+				<version>${jstlVersion}</version>
 			</dependency>
 
 			<!-- BEGIN LOGGING -->
@@ -54,18 +53,24 @@
 			<dependency>
 				<groupId>ch.qos.logback</groupId>
 				<artifactId>logback-core</artifactId>
-				<version>${logback.version}</version>
+				<version>${logbackVersion}</version>
 			</dependency>
 			<dependency>
 				<groupId>ch.qos.logback</groupId>
 				<artifactId>logback-classic</artifactId>
-				<version>${logback.version}</version>
+				<version>${logbackVersion}</version>
 			</dependency>
 			<!-- slf4j -->
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api</artifactId>
-				<version>${slf4j.version}</version>
+				<version>${slf4jVersion}</version>
+			</dependency>
+			<!-- bridge jcl over slf4j -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jcl-over-slf4j</artifactId>
+				<version>${bridgeJclOverSlf4jVersion}</version>
 			</dependency>
 			<!-- END LOGGING -->
 
@@ -74,24 +79,24 @@
 			<dependency>
 				<groupId>mysql</groupId>
 				<artifactId>mysql-connector-java</artifactId>
-				<version>${mysql.connector.version}</version>
+				<version>${mysqlConnectorVersion}</version>
 			</dependency>
 			<!-- BoneCP for connection Pool -->
 			<dependency>
 				<groupId>com.jolbox</groupId>
 				<artifactId>bonecp</artifactId>
-				<version>${bonecp.version}</version>
+				<version>${bonecpVersion}</version>
 			</dependency>
 			<!-- QueryDSL -->
 			<dependency>
 				<groupId>com.mysema.querydsl</groupId>
 				<artifactId>querydsl-apt</artifactId>
-				<version>${querydsl.version}</version>
+				<version>${querydslVersion}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.mysema.querydsl</groupId>
 				<artifactId>querydsl-jpa</artifactId>
-				<version>${querydsl.version}</version>
+				<version>${querydslVersion}</version>
 			</dependency>
 			<!-- END DATABASE -->
 
@@ -100,7 +105,7 @@
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-core</artifactId>
-				<version>${spring.version}</version>
+				<version>${springVersion}</version>
 				<!-- Exclude commons Logging -->
 				<exclusions>
 					<exclusion>
@@ -113,53 +118,53 @@
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-web</artifactId>
-				<version>${spring.version}</version>
+				<version>${springVersion}</version>
 			</dependency>
 			<!-- Spring MVC -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-webmvc</artifactId>
-				<version>${spring.version}</version>
+				<version>${springVersion}</version>
 			</dependency>
 			<!-- Spring JDBC -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-jdbc</artifactId>
-				<version>${spring.version}</version>
+				<version>${springVersion}</version>
 			</dependency>
 			<!-- Spring ORM -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-orm</artifactId>
-				<version>${spring.version}</version>
+				<version>${springVersion}</version>
 			</dependency>
 			<!-- Spring beans -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-beans</artifactId>
-				<version>${spring.version}</version>
+				<version>${springVersion}</version>
 			</dependency>
 			<!-- Spring Data JPA -->
 			<dependency>
 				<groupId>org.springframework.data</groupId>
 				<artifactId>spring-data-jpa</artifactId>
-				<version>${spring.data.jpa.version}</version>
+				<version>${springDataJpaVersion}</version>
 			</dependency>
 			<!-- Spring security -->
 			<dependency>
 				<groupId>org.springframework.security</groupId>
 				<artifactId>spring-security-web</artifactId>
-				<version>${spring.security.version}</version>
+				<version>${springSecurityVersion}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.security</groupId>
 				<artifactId>spring-security-config</artifactId>
-				<version>${spring.security.version}</version>
+				<version>${springSecurityVersion}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.security</groupId>
 				<artifactId>spring-security-taglibs</artifactId>
-				<version>${spring.security.version}</version>
+				<version>${springSecurityVersion}</version>
 			</dependency>
 			<!-- END SPRING -->
 
@@ -168,17 +173,17 @@
 			<dependency>
 				<groupId>javax.servlet</groupId>
 				<artifactId>javax.servlet-api</artifactId>
-				<version>${javax.servlet.version}</version>
+				<version>${javaxServletVersion}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.cxf</groupId>
 				<artifactId>cxf-rt-frontend-jaxrs</artifactId>
-				<version>${jaxrs.version}</version>
+				<version>${jaxrsVersion}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.codehaus.jackson</groupId>
 				<artifactId>jackson-jaxrs</artifactId>
-				<version>${cxf-jaxrs-jackson.version}</version>
+				<version>${cxfJaxrsJacksonVersion}</version>
 			</dependency>
 			<!-- END WEB SERVICE -->
 
@@ -187,13 +192,13 @@
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-validator</artifactId>
-				<version>${hibernate.validator.version}</version>
+				<version>${hibernateValidatorVersion}</version>
 			</dependency>
 			<!-- Hibernate ORM -->
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-entitymanager</artifactId>
-				<version>${hibernate.version}</version>
+				<version>${hibernateVersion}</version>
 			</dependency>
 			<!-- END HIBERNATE RELATIVES -->
 
@@ -202,18 +207,18 @@
 			<dependency>
 				<groupId>joda-time</groupId>
 				<artifactId>joda-time</artifactId>
-				<version>${jodatime.version}</version>
+				<version>${jodatimeVersion}</version>
 			</dependency>
 			<dependency>
 				<groupId>joda-time</groupId>
 				<artifactId>joda-time-jsptags</artifactId>
-				<version>${jodatime.tag.version}</version>
+				<version>${jodatimeTagVersion}</version>
 			</dependency>
 			<!-- Jadira -->
 			<dependency>
 				<groupId>org.jadira.usertype</groupId>
 				<artifactId>usertype.jodatime</artifactId>
-				<version>${jadira.version}</version>
+				<version>${jadiraVersion}</version>
 			</dependency>
 			<!-- END JODA TIME -->
 
@@ -221,7 +226,7 @@
 			<dependency>
 				<groupId>javax.servlet</groupId>
 				<artifactId>servlet-api</artifactId>
-				<version>${serveltapi.version}</version>
+				<version>${serveltapiVersion}</version>
 			</dependency>
 
 			<!-- BEGIN MODULE DEPENDENCY -->
@@ -229,37 +234,37 @@
 			<dependency>
 				<groupId>com.excilys</groupId>
 				<artifactId>computer-database-core</artifactId>
-				<version>${project.version}</version>
+				<version>${projectVersion}</version>
 			</dependency>
 			<!-- Persistence -->
 			<dependency>
 				<groupId>com.excilys</groupId>
 				<artifactId>computer-database-persistence</artifactId>
-				<version>${project.version}</version>
+				<version>${projectVersion}</version>
 			</dependency>
 			<!-- Service -->
 			<dependency>
 				<groupId>com.excilys</groupId>
 				<artifactId>computer-database-service</artifactId>
-				<version>${project.version}</version>
+				<version>${projectVersion}</version>
 			</dependency>
 			<!-- Binding -->
 			<dependency>
 				<groupId>com.excilys</groupId>
 				<artifactId>computer-database-binding</artifactId>
-				<version>${project.version}</version>
+				<version>${projectVersion}</version>
 			</dependency>
 			<!-- Webapp -->
 			<dependency>
 				<groupId>com.excilys</groupId>
 				<artifactId>computer-database-webapp</artifactId>
-				<version>${project.version}</version>
+				<version>${projectVersion}</version>
 			</dependency>
 			<!-- Web Service Jackson -->
 			<dependency>
 				<groupId>com.excilys</groupId>
 				<artifactId>computer-database-webservices</artifactId>
-				<version>${project.version}</version>
+				<version>${projectVersion}</version>
 			</dependency>
 			<!-- END MODULE DEPENDENCY -->
 		</dependencies>
@@ -268,7 +273,22 @@
 
 	<!-- BEGIN COMMMON DEPENDENCY -->
 	<dependencies>
-		<!-- slf4j commons-logging replacement -->
+
+		<!-- Logback -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+		</dependency>
+		<!-- slf4j -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<!-- bridge jcl over slf4j -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
@@ -278,7 +298,6 @@
 					<artifactId>slf4j-api</artifactId>
 				</exclusion>
 			</exclusions>
-			<version>${bridge.jcl.over.slf4j.version}</version>
 		</dependency>
 	</dependencies>
 	<!-- END COMMON DEPENDENCY -->
@@ -286,16 +305,27 @@
 	<!-- BEGIN BUILD -->
 	<build>
 		<finalName>computer-database</finalName>
+		<!-- plugins management -->
+		<pluginManagement>
+			<plugins>
+				<!-- maven plugin for compiling -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.1</version>
+					<configuration>
+						<source>1.7</source>
+						<target>1.7</target>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<!-- plugins common to all -->
 		<plugins>
 			<!-- maven plugin for compiling -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
-				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>

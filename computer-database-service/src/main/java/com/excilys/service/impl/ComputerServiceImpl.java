@@ -133,7 +133,7 @@ public class ComputerServiceImpl implements IComputerService {
 		if (filter.isEmpty()) {
 			return repository.count();
 		} else {
-			return repository.countByNameContaining("%"+filter+"%");
+			return repository.countByNameContaining(filter);
 		}
 	}
 

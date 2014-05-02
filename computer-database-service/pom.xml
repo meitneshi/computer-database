@@ -17,23 +17,6 @@
 			<artifactId>computer-database-persistence</artifactId>
 		</dependency>
 		<!-- END MODULE DEPENDENCIES -->
-
-		<!-- BEGIN LOGGING -->
-		<!-- Logback -->
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-		</dependency>
-		<!-- slf4j -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
-		<!-- END LOGGING -->
 	</dependencies>
 	<!-- END DEPENDENCIES -->
 </project>

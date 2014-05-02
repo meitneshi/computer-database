@@ -20,12 +20,20 @@
  
 	<!-- Select users and user_roles from database -->
 	<authentication-manager>
-	  <authentication-provider>
-		<jdbc-user-service data-source-ref="datasource"
-		  users-by-username-query=
-		    "select username,password, enabled from users where username=?"
-		  authorities-by-username-query=
-		    "select username, role from user_roles where username =?  " />
-	  </authentication-provider>
-	</authentication-manager>
+    <authentication-provider user-service-ref="com.excilys.service.impl.LoginService">
+<!--       <jdbc-user-service data-source-ref="datasource"/> -->
+    </authentication-provider>
+  </authentication-manager>
+	
+	
+<!-- 	<authentication-manager> -->
+<!-- 	  <authentication-provider user-service-ref="myUserDetailsService"> -->
+	  
+<!-- 		<jdbc-user-service data-source-ref="datasource" -->
+<!-- 		  users-by-username-query= -->
+<!-- 		    "select username,password, enabled from users where username=?" -->
+<!-- 		  authorities-by-username-query= -->
+<!-- 		    "select username, role from user_roles where username =?  " /> -->
+<!-- 	  </authentication-provider> -->
+<!-- 	</authentication-manager> -->
 </beans:beans>

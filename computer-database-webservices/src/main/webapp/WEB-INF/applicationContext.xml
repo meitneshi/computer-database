@@ -15,7 +15,6 @@
 
 	<import resource="classpath:/serviceContext.xml" />
 
-	<bean id="service" class="com.excilys.webService.ComputerWebService"></bean>
 
 	<jaxrs:server id="computerService" address="/computers">
 		<jaxrs:serviceBeans>
