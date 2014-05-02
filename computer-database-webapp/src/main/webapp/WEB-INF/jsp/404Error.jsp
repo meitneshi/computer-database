@@ -14,7 +14,7 @@
 		</td>
 		<td>
 			<h1><spring:message code="404.header"/><br>
-			<img src="resources/img/pfu.png">
+			<img src="resources/img/errors/pfu.png">
 			<spring:message code="404.message"/><br>
 			<a href="Dashboard"><spring:message code="error.redirect" /></a></h1>
 		</td>

@@ -83,10 +83,11 @@
 				<tr>
 					<td id="name">
 						<sec:authorize access="hasRole('ROLE_ADMIN')">
-							<a href="EditComputer?id=${computer.id }" onclick="">
+							<a href="EditComputer?id=${computer.id }" onclick=""><c:out value="${computer.name }"/></a>
 						</sec:authorize>
+						<sec:authorize access="hasRole('ROLE_USER')">
 							<c:out value="${computer.name }"/>
-						</a>
+						</sec:authorize>
 					</td>
 					<td id="introduced">
 						<c:choose>

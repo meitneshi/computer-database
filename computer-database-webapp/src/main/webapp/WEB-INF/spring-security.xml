@@ -7,7 +7,7 @@
 	http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
 	<http auto-config="true" use-expressions="true">
-		<intercept-url pattern="/Dashboard**" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/Dashboard**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" />
 		<intercept-url pattern="/AddComputer**" access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/EditComputer**" access="hasRole('ROLE_ADMIN')" />
  
