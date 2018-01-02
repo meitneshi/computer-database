@@ -51,6 +51,17 @@
 			<groupId>com.excilys</groupId>
 			<artifactId>computer-database-core</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.2</version>
+			<scope>test</scope>
+		</dependency>
 		<!-- END MODULE DEPENDENCIES -->
 	</dependencies>
 	<!-- END DEPENDENCIES -->
