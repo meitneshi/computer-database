@@ -1,11 +1,11 @@
-package java.com.excilys.mapper;
+package com.excilys.mapper;
 
 import static org.junit.Assert.assertEquals;
 
 public class Test {
 
     @org.junit.Test
-    public void toDto() {
+    public void testFunction() {
         assertEquals("toto", 10, 10);
     }
 
