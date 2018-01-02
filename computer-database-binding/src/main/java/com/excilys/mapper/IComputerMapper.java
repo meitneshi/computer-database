@@ -7,15 +7,15 @@ public interface IComputerMapper {
 
 	/**
 	 * convert a computerDTO into a Computer
-	 * @param computerDto
-	 * @return
+	 * @param computerDto the dto
+	 * @return computer
 	 */
 	public Computer toComputer(ComputerDTO computerDto);
 	
 	/**
 	 * convert a computer to a computerDto
-	 * @param computer
-	 * @return
+	 * @param computer the computer
+	 * @return computerDTO
 	 */
 	public ComputerDTO toDto(Computer computer);
 }

@@ -21,8 +21,8 @@ public class UtilDate {
 
 	/**
 	 * Convert String to Date
-	 * @param dateStr
-	 * @return
+	 * @param dateStr the stirng date
+	 * @return datetime
 	 */
 	public DateTime toDate(String dateStr) {
 		String pattern = messageSource.getMessage("format.datePattern", null, LocaleContextHolder.getLocale());
@@ -36,8 +36,8 @@ public class UtilDate {
 	
 	/**
 	 * Convert Date to String
-	 * @param dateTime
-	 * @return
+	 * @param dateTime the datetime
+	 * @return string date
 	 */
 	public String toString(DateTime dateTime) {
 		String pattern = messageSource.getMessage("format.datePattern", null, LocaleContextHolder.getLocale());

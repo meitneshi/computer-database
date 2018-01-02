@@ -11,8 +11,8 @@ import com.excilys.validator.annotations.NameValid;
 /**
  * this class represent the DTO of a computer
  * every field is represented with a simple type
- * id -> long
- * name, introduced, discontinued -> String
+ * id - long
+ * name, introduced, discontinued - String
  * @author mbibos toto
  *
  */
@@ -98,7 +98,7 @@ public class ComputerDTO {
 	}
 	
 	/**
-	 * @param company the company to set
+	 * @param companyId the company to set
 	 */
 	public void setCompanyId(String companyId) {
 		this.companyId = companyId;
