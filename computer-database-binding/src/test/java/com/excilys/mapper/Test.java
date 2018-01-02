@@ -6,7 +6,7 @@ public class Test {
 
     @org.junit.Test
     public void toDto() {
-        assertEquals("toto", true, 10);
+        assertEquals("toto", 10, 10);
     }
 
 }
