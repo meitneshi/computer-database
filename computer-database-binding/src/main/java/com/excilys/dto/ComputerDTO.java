@@ -13,7 +13,7 @@ import com.excilys.validator.annotations.NameValid;
  * every field is represented with a simple type
  * id -> long
  * name, introduced, discontinued -> String
- * @author mbibos
+ * @author mbibos toto
  *
  */
 public class ComputerDTO {
